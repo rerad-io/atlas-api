@@ -51,7 +51,15 @@ public class InstanceDataServiceImpl implements InstanceDataService {
         InstanceData existingInstanceData = instanceDataRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("InstanceData not found with id: " + id));
 
-        // Update existingInstanceData with values from instanceDataDTO
+        // Обновление полей сущности на основе данных из instanceDataDTO
+        existingInstanceData.setStudy(instanceDataMapper.toEntity(instanceDataDTO.getStudyDTO()));
+        existingInstanceData.setSeries(instanceDataMapper.toEntity(instanceDataDTO.getSeriesDTO()));
+        existingInstanceData.setStructure(instanceDataMapper.toEntity(instanceDataDTO.getAnatomicalStructureDTO()));
+        existingInstanceData.setInstanceNumber(instanceDataDTO.getInstanceNumber());
+        existingInstanceData.setType(instanceDataDTO.getType());
+        existingInstanceData.setX(instanceDataDTO.getX());
+        existingInstanceData.setY(instanceDataDTO.getY());
+        existingInstanceData.setPath(instanceDataDTO.getPath());
 
         InstanceData updatedInstanceData = instanceDataRepository.save(existingInstanceData);
         return instanceDataMapper.toDTO(updatedInstanceData);

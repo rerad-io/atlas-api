@@ -5,6 +5,8 @@ import com.example.medatlas.model.AnatomicalStructure;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
+import java.util.List;
+
 @Mapper
 public interface AnatomicalStructureMapper {
     AnatomicalStructureMapper INSTANCE = Mappers.getMapper(AnatomicalStructureMapper.class);
@@ -12,4 +14,6 @@ public interface AnatomicalStructureMapper {
     AnatomicalStructureDTO toDTO(AnatomicalStructure structure);
 
     AnatomicalStructure toEntity(AnatomicalStructureDTO structureDTO);
+
+    List<AnatomicalStructureDTO> toDTOList(List<AnatomicalStructure> structureList);
 }

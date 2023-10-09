@@ -27,26 +27,26 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     }
 
     @Override
-    public AnatomicalStructureDTO createStructure(AnatomicalStructureDTO structureDTO) {
+    public AnatomicalStructureDTO createAnatomicalStructure(AnatomicalStructureDTO structureDTO) {
         AnatomicalStructure structure = structureMapper.toEntity(structureDTO);
         structure = structureRepository.save(structure);
         return structureMapper.toDTO(structure);
     }
 
     @Override
-    public AnatomicalStructureDTO getStructureById(UUID id) {
+    public AnatomicalStructureDTO getAnatomicalStructureById(UUID id) {
         AnatomicalStructure structure = structureRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructure not found with id: " + id));
         return structureMapper.toDTO(structure);
     }
 
     @Override
-    public List<AnatomicalStructureDTO> getAllStructures() {
+    public List<AnatomicalStructureDTO> getAllAnatomicalStructures() {
         List<AnatomicalStructure> structureList = structureRepository.findAll();
         return structureMapper.toDTOList(structureList);
     }
 
     @Override
-    public AnatomicalStructureDTO updateStructure(UUID id, AnatomicalStructureDTO structureDTO) {
+    public AnatomicalStructureDTO updateAnatomicalStructure(UUID id, AnatomicalStructureDTO structureDTO) {
         AnatomicalStructure existingStructure = structureRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Structure not found with id: " + id));
 
@@ -57,7 +57,7 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     }
 
     @Override
-    public void deleteStructure(UUID id) {
+    public void deleteAnatomicalStructure(UUID id) {
         AnatomicalStructure structure = structureRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Structure not found with id: " + id));
         structureRepository.delete(structure);

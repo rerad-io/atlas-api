@@ -2,7 +2,15 @@ package com.example.medatlas.dto;
 
 import com.example.medatlas.model.enums.InstanceDataType;
 import jakarta.persistence.Column;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class InstanceDataDTO {
     private String name;
     private StudyDTO studyDTO;
@@ -14,5 +22,4 @@ public class InstanceDataDTO {
     private int y;
     @Column(columnDefinition = "jsonb")
     private String path;
-
 }

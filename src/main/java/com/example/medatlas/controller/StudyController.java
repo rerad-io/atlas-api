@@ -48,14 +48,4 @@ public class StudyController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteStudy(@PathVariable UUID id) {
-        boolean deleted = studyService.deleteStudy(id);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }

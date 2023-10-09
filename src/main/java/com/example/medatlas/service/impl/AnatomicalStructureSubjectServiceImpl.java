@@ -28,26 +28,26 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     }
 
     @Override
-    public AnatomicalStructureSubjectDTO createSubject(AnatomicalStructureSubjectDTO subjectDTO) {
+    public AnatomicalStructureSubjectDTO createAnatomicalStructureSubject(AnatomicalStructureSubjectDTO subjectDTO) {
         AnatomicalStructureSubject subject = subjectMapper.toEntity(subjectDTO);
         subject = subjectRepository.save(subject);
         return subjectMapper.toDTO(subject);
     }
 
     @Override
-    public AnatomicalStructureSubjectDTO getSubjectById(UUID id) {
+    public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectById(UUID id) {
         AnatomicalStructureSubject subject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + id));
         return subjectMapper.toDTO(subject);
     }
 
     @Override
-    public List<AnatomicalStructureSubjectDTO> getAllSubjects() {
+    public List<AnatomicalStructureSubjectDTO> getAllAnatomicalStructureSubjects() {
         List<AnatomicalStructureSubject> subjectsList = subjectRepository.findAll();
         return subjectsList.stream().map(subjectMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
-    public AnatomicalStructureSubjectDTO updateSubject(UUID id, AnatomicalStructureSubjectDTO subjectDTO) {
+    public AnatomicalStructureSubjectDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectDTO subjectDTO) {
         AnatomicalStructureSubject existingSubject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + id));
         AnatomicalStructureSubject updatedSubject = subjectMapper.toEntity(subjectDTO);
         updatedSubject.setId(existingSubject.getId());
@@ -56,7 +56,7 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     }
 
     @Override
-    public void deleteSubject(UUID id) {
+    public void deleteAnatomicalStructureSubject(UUID id) {
         AnatomicalStructureSubject subject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + id));
         subjectRepository.delete(subject);
     }

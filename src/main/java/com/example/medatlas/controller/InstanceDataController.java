@@ -47,14 +47,4 @@ public class InstanceDataController {
             return ResponseEntity.notFound().build();
         }
     }
-
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteInstanceData(@PathVariable UUID id) {
-        boolean deleted = instanceDataService.deleteInstanceData(id);
-        if (deleted) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 }

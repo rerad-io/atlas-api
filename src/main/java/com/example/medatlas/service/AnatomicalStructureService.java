@@ -14,5 +14,5 @@ public interface AnatomicalStructureService {
 
     AnatomicalStructureDTO updateAnatomicalStructure(UUID id, AnatomicalStructureDTO structureDTO);
 
-    boolean deleteAnatomicalStructure(UUID id);
+    void deleteAnatomicalStructure(UUID id);
 }

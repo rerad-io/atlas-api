@@ -10,5 +10,5 @@ public interface AnatomicalStructureSubjectService {
     AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectById(UUID id);
     List<AnatomicalStructureSubjectDTO> getAllAnatomicalStructureSubjects();
     AnatomicalStructureSubjectDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectDTO subjectDTO);
-    boolean deleteAnatomicalStructureSubject(UUID id);
+    void deleteAnatomicalStructureSubject(UUID id);
 }
