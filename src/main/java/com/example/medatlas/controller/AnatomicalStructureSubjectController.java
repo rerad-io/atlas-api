@@ -24,13 +24,13 @@ public class AnatomicalStructureSubjectController {
 
     @PostMapping("/create")
     public ResponseEntity<AnatomicalStructureSubjectDTO> createSubject(@RequestBody AnatomicalStructureSubjectDTO subjectDTO) {
-        AnatomicalStructureSubjectDTO createdSubject = subjectService.createSubject(subjectDTO);
+        AnatomicalStructureSubjectDTO createdSubject = subjectService.createAnatomicalStructureSubject(subjectDTO);
         return ResponseEntity.ok(createdSubject);
     }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<AnatomicalStructureSubjectDTO> getSubjectById(@PathVariable UUID id) {
-        AnatomicalStructureSubjectDTO subjectDTO = subjectService.getSubjectById(id);
+        AnatomicalStructureSubjectDTO subjectDTO = subjectService.getAnatomicalStructureSubjectById(id);
         if (subjectDTO != null) {
             return ResponseEntity.ok(subjectDTO);
         } else {
@@ -40,7 +40,7 @@ public class AnatomicalStructureSubjectController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<AnatomicalStructureSubjectDTO> updateSubject(@PathVariable UUID id, @RequestBody AnatomicalStructureSubjectDTO subjectDTO) {
-        AnatomicalStructureSubjectDTO updatedSubject = subjectService.updateSubject(id, subjectDTO);
+        AnatomicalStructureSubjectDTO updatedSubject = subjectService.updateAnatomicalStructureSubject(id, subjectDTO);
         if (updatedSubject != null) {
             return ResponseEntity.ok(updatedSubject);
         } else {
@@ -50,7 +50,7 @@ public class AnatomicalStructureSubjectController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteSubject(@PathVariable UUID id) {
-        boolean deleted = subjectService.deleteSubject(id);
+        boolean deleted = subjectService.deleteAnatomicalStructureSubject(id);
         if (deleted) {
             return ResponseEntity.noContent().build();
         } else {

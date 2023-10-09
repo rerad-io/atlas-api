@@ -1,6 +1,7 @@
 package com.example.medatlas.dto;
 
 import com.example.medatlas.model.enums.InstanceDataType;
+import jakarta.persistence.Column;
 
 public class InstanceDataDTO {
     private String name;
@@ -11,6 +12,7 @@ public class InstanceDataDTO {
     private InstanceDataType type;
     private int x;
     private int y;
-    private String Path;
+    @Column(columnDefinition = "jsonb")
+    private String path;
 
 }

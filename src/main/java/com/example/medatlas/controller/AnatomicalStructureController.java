@@ -1,3 +1,5 @@
+package com.example.medatlas.controller;
+
 import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.service.AnatomicalStructureService;
@@ -22,13 +24,13 @@ public class AnatomicalStructureController {
 
     @PostMapping("/create")
     public ResponseEntity<AnatomicalStructureDTO> createStructure(@RequestBody AnatomicalStructureDTO structureDTO) {
-        AnatomicalStructureDTO createdStructure = structureService.createStructure(structureDTO);
+        AnatomicalStructureDTO createdStructure = structureService.createAnatomicalStructure(structureDTO);
         return ResponseEntity.ok(createdStructure);
     }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<AnatomicalStructureDTO> getStructureById(@PathVariable UUID id) {
-        AnatomicalStructureDTO structureDTO = structureService.getStructureById(id);
+        AnatomicalStructureDTO structureDTO = structureService.getAnatomicalStructureById(id);
         if (structureDTO != null) {
             return ResponseEntity.ok(structureDTO);
         } else {
@@ -38,7 +40,7 @@ public class AnatomicalStructureController {
 
     @PutMapping("/update/{id}")
     public ResponseEntity<AnatomicalStructureDTO> updateStructure(@PathVariable UUID id, @RequestBody AnatomicalStructureDTO structureDTO) {
-        AnatomicalStructureDTO updatedStructure = structureService.updateStructure(id, structureDTO);
+        AnatomicalStructureDTO updatedStructure = structureService.updateAnatomicalStructure(id, structureDTO);
         if (updatedStructure != null) {
             return ResponseEntity.ok(updatedStructure);
         } else {
@@ -48,7 +50,7 @@ public class AnatomicalStructureController {
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteStructure(@PathVariable UUID id) {
-        boolean deleted = structureService.deleteStructure(id);
+        boolean deleted = structureService.deleteAnatomicalStructure(id);
         if (deleted) {
             return ResponseEntity.noContent().build();
         } else {

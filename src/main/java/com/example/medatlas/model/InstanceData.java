@@ -1,4 +1,5 @@
 package com.example.medatlas.model;
+
 import com.example.medatlas.model.enums.InstanceDataType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -58,12 +59,8 @@ public class InstanceData {
     @Column(name = "y")
     private int y;
 
-    @Column(name = "path")
-    private String path;
-
-    @Lob // Используйте аннотацию @Lob для больших объектов, например, для JSON
-    @Column(columnDefinition = "TEXT") // Используйте TEXT для JSON данных
-    @Type(type = "jsonb") // Используйте jsonb для PostgreSQL, если поддерживается
+    @Lob // аннотация @Lob для больших объектов, например, для JSON
+    @Column(columnDefinition = "jsonb")
     private String path;
 
     @Override
