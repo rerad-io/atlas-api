@@ -5,7 +5,7 @@ import com.example.medatlas.model.Series;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface SeriesMapper {
     SeriesMapper INSTANCE = Mappers.getMapper(SeriesMapper.class);
 

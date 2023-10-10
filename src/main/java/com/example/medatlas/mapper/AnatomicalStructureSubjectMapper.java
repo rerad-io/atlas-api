@@ -5,7 +5,7 @@ import com.example.medatlas.model.AnatomicalStructureSubject;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface AnatomicalStructureSubjectMapper {
     AnatomicalStructureSubjectMapper INSTANCE = Mappers.getMapper(AnatomicalStructureSubjectMapper.class);
 
