@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,6 +38,11 @@ public class AnatomicalStructureController {
             return ResponseEntity.notFound().build();
         }
     }
+    @GetMapping("/all")
+    public ResponseEntity<List<AnatomicalStructureDTO>> getAllAnatomicalStructures() {
+        List<AnatomicalStructureDTO> structureDTOList = structureService.getAllAnatomicalStructures();
+        return ResponseEntity.ok(structureDTOList);
+    }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<AnatomicalStructureDTO> updateStructure(@PathVariable UUID id, @RequestBody AnatomicalStructureDTO structureDTO) {
@@ -46,5 +52,10 @@ public class AnatomicalStructureController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteAnatomicalStructure(@PathVariable UUID id) {
+        structureService.deleteAnatomicalStructure(id);
+        return ResponseEntity.ok().build();
     }
 }
