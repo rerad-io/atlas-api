@@ -29,16 +29,16 @@ public class Study {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private UUID id;
 
-    @Column(name = "external_id")
+    @Column(name = "external_id", unique = true)
     private UUID externalId;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 250)
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column
+    @Column (name = "preview_frame", length = 250)
     private String previewFrame;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)
