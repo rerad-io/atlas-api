@@ -16,7 +16,7 @@ import java.util.UUID;
 @AllArgsConstructor
 public class AnatomicalStructure {
     /**
-     * Subject*	AnatomicalStructureSubject (Тема анатом. Структ.)	Тема
+     * Subject*	AnatomicalStructureSubject   (Тема анатом. Структ.)	Тема
      * Name*	string 250	Название структуры
      */
     @Id
