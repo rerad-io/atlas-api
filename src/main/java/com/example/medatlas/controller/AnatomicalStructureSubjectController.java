@@ -47,4 +47,9 @@ public class AnatomicalStructureSubjectController {
             return ResponseEntity.notFound().build();
         }
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteSubject(@PathVariable UUID id) {
+        subjectService.deleteAnatomicalStructureSubject(id);
+        return ResponseEntity.ok().build();
+    }
 }

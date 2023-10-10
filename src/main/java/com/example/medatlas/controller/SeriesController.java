@@ -47,4 +47,9 @@ public class SeriesController {
             return ResponseEntity.notFound().build();
         }
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteSeries(@PathVariable UUID id) {
+        seriesService.deleteSeries(id);
+        return ResponseEntity.ok().build();
+    }
 }

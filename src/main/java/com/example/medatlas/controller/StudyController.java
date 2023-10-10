@@ -48,4 +48,9 @@ public class StudyController {
             return ResponseEntity.notFound().build();
         }
     }
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Void> deleteStudy(@PathVariable UUID id) {
+        studyService.deleteStudy(id);
+        return ResponseEntity.ok().build();
+    }
 }

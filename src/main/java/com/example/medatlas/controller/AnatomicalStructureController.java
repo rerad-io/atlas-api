@@ -54,7 +54,7 @@ public class AnatomicalStructureController {
         }
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteAnatomicalStructure(@PathVariable UUID id) {
+    public ResponseEntity<Void> deleteStructure(@PathVariable UUID id) {
         structureService.deleteAnatomicalStructure(id);
         return ResponseEntity.ok().build();
     }
