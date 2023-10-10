@@ -6,7 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.Type;
 
 import java.util.Objects;
 import java.util.UUID;
@@ -46,11 +45,11 @@ public class InstanceData {
     @JoinColumn(name = "anatomical_structure_id", referencedColumnName = "id")
     private AnatomicalStructure structure;
 
-    @Column(name = "instance_number")
+    @Column(name = "instance_number", unique = true)
     private int instanceNumber;
 
     @Enumerated(EnumType.ORDINAL) // нужно заменить на EnumType.STRING, если хотим сохранять значения в виде строк
-    @Column(name = "type")
+    @Column(name = "type", unique = true)
     private InstanceDataType type;
 
     @Column(name = "x")

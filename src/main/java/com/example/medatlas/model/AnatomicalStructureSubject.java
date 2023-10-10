@@ -23,10 +23,10 @@ public class AnatomicalStructureSubject {
     @Column(name = "id")
     private UUID id;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 250, unique = true)
     private String name;
 
-    @Column(name = "color")
+    @Column(name = "color", length = 6, unique = true)
     private String color;
 
     @OneToMany(mappedBy = "subject")

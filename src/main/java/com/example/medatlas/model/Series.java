@@ -31,25 +31,25 @@ public class Series {
     private UUID id;
 
     @ManyToOne(targetEntity = Study.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "study_id", referencedColumnName = "id")
+    @JoinColumn(name = "study_id", referencedColumnName = "id", unique = true)
     private Study study;
 
-    @Column(name = "number")
+    @Column(name = "number", unique = true)
     private int number;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 250)
     private String name;
 
-    @Column(name = "preview_frame")
+    @Column(name = "preview_frame", length = 250)
     private String previewFrame;
 
     @Column(name = "instance_count")
     private int instanceCount;
 
-    @Column(name = "sagital_frame")
+    @Column(name = "sagital_frame", length = 250)
     private String sagitalFrame;
 
-    @Column(name = "coronal_frame")
+    @Column(name = "coronal_frame", length = 250)
     private String coronalFrame;
 
     @OneToMany(mappedBy = "series", cascade = CascadeType.ALL)

@@ -27,7 +27,7 @@ public class AnatomicalStructure {
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
     private AnatomicalStructureSubject subject;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 250, unique = true)
     private String name;
 
     @Override
