@@ -128,7 +128,7 @@ databaseChangeLog:
               - column:
                   name: StudyId
                   type: UUID
-              #                  constraints:
+              #                    constraints:
               #                    notNull: true
               - column:
                   name: SeriesId
