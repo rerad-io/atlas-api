@@ -19,13 +19,16 @@ public interface InstanceDataMapper {
 
     @Mapping(target = "studyDTO", source = "study") // Assuming you have a method to map Study
     @Mapping(target = "seriesDTO", source = "series") // Assuming you have a method to map Series
-    @Mapping(target = "anatomicalStructureDTO", source = "structure") // Assuming you have a method to map AnatomicalStructure
+    @Mapping(target = "anatomicalStructureDTO", source = "structure")
+        // Assuming you have a method to map AnatomicalStructure
     InstanceDataDTO toDTO(InstanceData instanceData);
 
     @Mapping(target = "study", source = "studyDTO") // Assuming you have a method to map StudyDTO
     @Mapping(target = "series", source = "seriesDTO") // Assuming you have a method to map SeriesDTO
-    @Mapping(target = "structure", source = "anatomicalStructureDTO") // Assuming you have a method to map AnatomicalStructureDTO
+    @Mapping(target = "structure", source = "anatomicalStructureDTO")
+        // Assuming you have a method to map AnatomicalStructureDTO
     InstanceData toEntity(InstanceDataDTO instanceDataDTO);
+
     Study toEntity(StudyDTO studyDTO);
 
     StudyDTO toDTO(Study study);
@@ -34,8 +37,11 @@ public interface InstanceDataMapper {
 
     SeriesDTO toDTO(Series series);
 
+    @Mapping(source = "id", target = "id")
     AnatomicalStructure toEntity(AnatomicalStructureDTO anatomicalStructureDTO);
 
+    @Mapping(source = "id", target = "id")
     AnatomicalStructureDTO toDTO(AnatomicalStructure anatomicalStructure);
+
     List<InstanceDataDTO> toDTOList(List<InstanceData> instanceDataList);
 }

@@ -26,13 +26,20 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
         this.subjectRepository = subjectRepository;
         this.subjectMapper = subjectMapper;
     }
-
     @Override
     public AnatomicalStructureSubjectDTO createAnatomicalStructureSubject(AnatomicalStructureSubjectDTO subjectDTO) {
         AnatomicalStructureSubject subject = subjectMapper.toEntity(subjectDTO);
         subject = subjectRepository.save(subject);
+        subjectDTO.setId(subject.getId()); // Устанавливаем id в объекте subjectDTO
         return subjectMapper.toDTO(subject);
     }
+//
+//    @Override
+//    public AnatomicalStructureSubjectDTO createAnatomicalStructureSubject(AnatomicalStructureSubjectDTO subjectDTO) {
+//        AnatomicalStructureSubject subject = subjectMapper.toEntity(subjectDTO);
+//        subject = subjectRepository.save(subject);
+//        return subjectMapper.toDTO(subject);
+//    }
 
     @Override
     public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectById(UUID id) {

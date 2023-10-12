@@ -21,19 +21,19 @@ public class StudyController {
         this.studyService = studyService;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<StudyDTO> createStudy(@RequestBody StudyDTO studyDTO) {
         StudyDTO createdStudy = studyService.createStudy(studyDTO);
         return ResponseEntity.ok(createdStudy);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<List<StudyDTO>> getAllStudies() {
         List<StudyDTO> studyDTOList = studyService.getAllStudies();
         return ResponseEntity.ok(studyDTOList);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<StudyDTO> getStudyById(@PathVariable UUID id) {
         StudyDTO studyDTO = studyService.getStudyById(id);
         if (studyDTO != null) {
@@ -43,7 +43,7 @@ public class StudyController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<StudyDTO> updateStudy(@PathVariable UUID id, @RequestBody StudyDTO studyDTO) {
         StudyDTO updatedStudy = studyService.updateStudy(id, studyDTO);
         if (updatedStudy != null) {
@@ -53,7 +53,7 @@ public class StudyController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudy(@PathVariable UUID id) {
         studyService.deleteStudy(id);
         return ResponseEntity.ok().build();

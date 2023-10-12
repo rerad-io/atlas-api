@@ -20,19 +20,19 @@ public class InstanceDataController {
         this.instanceDataService = instanceDataService;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<InstanceDataDTO> createInstanceData(@RequestBody InstanceDataDTO instanceDataDTO) {
         InstanceDataDTO createdInstanceData = instanceDataService.createInstanceData(instanceDataDTO);
         return ResponseEntity.ok(createdInstanceData);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<List<InstanceDataDTO>> getAllInstanceData() {
         List<InstanceDataDTO> instanceDataDTOList = instanceDataService.getAllInstanceData();
         return ResponseEntity.ok(instanceDataDTOList);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<InstanceDataDTO> getInstanceDataById(@PathVariable UUID id) {
         InstanceDataDTO instanceDataDTO = instanceDataService.getInstanceDataById(id);
         if (instanceDataDTO != null) {
@@ -42,7 +42,7 @@ public class InstanceDataController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<InstanceDataDTO> updateInstanceData(@PathVariable UUID id, @RequestBody InstanceDataDTO instanceDataDTO) {
         InstanceDataDTO updatedInstanceData = instanceDataService.updateInstanceData(id, instanceDataDTO);
         if (updatedInstanceData != null) {
@@ -52,7 +52,7 @@ public class InstanceDataController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteInstanceData(@PathVariable UUID id) {
         instanceDataService.deleteInstanceData(id);
         return ResponseEntity.ok().build();

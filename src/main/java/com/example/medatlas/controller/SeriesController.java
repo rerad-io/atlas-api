@@ -20,19 +20,19 @@ public class SeriesController {
         this.seriesService = seriesService;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<SeriesDTO> createSeries(@RequestBody SeriesDTO seriesDTO) {
         SeriesDTO createdSeries = seriesService.createSeries(seriesDTO);
         return ResponseEntity.ok(createdSeries);
     }
 
-    @GetMapping("/all")
+    @GetMapping("/")
     public ResponseEntity<List<SeriesDTO>> getAllSeries() {
         List<SeriesDTO> seriesDTOList = seriesService.getAllSeries();
         return ResponseEntity.ok(seriesDTOList);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<SeriesDTO> getSeriesById(@PathVariable UUID id) {
         SeriesDTO seriesDTO = seriesService.getSeriesById(id);
         if (seriesDTO != null) {
@@ -42,7 +42,7 @@ public class SeriesController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<SeriesDTO> updateSeries(@PathVariable UUID id, @RequestBody SeriesDTO seriesDTO) {
         SeriesDTO updatedSeries = seriesService.updateSeries(id, seriesDTO);
         if (updatedSeries != null) {
@@ -52,7 +52,7 @@ public class SeriesController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteSeries(@PathVariable UUID id) {
         seriesService.deleteSeries(id);
         return ResponseEntity.ok().build();
