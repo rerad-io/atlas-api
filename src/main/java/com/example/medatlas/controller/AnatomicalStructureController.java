@@ -20,13 +20,13 @@ public class AnatomicalStructureController {
         this.structureService = structureService;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/api/AnatomicalStructureSubject/")
     public ResponseEntity<AnatomicalStructureDTO> createStructure(@RequestBody AnatomicalStructureDTO structureDTO) {
         AnatomicalStructureDTO createdStructure = structureService.createAnatomicalStructure(structureDTO);
         return ResponseEntity.ok(createdStructure);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/api/AnatomicalStructureSubject/{id}")
     public ResponseEntity<AnatomicalStructureDTO> getStructureById(@PathVariable UUID id) {
         AnatomicalStructureDTO structureDTO = structureService.getAnatomicalStructureById(id);
         if (structureDTO != null) {
@@ -36,13 +36,13 @@ public class AnatomicalStructureController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping("/api/AnatomicalStructureSubject")
     public ResponseEntity<List<AnatomicalStructureDTO>> getAllAnatomicalStructures() {
         List<AnatomicalStructureDTO> structureDTOList = structureService.getAllAnatomicalStructures();
         return ResponseEntity.ok(structureDTOList);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/api/AnatomicalStructureSubject/{id}")
     public ResponseEntity<AnatomicalStructureDTO> updateStructure(@PathVariable UUID id, @RequestBody AnatomicalStructureDTO structureDTO) {
         AnatomicalStructureDTO updatedStructure = structureService.updateAnatomicalStructure(id, structureDTO);
         if (updatedStructure != null) {
@@ -52,7 +52,7 @@ public class AnatomicalStructureController {
         }
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/api/AnatomicalStructureSubject/{id}")
     public ResponseEntity<Void> deleteStructure(@PathVariable UUID id) {
         structureService.deleteAnatomicalStructure(id);
         return ResponseEntity.ok().build();
