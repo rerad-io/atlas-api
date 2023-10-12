@@ -10,13 +10,12 @@ import com.example.medatlas.model.Series;
 import com.example.medatlas.model.Study;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface InstanceDataMapper {
-    InstanceDataMapper INSTANCE = Mappers.getMapper(InstanceDataMapper.class);
+//    InstanceDataMapper INSTANCE = Mappers.getMapper(InstanceDataMapper.class);
 
     @Mapping(target = "studyDTO", source = "study") // Assuming you have a method to map Study
     @Mapping(target = "seriesDTO", source = "series") // Assuming you have a method to map Series

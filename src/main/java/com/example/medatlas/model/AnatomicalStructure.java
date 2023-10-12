@@ -20,6 +20,7 @@ public class AnatomicalStructure {
      * Name*	string 250	Название структуры
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 

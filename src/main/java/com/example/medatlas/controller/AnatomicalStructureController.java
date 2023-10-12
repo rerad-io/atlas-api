@@ -1,7 +1,6 @@
 package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
-import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.service.AnatomicalStructureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,16 +10,14 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/anatomical-structures")
+@RequestMapping("/api/AnatomicalStructure")
 public class AnatomicalStructureController {
 
     private final AnatomicalStructureService structureService;
-    private final AnatomicalStructureMapper structureMapper;
 
     @Autowired
-    public AnatomicalStructureController(AnatomicalStructureService structureService, AnatomicalStructureMapper structureMapper) {
+    public AnatomicalStructureController(AnatomicalStructureService structureService) {
         this.structureService = structureService;
-        this.structureMapper = structureMapper;
     }
 
     @PostMapping("/create")
@@ -38,6 +35,7 @@ public class AnatomicalStructureController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping("/all")
     public ResponseEntity<List<AnatomicalStructureDTO>> getAllAnatomicalStructures() {
         List<AnatomicalStructureDTO> structureDTOList = structureService.getAllAnatomicalStructures();
@@ -53,6 +51,7 @@ public class AnatomicalStructureController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteStructure(@PathVariable UUID id) {
         structureService.deleteAnatomicalStructure(id);

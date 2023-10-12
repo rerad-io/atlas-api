@@ -30,6 +30,7 @@ public class InstanceData {
      * Path	string	Строка содержащая JSON данные в виде массива с полями “x”, “y” описывающие замкнутую фигуру, используется если Type = Area
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 

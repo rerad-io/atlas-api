@@ -1,4 +1,8 @@
 package com.example.medatlas.model.enums;
+
+import lombok.Getter;
+
+@Getter
 public enum InstanceDataType {
     Point(0),
     Area(1);
@@ -7,10 +11,6 @@ public enum InstanceDataType {
 
     InstanceDataType(int value) {
         this.value = value;
-    }
-
-    public int getValue() {
-        return value;
     }
 
     public static InstanceDataType fromValue(int value) {

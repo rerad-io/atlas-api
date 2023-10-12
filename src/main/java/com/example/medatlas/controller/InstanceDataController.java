@@ -1,31 +1,35 @@
 package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.InstanceDataDTO;
-import com.example.medatlas.mapper.InstanceDataMapper;
 import com.example.medatlas.service.InstanceDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/instance-data")
+@RequestMapping("/api/InstanceData")
 public class InstanceDataController {
 
     private final InstanceDataService instanceDataService;
-    private final InstanceDataMapper instanceDataMapper;
 
     @Autowired
-    public InstanceDataController(InstanceDataService instanceDataService, InstanceDataMapper instanceDataMapper) {
+    public InstanceDataController(InstanceDataService instanceDataService) {
         this.instanceDataService = instanceDataService;
-        this.instanceDataMapper = instanceDataMapper;
     }
 
     @PostMapping("/create")
     public ResponseEntity<InstanceDataDTO> createInstanceData(@RequestBody InstanceDataDTO instanceDataDTO) {
         InstanceDataDTO createdInstanceData = instanceDataService.createInstanceData(instanceDataDTO);
         return ResponseEntity.ok(createdInstanceData);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<InstanceDataDTO>> getAllInstanceData() {
+        List<InstanceDataDTO> instanceDataDTOList = instanceDataService.getAllInstanceData();
+        return ResponseEntity.ok(instanceDataDTOList);
     }
 
     @GetMapping("/get/{id}")
@@ -47,6 +51,7 @@ public class InstanceDataController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteInstanceData(@PathVariable UUID id) {
         instanceDataService.deleteInstanceData(id);
