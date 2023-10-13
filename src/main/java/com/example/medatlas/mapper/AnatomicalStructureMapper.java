@@ -16,6 +16,5 @@ public interface AnatomicalStructureMapper {
     @Mapping(source = "id", target = "id")
     AnatomicalStructure toEntity(AnatomicalStructureDTO structureDTO);
 
-    @Mapping(source = "id", target = "id")
     List<AnatomicalStructureDTO> toDTOList(List<AnatomicalStructure> structureList);
 }

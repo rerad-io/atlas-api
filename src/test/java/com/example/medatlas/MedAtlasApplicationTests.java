@@ -9,5 +9,4 @@ class MedAtlasApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
