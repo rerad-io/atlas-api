@@ -51,4 +51,19 @@ public class DTOCreator {
             throw new RuntimeException(e);
         }
     }
+
+    public static AnatomicalStructureDTO getAnatomicalStructureDTO() {
+        AnatomicalStructureDTO structureDTO = new AnatomicalStructureDTO();
+        structureDTO.setId(UUID.randomUUID());
+
+        AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
+        subjectDTO.setId(UUID.randomUUID());
+        subjectDTO.setName("Sample Name");
+        subjectDTO.setColor("Sample Color");
+
+        structureDTO.setSubjectDTO(subjectDTO);
+        structureDTO.setName("Example Structure");
+
+        return structureDTO;
+    }
 }
