@@ -28,6 +28,7 @@ target/
 build/
 !**/src/main/**/build/
 !**/src/test/**/build/
-
+med-atlas.jar
+out/artifacts/med-atlas_jar/med-atlas.jar
 ### VS Code ###
 .vscode/
