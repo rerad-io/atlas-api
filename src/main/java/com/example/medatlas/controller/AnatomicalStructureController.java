@@ -2,6 +2,7 @@ package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.service.AnatomicalStructureService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/AnatomicalStructure")
+@Api(tags = "Anatomical Structure API")
 public class AnatomicalStructureController {
 
     private final AnatomicalStructureService structureService;

@@ -2,6 +2,7 @@ package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.InstanceDataDTO;
 import com.example.medatlas.service.InstanceDataService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/InstanceData")
+@Api(tags = "Instance Data API")
 public class InstanceDataController {
 
     private final InstanceDataService instanceDataService;

@@ -2,6 +2,7 @@ package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.SeriesDTO;
 import com.example.medatlas.service.SeriesService;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/Series")
+@Api(tags = "Series API")
 public class SeriesController {
 
     private final SeriesService seriesService;

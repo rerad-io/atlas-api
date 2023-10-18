@@ -38,10 +38,6 @@ public class DTOCreator {
         return createAnatomicalStructureDTOList(2); // Пример списка из двух элементов
     }
 
-    public static AnatomicalStructureSubjectDTO getSubject() {
-        return createAnatomicalStructureSubjectDTO();
-    }
-
     public static String asJsonString(Object object) {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -102,8 +98,8 @@ public class DTOCreator {
 
     public static List<SeriesDTO> createSeriesDTOList(int count) {
         List<SeriesDTO> seriesDTOList = new ArrayList<>();
-        for (int i = 0; i< count;
-        i++){
+        for (int i = 0; i < count;
+             i++) {
             seriesDTOList.add(createSeriesDTO());
         }
         return seriesDTOList;
@@ -120,6 +116,7 @@ public class DTOCreator {
     public static List<SeriesDTO> getSeriesDtoList() {
         return createSeriesDTOList(2); // Пример списка из двух элементов
     }
+
     public static StudyDTO getStudyDTO() {
         StudyDTO studyDTO = new StudyDTO();
         studyDTO.setId(UUID.randomUUID());
