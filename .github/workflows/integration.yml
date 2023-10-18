@@ -61,6 +61,7 @@ jobs:
       args: | 
         -f ./.helm/values.dev.yaml \
         --set image.tag=${{ github.sha }} \
+        --set ingress.enabled=true \
         --set database.host=${{ secrets.POSTGRES_HOST }} \
         --set database.databaseName=${{ secrets.POSTGRES_NAME }} \
         --set database.password=${{ secrets.POSTGRES_PASSWORD }} \
