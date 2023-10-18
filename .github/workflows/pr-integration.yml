@@ -16,6 +16,8 @@ jobs:
     name: Checks
     if: github.event.action != 'closed'
     uses: rerad-io/rerad-devops/.github/workflows/code-quality.yaml@main
+    with:
+      enable-node: false
     secrets:
       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
