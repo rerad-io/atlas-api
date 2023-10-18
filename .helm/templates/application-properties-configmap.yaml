@@ -44,4 +44,4 @@ data:
     logging.level.org.springframework.web=INFO
 
     # Server port configuration
-    server.port=5203
+    server.port={{ .Values.service.port }}
