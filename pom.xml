@@ -209,7 +209,7 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.5.3.Final</version>
+            <version>1.5.5.Final</version>
         </dependency>
     </dependencies>
     <dependencyManagement>
@@ -229,7 +229,7 @@
             <dependency>
                 <groupId>org.mapstruct</groupId>
                 <artifactId>mapstruct</artifactId>
-                <version>1.4.2.Final</version> <!-- Указать актуальную версию -->
+                <version>1.5.5.Final</version> <!-- Указать актуальную версию -->
             </dependency>
         </dependencies>
 
