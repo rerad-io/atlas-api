@@ -1,0 +1,90 @@
+replicaCount: 1
+
+image:
+  repository: 789776454163.dkr.ecr.us-east-1.amazonaws.com/atlas-api
+  tag: 0c80e26a55da6e12517d991fc77065f79440a543
+  pullPolicy: IfNotPresent
+
+# app specific
+enviroment: production
+
+lokiUrl: http://loki.loki-stack.svc.cluster.local
+
+database:
+  enabled: true
+  existingSecret:
+  host:
+  databaseName: atlas
+  schemaName: api
+  username: postgres
+  password: Qwerty123!
+
+s3:
+  enabled: true
+  keyId:
+  secretAccessKey:
+  bucketName:
+  region:
+
+redis:
+  existingSecret:
+  url:
+  password:
+
+nats:
+  existingSecret:
+  server: rerad-nats:4222
+  password:
+
+openai:
+  key:
+
+# end of app specific
+
+# common container preferences
+
+imagePullSecrets:
+  - name: ecr-registry
+
+nameOverride: ''
+fullnameOverride: ''
+
+serviceAccount:
+  create: true
+  annotations: {}
+  name:
+
+podSecurityContext: {}
+
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 5203
+
+ingress:
+  enabled: false
+  annotations:
+    # kubernetes.io/ingress.class: nginx
+    cert-manager.io/issuer: 'letsencrypt'
+    nginx.org/client-max-body-size: 4096m
+    nginx.ingress.kubernetes.io/proxy-body-size: 4096m
+  hosts:
+    - host: atlas-api.d.medcol.io
+      paths:
+        - '/'
+  tls:
+    - secretName: atlas-api-d-medcol-io
+      hosts:
+        - atlas-api.d.medcol.io
+
+resources: {}
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+# end of common container preferences

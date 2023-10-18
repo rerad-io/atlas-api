@@ -1,0 +1,47 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: {{ include "atlas-api.config" . }}
+  labels:
+    {{- include "atlas-api.labels" . | nindent 4 }}
+data:
+  application.properties: |-
+    # Disconniament of tests
+    skipTests=true
+    spring.application.name=med-atlas
+
+    # Settings for connecting to the database PostgreSQL
+    spring.datasource.url=jdbc:postgresql://{{ .Values.database.host }}:5432/{{ .Values.database.databaseName }}?currentSchema={{ .Values.database.schemaName }}
+    spring.datasource.username={{ .Values.database.username }}
+    spring.datasource.password={{ .Values.database.password }}
+
+    # Database dialect settings (postgreSQL)
+    spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+
+    # A Creating tables (you can change on Update or Validate in Production)
+    spring.jpa.hibernate.ddl-auto=create
+
+    # Logging SQL requests
+    spring.jpa.show-sql=true
+
+    # Hibernate
+    spring.jpa.properties.hibernate.format_sql=true
+    spring.jpa.properties.hibernate.temp.use_jdbc_metadata_defaults=false
+
+    # Packets for scanning entities
+    spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+    spring.entity-packages=com.example.medatlas.model
+
+    # Connection pool (HikariCP)
+    spring.datasource.hikari.connectionTimeout=20000
+    spring.datasource.hikari.maximumPoolSize=5
+
+    # Database logging settings (default Hibernate)
+    logging.level.org.hibernate.SQL=DEBUG
+    logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+
+    # Spring logging settings
+    logging.level.org.springframework.web=INFO
+
+    # Server port configuration
+    server.port=5203

@@ -1,0 +1,43 @@
+name: Development Integration
+
+on:
+  push:
+    branches: ['main']
+
+permissions:
+  contents: read
+
+jobs:
+
+  check:
+    name: Checks
+    uses: rerad-io/rerad-devops/.github/workflows/code-quality.yaml@main
+    secrets:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+  build:
+    name: Build
+    needs: ['check']
+    uses: rerad-io/rerad-devops/.github/workflows/docker-image.yaml@main
+    with:
+      ECR_REPOSITORY: atlas-api
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  deploy:
+    name: Deploy
+    needs: ['build']
+    uses: rerad-io/rerad-devops/.github/workflows/deploy-on-kuber.yaml@main
+    with:
+      APP: rerad-api
+      NAMESPACE: rerad-dev
+    secrets:
+      KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      args: | 
+        -f ./.helm/values.dev.yaml \
+        --set image.tag=${{ github.sha }} \
+        --set database.host=${{ secrets.POSTGRES_HOST }} \
+        --set database.databaseName=${{ secrets.POSTGRES_NAME }} \
+        --set database.password=${{ secrets.POSTGRES_PASSWORD }} \
+        --wait

@@ -1,0 +1,4 @@
+enviroment: development
+
+ingress:
+  enabled: false

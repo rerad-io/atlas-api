@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "atlas-api.fullname" . }}
+  labels:
+    {{- include "atlas-api.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "atlas-api.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels:
+        {{- include "atlas-api.selectorLabels" . | nindent 8 }}
+    spec:
+    {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      serviceAccountName: {{ include "atlas-api.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      volumes:
+      - name: application-config
+        configMap:
+          name: {{ include "atlas-api.config" . }}
+          items:
+          - key: application.properties 
+            path: application.properties
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 5201
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 1
+          env:
+           - name: DATABASE_HOST
+             valueFrom:
+              secretKeyRef:
+                name: {{ include "atlas-api.db-secret" . }}
+                key: host
+           - name: DATABASE_NAME
+             valueFrom:
+              secretKeyRef:
+                name: {{ include "atlas-api.db-secret" . }}
+                key: databaseName
+           - name: DATABASE_SCHEMA
+             valueFrom:
+              secretKeyRef:
+                name: {{ include "atlas-api.db-secret" . }}
+                key: schemaName
+           - name: DATABASE_USER
+             valueFrom:
+              secretKeyRef:
+                name: {{ include "atlas-api.db-secret" . }}
+                key: username
+           - name: DATABASE_PASSWORD
+             valueFrom:
+              secretKeyRef:
+                name: {{ include "atlas-api.db-secret" . }}
+                key: password
+          volumeMounts:
+          - name: application-config 
+            mountPath: "/config" 
+            readOnly: true
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
