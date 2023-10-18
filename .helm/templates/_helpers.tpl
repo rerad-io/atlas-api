@@ -36,6 +36,7 @@ Common labels
 */}}
 {{- define "atlas-api.labels" -}}
 helm.sh/chart: {{ include "atlas-api.chart" . }}
+project: atlas
 {{ include "atlas-api.selectorLabels" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
