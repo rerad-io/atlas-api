@@ -1,0 +1,188 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: postgres
+      changes:
+        - createTable:
+            tableName: study
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: external_id
+                  type: UUID
+              - column:
+                  name: Name
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+              - column:
+                  name: description
+                  type: TEXT
+              - column:
+                  name: preview_frame
+                  type: VARCHAR(250)
+
+  - changeSet:
+      id: 2
+      author: postgres
+      changes:
+        - createTable:
+            tableName: series
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: study_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: number
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: name
+                  type: VARCHAR(250)
+              - column:
+                  name: preview_frame
+                  type: VARCHAR(250)
+              - column:
+                  name: instance_count
+                  type: INT
+              - column:
+                  name: sagital_frame
+                  type: VARCHAR(250)
+              - column:
+                  name: coronal_frame
+                  type: VARCHAR(250)
+        - addForeignKeyConstraint:
+            baseTableName: series
+            baseColumnNames: study_id
+            referencedTableName: study
+            referencedColumnNames: id
+            constraintName: fk_series_study
+  - changeSet:
+      id: 3
+      author: postgres
+      changes:
+        - createTable:
+            tableName: anatomical_structure_subject
+            columns:
+              - column:
+                    name: id
+                    type: UUID
+                    constraints:
+                      primaryKey: true
+              - column:
+                  name: Name
+                  type: VARCHAR(250)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Color
+                  type: VARCHAR(6)
+                  constraints:
+                    nullable: false
+
+  - changeSet:
+      id: 4
+      author: postgres
+      changes:
+        - createTable:
+            tableName: anatomical_structure
+            columns:
+              - column:
+                    name: id
+                    type: UUID
+                    constraints:
+                      primaryKey: true
+              - column:
+                  name: subject_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: Name
+                  type: VARCHAR(250)
+        - addForeignKeyConstraint:
+            baseTableName: anatomical_structure
+            baseColumnNames: subject_id
+            referencedTableName: anatomical_structure_subject
+            referencedColumnNames: id
+            constraintName: fk_structure_subject
+  - changeSet:
+      id: 5
+      author: postgres
+      changes:
+        - createTable:
+            tableName: instance_data
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: study_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: series_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: structure_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+              - column:
+                  name: instance_number
+                  type: INT
+                  constraints:
+                    nullable: false
+              - column:
+                  name: type
+                  type: VARCHAR(10)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: x
+                  type: INT
+              - column:
+                  name: y
+                  type: INT
+              - column:
+                  name: path
+                  type: TEXT
+        - addForeignKeyConstraint:
+            baseTableName: instance_data
+            baseColumnNames: study_id
+            referencedTableName: study
+            referencedColumnNames: id
+            constraintName: fk_instance_data_study
+        - addForeignKeyConstraint:
+            baseTableName: instance_data
+            baseColumnNames: series_id
+            referencedTableName: series
+            referencedColumnNames: id
+            constraintName: fk_instance_data_series
+        - addForeignKeyConstraint:
+            baseTableName: instance_data
+            baseColumnNames: structure_id
+            referencedTableName: anatomical_structure
+            referencedColumnNames: id
+            constraintName: fk_instance_data_anatomical_structure

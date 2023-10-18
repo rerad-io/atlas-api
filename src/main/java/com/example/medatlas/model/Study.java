@@ -22,11 +22,11 @@ public class Study {
      * ExternalId*	GUID	Внешний идентификатор исследования
      * Name*	string 250	Название
      * Description	string max	Описание
-     * PreviewFrame	string 250	Кадр для превьюшки
+     * PreviewFrame	string 250	Кадр для превью
      */
     @Id
     @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(name = "external_id", unique = true)
@@ -56,10 +56,10 @@ public class Study {
         if (o == null || getClass() != o.getClass()) return false;
         Study study = (Study) o;
         // Сравниваем по id, если он не null
-        if (id != null ? !id.equals(study.id) : study.id != null) return false;
+        if (!Objects.equals(id, study.id)) return false;
 
         // Если id у обоих объектов равны null, сравниваем по externalId
-        return externalId != null ? externalId.equals(study.externalId) : study.externalId == null;
+        return Objects.equals(externalId, study.externalId);
     }
 
     @Override

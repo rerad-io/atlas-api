@@ -2,34 +2,38 @@ package com.example.medatlas.controller;
 
 
 import com.example.medatlas.dto.StudyDTO;
-import com.example.medatlas.mapper.StudyMapper;
 import com.example.medatlas.service.StudyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/study")
+@RequestMapping("/api/Study")
 public class StudyController {
 
     private final StudyService studyService;
-    private final StudyMapper studyMapper;
 
     @Autowired
-    public StudyController(StudyService studyService, StudyMapper studyMapper) {
+    public StudyController(StudyService studyService) {
         this.studyService = studyService;
-        this.studyMapper = studyMapper;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<StudyDTO> createStudy(@RequestBody StudyDTO studyDTO) {
         StudyDTO createdStudy = studyService.createStudy(studyDTO);
         return ResponseEntity.ok(createdStudy);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/")
+    public ResponseEntity<List<StudyDTO>> getAllStudies() {
+        List<StudyDTO> studyDTOList = studyService.getAllStudies();
+        return ResponseEntity.ok(studyDTOList);
+    }
+
+    @GetMapping("/{id}")
     public ResponseEntity<StudyDTO> getStudyById(@PathVariable UUID id) {
         StudyDTO studyDTO = studyService.getStudyById(id);
         if (studyDTO != null) {
@@ -39,7 +43,7 @@ public class StudyController {
         }
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<StudyDTO> updateStudy(@PathVariable UUID id, @RequestBody StudyDTO studyDTO) {
         StudyDTO updatedStudy = studyService.updateStudy(id, studyDTO);
         if (updatedStudy != null) {
@@ -48,7 +52,8 @@ public class StudyController {
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/delete/{id}")
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStudy(@PathVariable UUID id) {
         studyService.deleteStudy(id);
         return ResponseEntity.ok().build();

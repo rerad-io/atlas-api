@@ -1,7 +1,6 @@
 package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
-import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.service.AnatomicalStructureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,25 +10,23 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/anatomical-structures")
+@RequestMapping("/api/AnatomicalStructure")
 public class AnatomicalStructureController {
 
     private final AnatomicalStructureService structureService;
-    private final AnatomicalStructureMapper structureMapper;
 
     @Autowired
-    public AnatomicalStructureController(AnatomicalStructureService structureService, AnatomicalStructureMapper structureMapper) {
+    public AnatomicalStructureController(AnatomicalStructureService structureService) {
         this.structureService = structureService;
-        this.structureMapper = structureMapper;
     }
 
-    @PostMapping("/create")
+    @PostMapping("/")
     public ResponseEntity<AnatomicalStructureDTO> createStructure(@RequestBody AnatomicalStructureDTO structureDTO) {
         AnatomicalStructureDTO createdStructure = structureService.createAnatomicalStructure(structureDTO);
         return ResponseEntity.ok(createdStructure);
     }
 
-    @GetMapping("/get/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<AnatomicalStructureDTO> getStructureById(@PathVariable UUID id) {
         AnatomicalStructureDTO structureDTO = structureService.getAnatomicalStructureById(id);
         if (structureDTO != null) {
@@ -38,13 +35,14 @@ public class AnatomicalStructureController {
             return ResponseEntity.notFound().build();
         }
     }
-    @GetMapping("/all")
+
+    @GetMapping("/")
     public ResponseEntity<List<AnatomicalStructureDTO>> getAllAnatomicalStructures() {
         List<AnatomicalStructureDTO> structureDTOList = structureService.getAllAnatomicalStructures();
         return ResponseEntity.ok(structureDTOList);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<AnatomicalStructureDTO> updateStructure(@PathVariable UUID id, @RequestBody AnatomicalStructureDTO structureDTO) {
         AnatomicalStructureDTO updatedStructure = structureService.updateAnatomicalStructure(id, structureDTO);
         if (updatedStructure != null) {
@@ -53,7 +51,8 @@ public class AnatomicalStructureController {
             return ResponseEntity.notFound().build();
         }
     }
-    @DeleteMapping("/delete/{id}")
+
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteStructure(@PathVariable UUID id) {
         structureService.deleteAnatomicalStructure(id);
         return ResponseEntity.ok().build();

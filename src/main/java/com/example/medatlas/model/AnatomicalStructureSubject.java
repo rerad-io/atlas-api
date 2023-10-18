@@ -20,6 +20,7 @@ public class AnatomicalStructureSubject {
      * Color*	string 6	HEX цвет
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 

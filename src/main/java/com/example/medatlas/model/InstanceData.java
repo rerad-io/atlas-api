@@ -30,6 +30,7 @@ public class InstanceData {
      * Path	string	Строка содержащая JSON данные в виде массива с полями “x”, “y” описывающие замкнутую фигуру, используется если Type = Area
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 
@@ -41,16 +42,17 @@ public class InstanceData {
     @JoinColumn(name = "series_id", referencedColumnName = "id")
     private Series series;
 
-    @ManyToOne(targetEntity = AnatomicalStructure.class, fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = AnatomicalStructure.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "anatomical_structure_id", referencedColumnName = "id")
     private AnatomicalStructure structure;
 
     @Column(name = "instance_number", unique = true)
     private int instanceNumber;
 
-    @Enumerated(EnumType.ORDINAL) // нужно заменить на EnumType.STRING, если хотим сохранять значения в виде строк
-    @Column(name = "type", unique = true)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type", length = 2)
     private InstanceDataType type;
+
 
     @Column(name = "x")
     private int x;

@@ -31,6 +31,7 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     public AnatomicalStructureSubjectDTO createAnatomicalStructureSubject(AnatomicalStructureSubjectDTO subjectDTO) {
         AnatomicalStructureSubject subject = subjectMapper.toEntity(subjectDTO);
         subject = subjectRepository.save(subject);
+        subjectDTO.setId(subject.getId()); // Устанавливаем id в объекте subjectDTO
         return subjectMapper.toDTO(subject);
     }
 

@@ -27,6 +27,7 @@ public class Series {
      * CoronalFrame	string 250	Кадр для превьюшки корональной плоскости
      */
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private UUID id;
 
