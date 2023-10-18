@@ -14,8 +14,8 @@ database:
   enabled: true
   existingSecret:
   host:
-  databaseName: atlas
-  schemaName: api
+  databaseName: rerad
+  schemaName: atlas
   username: postgres
   password: Qwerty123!
 
