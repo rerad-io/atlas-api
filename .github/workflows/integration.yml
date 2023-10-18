@@ -9,7 +9,7 @@ permissions:
 
 jobs:
 
-  checks:
+  check:
     name: Checks
     runs-on: ubuntu-latest
     steps:
