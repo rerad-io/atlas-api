@@ -13,8 +13,10 @@ public class SwaggerConfig {
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.example.medatlas.controller"))
+                .apis(RequestHandlerSelectors.basePackage("com.example.medatlas"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .pathMapping("/")
+                .useDefaultResponseMessages(false);
     }
 }
