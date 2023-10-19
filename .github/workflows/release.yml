@@ -16,7 +16,7 @@ jobs:
     with:
       runs-on: release-runner
       environment: production
-      APP: rerad-api
+      APP: atlas-api
       NAMESPACE: rerad-prod
     secrets:
       KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}

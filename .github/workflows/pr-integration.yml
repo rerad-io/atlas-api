@@ -57,7 +57,7 @@ jobs:
     needs: ['build']
     uses: rerad-io/rerad-devops/.github/workflows/deploy-on-kuber.yaml@main
     with:
-      APP: rerad-api-pr-${{ github.event.number }}
+      APP: atlas-api-pr-${{ github.event.number }}
       NAMESPACE: rerad-dev
     secrets:
       KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
@@ -93,4 +93,4 @@ jobs:
         KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
       with:
         args: |
-          helm uninstall rerad-api-pr-${{ github.event.number }} -n rerad-dev
+          helm uninstall atlas-api-pr-${{ github.event.number }} -n rerad-dev
