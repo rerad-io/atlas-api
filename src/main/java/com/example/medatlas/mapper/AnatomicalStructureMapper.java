@@ -9,7 +9,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface AnatomicalStructureMapper {
-    //    AnatomicalStructureMapper INSTANCE = Mappers.getMapper(AnatomicalStructureMapper.class);
     @Mapping(source = "id", target = "id")
     AnatomicalStructureDTO toDTO(AnatomicalStructure structure);
 

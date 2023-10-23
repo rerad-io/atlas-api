@@ -1,5 +1,6 @@
 package com.example.medatlas.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(description = "Anatomical Structure Subject")
 public class AnatomicalStructureSubjectDTO {
     private UUID id;
     private String name;

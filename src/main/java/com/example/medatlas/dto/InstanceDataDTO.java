@@ -1,6 +1,7 @@
 package com.example.medatlas.dto;
 
 import com.example.medatlas.model.enums.InstanceDataType;
+import io.swagger.annotations.ApiModel;
 import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(description = "Instance Data")
 public class InstanceDataDTO {
     private UUID id;
     private String name;
