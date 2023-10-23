@@ -13,7 +13,7 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        // Разрешаем все источники (*) - в продакшене лучше настроить разрешенные источники.
+        // "Allow all sources (*) - it's better to configure allowed sources in production."
         config.addAllowedOrigin("*");
         config.addAllowedHeader("*");
         config.addAllowedMethod("GET");
