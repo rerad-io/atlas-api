@@ -1,0 +1,96 @@
+name: PR Preview workflow
+
+on:
+  pull_request:
+    types: [ 'opened', 'synchronize', 'closed' ]
+    branches: ['main']
+
+permissions:
+  issues: write
+  pull-requests: write
+  contents: write
+
+jobs:
+
+  check:
+    name: Checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Cache SonarQube packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+      - name: Cache Maven packages
+        uses: actions/cache@v1
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+      - name: Build and analyze
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: https://sonarqube.d.medcol.io
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=rerad-io_atlas-api_AYsbd52xttwOk7eq-KqM -DskipTests
+
+  build:
+    name: Build
+    needs: ['check']
+    uses: rerad-io/rerad-devops/.github/workflows/docker-image.yaml@main
+    with:
+      ECR_REPOSITORY: atlas-api
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+  deploy:
+    name: Deploy
+    needs: ['build']
+    uses: rerad-io/rerad-devops/.github/workflows/deploy-on-kuber.yaml@main
+    with:
+      APP: atlas-api-pr-${{ github.event.number }}
+      NAMESPACE: rerad-dev
+    secrets:
+      KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      args: | 
+        -f ./.helm/values.dev.yaml \
+        --set image.tag=${{ github.sha }} \
+        --set ingress.enabled=true \
+        --set ingress.hosts[0].host=atlas-api-pr-${{ github.event.number }}.d.medcol.io \
+        --set ingress.tls[0].secretName=atlas-api-pr-${{ github.event.number }}-tls \
+        --set ingress.tls[0].hosts[0]=atlas-api-pr-${{ github.event.number }}.d.medcol.io \
+        --set database.host=${{ secrets.POSTGRES_HOST }} \
+        --set database.databaseName=${{ secrets.POSTGRES_NAME }} \
+        --set database.password=${{ secrets.POSTGRES_PASSWORD }} \
+        --set database.schemaName=pr${{ github.event.number }} \
+        --wait
+
+  comment:
+    name: Comment
+    needs: ['deploy']
+    uses: rerad-io/rerad-devops/.github/workflows/deploy-comment.yaml@main
+    with:
+      APP_HOST: api-pr-${{ github.event.number }}.d.medcol.io
+      install: ${{ github.event.action == 'opened' || github.event.action == 'synchronize' }}
+  
+  uninstall:
+    name: Uninstall
+    if: github.event.action == 'closed'
+    runs-on: dev-runner
+    steps:
+    - name: Uninstall with helm
+      uses: wahyd4/kubectl-helm-action@master
+      env:
+        KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
+      with:
+        args: |
+          helm uninstall atlas-api-pr-${{ github.event.number }} -n rerad-dev
