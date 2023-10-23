@@ -11,9 +11,9 @@ data:
     spring.application.name=med-atlas
 
     # Settings for connecting to the database PostgreSQL
-    spring.datasource.url=jdbc:postgresql://{{ .Values.database.host }}:5432/{{ .Values.database.databaseName }}?currentSchema={{ .Values.database.schemaName }}
-    spring.datasource.username={{ .Values.database.username }}
-    spring.datasource.password={{ .Values.database.password }}
+    spring.datasource.url=jdbc:postgresql://postgres:5432/postgres
+    spring.datasource.username=postgres
+    spring.datasource.password=Qwerty123!
 
     # Database dialect settings (postgreSQL)
     spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
@@ -44,4 +44,4 @@ data:
     logging.level.org.springframework.web=INFO
 
     # Server port configuration
-    server.port={{ .Values.service.port }}
+    server.port=5203
