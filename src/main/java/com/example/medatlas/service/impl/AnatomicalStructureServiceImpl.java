@@ -1,8 +1,10 @@
 package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
 import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.model.AnatomicalStructure;
+import com.example.medatlas.model.AnatomicalStructureSubject;
 import com.example.medatlas.repository.AnatomicalStructureRepository;
 import com.example.medatlas.service.AnatomicalStructureService;
 import jakarta.persistence.EntityNotFoundException;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -61,5 +64,22 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
         AnatomicalStructure structure = structureRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Structure not found with id: " + id));
         structureRepository.delete(structure);
+    }
+
+    @Override
+    public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID structureId) {
+        Optional<AnatomicalStructure> structureOptional = structureRepository.findById(structureId);
+        if (structureOptional.isPresent()) {
+            AnatomicalStructure structure = structureOptional.get();
+            AnatomicalStructureSubject subject = structure.getSubject(); // Получение связанного родительского объекта
+
+            if (subject != null) {
+                return structureMapper.toAnatomicalStructureSubjectDTO(subject);
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
     }
 }

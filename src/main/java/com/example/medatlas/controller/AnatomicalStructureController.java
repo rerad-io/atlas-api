@@ -1,5 +1,6 @@
 package com.example.medatlas.controller;
 
+import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import com.example.medatlas.dto.AnatomicalStructureDTO;
@@ -35,6 +36,10 @@ public class AnatomicalStructureController {
     public ResponseEntity<AnatomicalStructureDTO> getStructureById(@PathVariable UUID id) {
         AnatomicalStructureDTO structureDTO = structureService.getAnatomicalStructureById(id);
         if (structureDTO != null) {
+            AnatomicalStructureSubjectDTO subjectDTO = structureService.getAnatomicalStructureSubjectByStructureId(id);
+            if (subjectDTO != null) {
+                structureDTO.setAnatomicalStructureSubject(subjectDTO); // Установка информации о родителе
+            }
             return ResponseEntity.ok(structureDTO);
         } else {
             return ResponseEntity.notFound().build();
