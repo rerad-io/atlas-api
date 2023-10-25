@@ -42,7 +42,7 @@ public class SeriesController {
         return ResponseEntity.ok(createdSeries);
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @Operation(summary = "Get all anatomical series")
     public ResponseEntity<List<SeriesDTO>> getAllSeries() {
         // TODO need much better search

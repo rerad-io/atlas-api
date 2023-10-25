@@ -1,5 +1,6 @@
 package com.example.medatlas.controller;
 
+import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
 import com.example.medatlas.service.AnatomicalStructureSubjectService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,7 +31,7 @@ public class AnatomicalStructureSubjectController {
         return ResponseEntity.ok(createdSubject);
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @Operation(summary = "Get all anatomical structure subjects")
     public ResponseEntity<List<AnatomicalStructureSubjectDTO>> getSubjectAll() {
         List<AnatomicalStructureSubjectDTO> subjectDTOList = subjectService.getAllAnatomicalStructureSubjects();
@@ -38,15 +39,21 @@ public class AnatomicalStructureSubjectController {
     }
 
     @GetMapping("/{id}")
-    @Operation(summary = "Get an anatomical structure subject by ID")
-    public ResponseEntity<AnatomicalStructureSubjectDTO> getSubjectById(@PathVariable UUID id) {
-        AnatomicalStructureSubjectDTO subjectDTO = subjectService.getAnatomicalStructureSubjectById(id);
-        if (subjectDTO != null) {
-            return ResponseEntity.ok(subjectDTO);
-        } else {
+    public ResponseEntity<AnatomicalStructureSubjectDTO> getSubjectWithChildren(@PathVariable UUID id) {
+        // Проверяем, существует ли объект AnatomicalStructureSubject с указанным id в БД
+        if (!subjectService.existsSubjectById(id)) {
             return ResponseEntity.notFound().build();
         }
+
+        AnatomicalStructureSubjectDTO subjectDTO = subjectService.getAnatomicalStructureSubjectById(id);
+
+        List<AnatomicalStructureDTO> childrenDTO = subjectService.getChildrenBySubjectId(id);
+
+        subjectDTO.setAnatomicalStructures(childrenDTO);
+
+        return ResponseEntity.ok(subjectDTO);
     }
+
 
     @PutMapping("/{id}")
     @Operation(summary = "Update an anatomical structure subject by ID")

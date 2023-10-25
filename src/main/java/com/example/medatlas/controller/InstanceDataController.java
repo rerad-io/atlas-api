@@ -31,7 +31,7 @@ public class InstanceDataController {
         return ResponseEntity.ok(createdInstanceData);
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @Operation(summary = "Get all anatomical instance data")
     public ResponseEntity<List<InstanceDataDTO>> getAllInstanceData() {
         List<InstanceDataDTO> instanceDataDTOList = instanceDataService.getAllInstanceData();

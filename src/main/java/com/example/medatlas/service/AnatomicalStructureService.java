@@ -18,4 +18,5 @@ public interface AnatomicalStructureService {
     void deleteAnatomicalStructure(UUID id);
 
     AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID id);
+
 }

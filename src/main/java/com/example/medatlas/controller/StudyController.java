@@ -31,7 +31,7 @@ public class StudyController {
         return ResponseEntity.ok(createdStudy);
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @Operation(summary = "Get all studies")
     public ResponseEntity<List<StudyDTO>> getAllStudies() {
         List<StudyDTO> studyDTOList = studyService.getAllStudies();
