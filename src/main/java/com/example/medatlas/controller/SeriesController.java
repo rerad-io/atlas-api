@@ -60,7 +60,6 @@ public class SeriesController {
     public ResponseEntity<SeriesDTO> getSeriesById(@PathVariable UUID id) {
         SeriesDTO seriesDTO = seriesService.getSeriesById(id);
         if (seriesDTO != null) {
-            // Загружаем информацию о родительской сущности Study
             StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
             seriesDTO.setStudy(parentStudy);
             return ResponseEntity.ok(seriesDTO);

@@ -20,5 +20,4 @@ public interface AnatomicalStructureMapper {
     List<AnatomicalStructureDTO> toDTOList(List<AnatomicalStructure> structureList);
 
     AnatomicalStructureSubjectDTO toAnatomicalStructureSubjectDTO(AnatomicalStructureSubject subject);
-
 }

@@ -40,7 +40,6 @@ public class AnatomicalStructureSubjectController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AnatomicalStructureSubjectDTO> getSubjectWithChildren(@PathVariable UUID id) {
-        // Проверяем, существует ли объект AnatomicalStructureSubject с указанным id в БД
         if (!subjectService.existsSubjectById(id)) {
             return ResponseEntity.notFound().build();
         }
@@ -53,7 +52,6 @@ public class AnatomicalStructureSubjectController {
 
         return ResponseEntity.ok(subjectDTO);
     }
-
 
     @PutMapping("/{id}")
     @Operation(summary = "Update an anatomical structure subject by ID")

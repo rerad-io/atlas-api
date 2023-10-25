@@ -8,10 +8,15 @@ import java.util.UUID;
 
 public interface AnatomicalStructureSubjectService {
     AnatomicalStructureSubjectDTO createAnatomicalStructureSubject(AnatomicalStructureSubjectDTO subjectDTO);
+
     AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectById(UUID id);
+
     List<AnatomicalStructureDTO> getChildrenBySubjectId(UUID subjectId);
+
     List<AnatomicalStructureSubjectDTO> getAllAnatomicalStructureSubjects();
+
     AnatomicalStructureSubjectDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectDTO subjectDTO);
+
     void deleteAnatomicalStructureSubject(UUID id);
 
     boolean existsSubjectById(UUID id);

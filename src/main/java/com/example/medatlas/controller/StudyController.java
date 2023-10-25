@@ -14,7 +14,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/Study")
 @Tag(name = "Study API", description = "API endpoints for the Study Controller")
-//@Api(tags = "Study API")
 public class StudyController {
 
     private final StudyService studyService;
