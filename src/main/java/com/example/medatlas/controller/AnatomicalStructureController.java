@@ -38,7 +38,7 @@ public class AnatomicalStructureController {
         if (structureDTO != null) {
             AnatomicalStructureSubjectDTO subjectDTO = structureService.getAnatomicalStructureSubjectByStructureId(id);
             if (subjectDTO != null) {
-                structureDTO.setAnatomicalStructureSubject(subjectDTO); // Установка информации о родителе
+                structureDTO.setAnatomicalStructureSubject(subjectDTO);
             }
             return ResponseEntity.ok(structureDTO);
         } else {

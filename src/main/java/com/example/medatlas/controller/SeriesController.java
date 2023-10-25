@@ -45,6 +45,7 @@ public class SeriesController {
     @GetMapping("/")
     @Operation(summary = "Get all anatomical series")
     public ResponseEntity<List<SeriesDTO>> getAllSeries() {
+        // TODO need much better search
         List<SeriesDTO> seriesDTOList = seriesService.getAllSeries();
 
         seriesDTOList.forEach(seriesDTO -> {
