@@ -38,7 +38,7 @@ public class Study {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @Column (name = "preview_frame", length = 250)
+    @Column(name = "preview_frame", length = 250)
     private String previewFrame;
 
     @OneToMany(mappedBy = "study", cascade = CascadeType.ALL)

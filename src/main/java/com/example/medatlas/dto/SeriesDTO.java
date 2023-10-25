@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.UUID;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,8 +17,13 @@ public class SeriesDTO {
     private UUID id;
     private int number;
     private String name;
+    private StudyDTO study;
     private String previewFrame;
     private int instanceCount;
     private String sagitalFrame;
     private String coronalFrame;
+
+    public void setStudy(StudyDTO study) {
+        this.study = study;
+    }
 }

@@ -1,7 +1,9 @@
 package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.SeriesDTO;
+import com.example.medatlas.dto.StudyDTO;
 import com.example.medatlas.service.SeriesService;
+import com.example.medatlas.service.StudyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,27 +16,42 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/Series")
 @Tag(name = "Anatomical Series API", description = "API endpoints for the Series Controller")
-//@Api(tags = "Series API")
 public class SeriesController {
 
     private final SeriesService seriesService;
+    private final StudyService studyService;
 
     @Autowired
-    public SeriesController(SeriesService seriesService) {
+    public SeriesController(SeriesService seriesService, StudyService studyService) {
         this.seriesService = seriesService;
+        this.studyService = studyService;
     }
 
     @PostMapping("/")
     @Operation(summary = "Create an anatomical series")
     public ResponseEntity<SeriesDTO> createSeries(@RequestBody SeriesDTO seriesDTO) {
+        StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+
+        if (parentStudy == null) {
+            return ResponseEntity.notFound().build();
+        }
+
         SeriesDTO createdSeries = seriesService.createSeries(seriesDTO);
+        createdSeries.setStudy(parentStudy);
+
         return ResponseEntity.ok(createdSeries);
     }
 
     @GetMapping("/")
     @Operation(summary = "Get all anatomical series")
     public ResponseEntity<List<SeriesDTO>> getAllSeries() {
+        // TODO need much better search
         List<SeriesDTO> seriesDTOList = seriesService.getAllSeries();
+
+        seriesDTOList.forEach(seriesDTO -> {
+            StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+            seriesDTO.setStudy(parentStudy);
+        });
         return ResponseEntity.ok(seriesDTOList);
     }
 
@@ -43,6 +60,9 @@ public class SeriesController {
     public ResponseEntity<SeriesDTO> getSeriesById(@PathVariable UUID id) {
         SeriesDTO seriesDTO = seriesService.getSeriesById(id);
         if (seriesDTO != null) {
+            // Загружаем информацию о родительской сущности Study
+            StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+            seriesDTO.setStudy(parentStudy);
             return ResponseEntity.ok(seriesDTO);
         } else {
             return ResponseEntity.notFound().build();
@@ -52,12 +72,14 @@ public class SeriesController {
     @PutMapping("/{id}")
     @Operation(summary = "Update an anatomical series")
     public ResponseEntity<SeriesDTO> updateSeries(@PathVariable UUID id, @RequestBody SeriesDTO seriesDTO) {
-        SeriesDTO updatedSeries = seriesService.updateSeries(id, seriesDTO);
-        if (updatedSeries != null) {
-            return ResponseEntity.ok(updatedSeries);
-        } else {
+        StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+
+        if (parentStudy == null) {
             return ResponseEntity.notFound().build();
         }
+        SeriesDTO updatedSeries = seriesService.updateSeries(id, seriesDTO);
+        updatedSeries.setStudy(parentStudy);
+        return ResponseEntity.ok(updatedSeries);
     }
 
     @DeleteMapping("/{id}")

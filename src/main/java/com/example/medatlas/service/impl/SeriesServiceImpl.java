@@ -1,10 +1,12 @@
 package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.SeriesDTO;
+import com.example.medatlas.dto.StudyDTO;
 import com.example.medatlas.mapper.SeriesMapper;
 import com.example.medatlas.model.Series;
 import com.example.medatlas.repository.SeriesRepository;
 import com.example.medatlas.service.SeriesService;
+import com.example.medatlas.service.StudyService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,17 +20,22 @@ public class SeriesServiceImpl implements SeriesService {
 
     private final SeriesRepository seriesRepository;
     private final SeriesMapper seriesMapper;
+    private final StudyService studyService;
 
     @Autowired
-    public SeriesServiceImpl(SeriesRepository seriesRepository, SeriesMapper seriesMapper) {
+    public SeriesServiceImpl(SeriesRepository seriesRepository, SeriesMapper seriesMapper, StudyService studyService) {
         this.seriesRepository = seriesRepository;
         this.seriesMapper = seriesMapper;
+        this.studyService = studyService;
     }
 
     @Override
     public SeriesDTO createSeries(SeriesDTO seriesDTO) {
-        // Implement the creation of a new Series and return the DTO
-        // Реализуем создание новой серии и возвращаем DTO
+        StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        if (parentStudy == null) {
+            throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudy().getId());
+        }
+
         Series series = seriesMapper.toEntity(seriesDTO);
         series = seriesRepository.save(series);
         return seriesMapper.toDTO(series);
@@ -36,24 +43,23 @@ public class SeriesServiceImpl implements SeriesService {
 
     @Override
     public SeriesDTO getSeriesById(UUID id) {
-        // Implement the retrieval of a Series by ID and return the DTO
-        // Реализуем получение серии по идентификатору и возвращаем DTO
         Series series = seriesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Series not found with id: " + id));
         return seriesMapper.toDTO(series);
     }
 
     @Override
     public List<SeriesDTO> getAllSeries() {
-        // Implement the retrieval of all Series and return a list of DTOs
-        // Реализуем получение всех серий и возвращаем список DTO
         List<Series> seriesList = seriesRepository.findAll();
         return seriesList.stream().map(seriesMapper::toDTO).collect(Collectors.toList());
     }
 
     @Override
     public SeriesDTO updateSeries(UUID id, SeriesDTO seriesDTO) {
-        // Implement the update of a Series and return the updated DTO
-        // Реализуем обновление серии и возвращаем обновленный DTO
+        StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        if (parentStudy == null) {
+            throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudy().getId());
+        }
+
         Series existingSeries = seriesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Series not found with id: " + id));
         Series updatedSeries = seriesMapper.toEntity(seriesDTO);
         updatedSeries.setId(existingSeries.getId());
@@ -63,7 +69,6 @@ public class SeriesServiceImpl implements SeriesService {
 
     @Override
     public void deleteSeries(UUID id) {
-        // Implement the deletion of a Series by ID
         Series series = seriesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Series not found with id: " + id));
         seriesRepository.delete(series);
     }

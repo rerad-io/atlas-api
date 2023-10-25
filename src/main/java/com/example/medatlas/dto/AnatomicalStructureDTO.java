@@ -22,4 +22,8 @@ public class AnatomicalStructureDTO {
 
     public void setSubjectDTO(AnatomicalStructureSubjectDTO anatomicalStructureSubjectDTO) {
     }
+
+    public void setAnatomicalStructureSubject(AnatomicalStructureSubjectDTO subjectDTO) {
+
+    }
 }
