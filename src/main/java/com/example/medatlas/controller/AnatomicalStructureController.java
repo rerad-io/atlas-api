@@ -46,7 +46,7 @@ public class AnatomicalStructureController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @Operation(summary = "Get all anatomical structures")
     public ResponseEntity<List<AnatomicalStructureDTO>> getAllAnatomicalStructures() {
         List<AnatomicalStructureDTO> structureDTOList = structureService.getAllAnatomicalStructures();

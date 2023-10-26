@@ -42,7 +42,7 @@ public class SeriesController {
         return ResponseEntity.ok(createdSeries);
     }
 
-    @GetMapping("/")
+    @GetMapping()
     @Operation(summary = "Get all anatomical series")
     public ResponseEntity<List<SeriesDTO>> getAllSeries() {
         // TODO need much better search
@@ -60,7 +60,6 @@ public class SeriesController {
     public ResponseEntity<SeriesDTO> getSeriesById(@PathVariable UUID id) {
         SeriesDTO seriesDTO = seriesService.getSeriesById(id);
         if (seriesDTO != null) {
-            // Загружаем информацию о родительской сущности Study
             StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
             seriesDTO.setStudy(parentStudy);
             return ResponseEntity.ok(seriesDTO);

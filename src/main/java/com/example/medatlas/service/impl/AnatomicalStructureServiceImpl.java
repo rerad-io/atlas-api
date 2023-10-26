@@ -54,7 +54,6 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
                 .orElseThrow(() -> new EntityNotFoundException("Structure not found with id: " + id));
 
         // Update existingStructure with values from structureDTO
-
         AnatomicalStructure updatedStructure = structureRepository.save(existingStructure);
         return structureMapper.toDTO(updatedStructure);
     }
@@ -65,6 +64,7 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
                 .orElseThrow(() -> new EntityNotFoundException("Structure not found with id: " + id));
         structureRepository.delete(structure);
     }
+
     @Override
     public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID structureId) {
         Optional<AnatomicalStructure> structureOptional = structureRepository.findById(structureId);
