@@ -5,19 +5,51 @@ import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
 import com.example.medatlas.model.AnatomicalStructure;
 import com.example.medatlas.model.AnatomicalStructureSubject;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
-public interface AnatomicalStructureMapper {
-    @Mapping(source = "id", target = "id")
-    AnatomicalStructureDTO toDTO(AnatomicalStructure structure);
+public class AnatomicalStructureMapper {
+    public AnatomicalStructureDTO toDTO(AnatomicalStructure structure) {
+        AnatomicalStructureDTO structureDTO = new AnatomicalStructureDTO();
+        structureDTO.setId(structure.getId());
+        structureDTO.setName(structure.getName());
 
-    @Mapping(source = "id", target = "id")
-    AnatomicalStructure toEntity(AnatomicalStructureDTO structureDTO);
+        // Маппинг родительской сущности, если она есть
+//        if (structure.getSubject() != null) {
+//            structureDTO.setSubjectDTO(toAnatomicalStructureSubjectDTO(structure.getSubject()));
+//        }
+        return structureDTO;
+    }
 
-    List<AnatomicalStructureDTO> toDTOList(List<AnatomicalStructure> structureList);
+    public AnatomicalStructure toEntity(AnatomicalStructureDTO structureDTO) {
+        AnatomicalStructure structure = new AnatomicalStructure();
+        structure.setId(structureDTO.getId());
+        structure.setName(structureDTO.getName());
 
-    AnatomicalStructureSubjectDTO toAnatomicalStructureSubjectDTO(AnatomicalStructureSubject subject);
+        return structure;
+    }
+
+    public List<AnatomicalStructureDTO> toDTOList(List<AnatomicalStructure> structures) {
+        return structures.stream()
+                .map(this::toDTO)
+                .collect(Collectors.toList());
+    }
+
+    public AnatomicalStructureSubjectDTO toAnatomicalStructureSubjectDTO(AnatomicalStructureSubject subject) {
+        AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
+        subjectDTO.setId(subject.getId());
+        subjectDTO.setName(subject.getName());
+
+        // Маппинг детей, если они есть
+        if (subject.getAnatomicalStructures() != null) {
+            subjectDTO.setAnatomicalStructures(
+                    subject.getAnatomicalStructures().stream()
+                            .map(this::toDTO)
+                            .collect(Collectors.toList())
+            );
+        }
+        return subjectDTO;
+    }
 }

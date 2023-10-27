@@ -1,7 +1,7 @@
 package com.example.medatlas.controller;
 
-import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithChildrenDTO;
 import com.example.medatlas.service.AnatomicalStructureSubjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,37 +26,32 @@ public class AnatomicalStructureSubjectController {
 
     @PostMapping("/")
     @Operation(summary = "Create an anatomical structure subject")
-    public ResponseEntity<AnatomicalStructureSubjectDTO> createSubject(@RequestBody AnatomicalStructureSubjectDTO subjectDTO) {
-        AnatomicalStructureSubjectDTO createdSubject = subjectService.createAnatomicalStructureSubject(subjectDTO);
+    public ResponseEntity<AnatomicalStructureSubjectDTO> createSubject(@RequestBody AnatomicalStructureSubjectDTO subject) {
+        AnatomicalStructureSubjectDTO createdSubject = subjectService.createAnatomicalStructureSubject(subject);
         return ResponseEntity.ok(createdSubject);
     }
 
-    @GetMapping()
+    @GetMapping("/{id}")
+    @Operation(summary = "Get an anatomical structure subject by ID with children")
+    public ResponseEntity<AnatomicalStructureSubjectWithChildrenDTO> getSubjectWithChildren(@PathVariable UUID id) {
+        AnatomicalStructureSubjectWithChildrenDTO subjectWithChildrenDTO = subjectService.getAnatomicalStructureSubjectWithChildren(id);
+        if (subjectWithChildrenDTO != null) {
+            return ResponseEntity.ok(subjectWithChildrenDTO);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping
     @Operation(summary = "Get all anatomical structure subjects")
-    public ResponseEntity<List<AnatomicalStructureSubjectDTO>> getSubjectAll() {
+    public ResponseEntity<List<AnatomicalStructureSubjectDTO>> getAllSubjects() {
         List<AnatomicalStructureSubjectDTO> subjectDTOList = subjectService.getAllAnatomicalStructureSubjects();
         return ResponseEntity.ok(subjectDTOList);
     }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<AnatomicalStructureSubjectDTO> getSubjectWithChildren(@PathVariable UUID id) {
-        if (!subjectService.existsSubjectById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-
-        AnatomicalStructureSubjectDTO subjectDTO = subjectService.getAnatomicalStructureSubjectById(id);
-
-        List<AnatomicalStructureDTO> childrenDTO = subjectService.getChildrenBySubjectId(id);
-
-        subjectDTO.setAnatomicalStructures(childrenDTO);
-
-        return ResponseEntity.ok(subjectDTO);
-    }
-
     @PutMapping("/{id}")
     @Operation(summary = "Update an anatomical structure subject by ID")
-    public ResponseEntity<AnatomicalStructureSubjectDTO> updateSubject(@PathVariable UUID id, @RequestBody AnatomicalStructureSubjectDTO subjectDTO) {
-        AnatomicalStructureSubjectDTO updatedSubject = subjectService.updateAnatomicalStructureSubject(id, subjectDTO);
+    public ResponseEntity<AnatomicalStructureSubjectDTO> updateSubject(@PathVariable UUID id, @RequestBody AnatomicalStructureSubjectDTO subject) {
+        AnatomicalStructureSubjectDTO updatedSubject = subjectService.updateAnatomicalStructureSubject(id, subject);
         if (updatedSubject != null) {
             return ResponseEntity.ok(updatedSubject);
         } else {

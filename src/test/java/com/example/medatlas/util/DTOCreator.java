@@ -13,7 +13,6 @@ public class DTOCreator {
     public static AnatomicalStructureDTO createAnatomicalStructureDTO() {
         AnatomicalStructureDTO structureDTO = new AnatomicalStructureDTO();
         structureDTO.setId(UUID.randomUUID());
-        structureDTO.setSubjectDTO(createAnatomicalStructureSubjectDTO());
         structureDTO.setName("Sample Name");
         return structureDTO;
     }
@@ -30,36 +29,15 @@ public class DTOCreator {
         AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
         subjectDTO.setId(UUID.randomUUID());
         subjectDTO.setName("Sample Name");
-        subjectDTO.setColor("Sample Color");
         return subjectDTO;
     }
 
-    public static List<AnatomicalStructureDTO> getAnatomicalStructureDtoList() {
-        return createAnatomicalStructureDTOList(2); // Пример списка из двух элементов
-    }
-
-    public static String asJsonString(Object object) {
-        try {
-            ObjectMapper objectMapper = new ObjectMapper();
-            return objectMapper.writeValueAsString(object);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+    public static List<AnatomicalStructureSubjectDTO> createAnatomicalStructureSubjectDTOList(int count) {
+        List<AnatomicalStructureSubjectDTO> subjectDTOList = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            subjectDTOList.add(createAnatomicalStructureSubjectDTO());
         }
-    }
-
-    public static AnatomicalStructureDTO getAnatomicalStructureDTO() {
-        AnatomicalStructureDTO structureDTO = new AnatomicalStructureDTO();
-        structureDTO.setId(UUID.randomUUID());
-
-        AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
-        subjectDTO.setId(UUID.randomUUID());
-        subjectDTO.setName("Sample Name");
-        subjectDTO.setColor("Sample Color");
-
-        structureDTO.setSubjectDTO(subjectDTO);
-        structureDTO.setName("Example Structure");
-
-        return structureDTO;
+        return subjectDTOList;
     }
 
     public static InstanceDataDTO createInstanceDataDTO() {
@@ -77,15 +55,13 @@ public class DTOCreator {
         return instanceDataDTOList;
     }
 
-    public static InstanceDataDTO getInstanceDataDTO() {
-        InstanceDataDTO instanceDataDTO = new InstanceDataDTO();
-        instanceDataDTO.setId(UUID.randomUUID());
-        instanceDataDTO.setName("Example Name");
-        return instanceDataDTO;
-    }
-
-    public static List<InstanceDataDTO> getInstanceDataDtoList() {
-        return createInstanceDataDTOList(2); // Пример списка из двух элементов
+    public static String asJsonString(Object object) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.writeValueAsString(object);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static SeriesDTO createSeriesDTO() {
@@ -98,8 +74,7 @@ public class DTOCreator {
 
     public static List<SeriesDTO> createSeriesDTOList(int count) {
         List<SeriesDTO> seriesDTOList = new ArrayList<>();
-        for (int i = 0; i < count;
-             i++) {
+        for (int i = 0; i < count; i++) {
             seriesDTOList.add(createSeriesDTO());
         }
         return seriesDTOList;
@@ -117,22 +92,26 @@ public class DTOCreator {
         return createSeriesDTOList(2); // Пример списка из двух элементов
     }
 
-    public static StudyDTO getStudyDTO() {
+    public static StudyDTO createStudyDTO() {
         StudyDTO studyDTO = new StudyDTO();
         studyDTO.setId(UUID.randomUUID());
-        studyDTO.setExternalId(UUID.randomUUID());
-        studyDTO.setName("Example Study");
-        studyDTO.setDescription("Sample description");
-        studyDTO.setPreviewFrame("Sample preview frame");
+        studyDTO.setName("Sample Name");
         return studyDTO;
     }
 
     public static List<StudyDTO> createStudyDTOList(int count) {
         List<StudyDTO> studyDTOList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            studyDTOList.add(getStudyDTO());
+            studyDTOList.add(createStudyDTO());
         }
         return studyDTOList;
+    }
+
+    public static StudyDTO getStudyDTO() {
+        StudyDTO studyDTO = new StudyDTO();
+        studyDTO.setId(UUID.randomUUID());
+        studyDTO.setName("Example Name");
+        return studyDTO;
     }
 
     public static List<StudyDTO> getStudyDTOList() {

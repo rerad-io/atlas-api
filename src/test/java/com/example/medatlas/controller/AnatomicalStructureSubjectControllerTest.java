@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,18 +49,18 @@ public class AnatomicalStructureSubjectControllerTest {
     @Test
     @DisplayName("Test getSubjectAll")
     void getSubjectAll() throws Exception {
-        AnatomicalStructureSubjectDTO subjectDTO1 = DTOCreator.createAnatomicalStructureSubjectDTO();
-        AnatomicalStructureSubjectDTO subjectDTO2 = DTOCreator.createAnatomicalStructureSubjectDTO();
-        when(subjectService.getAllAnatomicalStructureSubjects()).thenReturn(List.of(subjectDTO1, subjectDTO2));
+        final List<AnatomicalStructureSubjectDTO> subjectDTOList = DTOCreator.createAnatomicalStructureSubjectDTOList(2); // Указываем количество элементов
+        when(subjectService.getAllAnatomicalStructureSubjects()).thenReturn(subjectDTOList);
 
         mockMvc.perform(get("/api/AnatomicalStructureSubject"))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(subjectDTO1.getId().toString()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(subjectDTO1.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].color").value(subjectDTO1.getColor()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(subjectDTO2.getId().toString()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value(subjectDTO2.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].color").value(subjectDTO2.getColor()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(subjectDTOList.get(0).getId().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(subjectDTOList.get(0).getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].color").value(subjectDTOList.get(0).getColor()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(subjectDTOList.get(1).getId().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value(subjectDTOList.get(1).getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].color").value(subjectDTOList.get(1).getColor()));
     }
 
     @Test

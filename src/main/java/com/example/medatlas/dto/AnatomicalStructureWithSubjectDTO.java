@@ -1,24 +1,21 @@
 package com.example.medatlas.dto;
 
-import com.fasterxml.jackson.annotation.JsonView;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 import java.util.UUID;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "Anatomical Structure Subject")
-public class AnatomicalStructureSubjectDTO {
+@ApiModel(description = "Anatomical Structure with Subject")
+public class AnatomicalStructureWithSubjectDTO {
 
     private UUID id;
     private String name;
-    private String color;
-    private List<AnatomicalStructureDTO> anatomicalStructures;
+    private AnatomicalStructureSubjectDTO parentSubjectDTO;
 }

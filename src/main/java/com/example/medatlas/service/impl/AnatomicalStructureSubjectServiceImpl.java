@@ -2,6 +2,7 @@ package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithChildrenDTO;
 import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.mapper.AnatomicalStructureSubjectMapper;
 import com.example.medatlas.model.AnatomicalStructure;
@@ -9,6 +10,7 @@ import com.example.medatlas.model.AnatomicalStructureSubject;
 import com.example.medatlas.repository.AnatomicalStructureSubjectRepository;
 import com.example.medatlas.service.AnatomicalStructureSubjectService;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,15 +53,29 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     }
 
     @Override
+    public AnatomicalStructureSubjectWithChildrenDTO getAnatomicalStructureSubjectWithChildren(UUID id) {
+        AnatomicalStructureSubjectDTO subject = getAnatomicalStructureSubjectById(id);
+
+        // Получите детей для данного субъекта
+        List<AnatomicalStructureDTO> childrenDTO = getChildrenBySubjectId(id);
+
+        // Создайте AnatomicalStructureSubjectWithChildrenDTO и установите поля
+        AnatomicalStructureSubjectWithChildrenDTO subjectWithChildrenDTO = new AnatomicalStructureSubjectWithChildrenDTO();
+        subjectWithChildrenDTO.setId(subject.getId());
+        subjectWithChildrenDTO.setName(subject.getName());
+        subjectWithChildrenDTO.setColor(subject.getColor());
+        subjectWithChildrenDTO.setAnatomicalStructures(childrenDTO);
+
+        return subjectWithChildrenDTO;
+    }
+
+
+    @Override
     public List<AnatomicalStructureDTO> getChildrenBySubjectId(UUID subjectId) {
         AnatomicalStructureSubject subject = subjectRepository.findById(subjectId)
                 .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + subjectId));
 
         List<AnatomicalStructure> children = subject.getAnatomicalStructures();
-        children.forEach(child -> {
-            System.out.println("Child ID: " + child.getId());
-            System.out.println("Child Name: " + child.getName());
-        });
 
         return children.stream()
                 .map(anatomicalStructureMapper::toDTO)
@@ -73,9 +89,9 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     }
 
     @Override
-    public AnatomicalStructureSubjectDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectDTO subjectDTO) {
+    public AnatomicalStructureSubjectDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectDTO subject) {
         AnatomicalStructureSubject existingSubject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + id));
-        AnatomicalStructureSubject updatedSubject = subjectMapper.toEntity(subjectDTO);
+        AnatomicalStructureSubject updatedSubject = subjectMapper.toEntity(subject);
         updatedSubject.setId(existingSubject.getId());
         updatedSubject = subjectRepository.save(updatedSubject);
         return subjectMapper.toDTO(updatedSubject);

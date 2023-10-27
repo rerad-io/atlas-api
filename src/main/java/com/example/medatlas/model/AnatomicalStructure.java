@@ -1,9 +1,11 @@
 package com.example.medatlas.model;
+
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.Objects;
 import java.util.UUID;
+
 @Getter
 @Setter
 @Entity

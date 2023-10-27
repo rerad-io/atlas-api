@@ -33,7 +33,7 @@ public class AnatomicalStructureControllerTest {
 
     @Test
     void createAnatomicalStructure() throws Exception {
-        AnatomicalStructureDTO newStructure = DTOCreator.getAnatomicalStructureDTO();
+        AnatomicalStructureDTO newStructure = DTOCreator.createAnatomicalStructureDTO();
         when(anatomicalStructureService.createAnatomicalStructure(newStructure)).thenReturn(newStructure);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/AnatomicalStructure/")
                         .contentType("application/json")
@@ -46,7 +46,7 @@ public class AnatomicalStructureControllerTest {
 
     @Test
     void getAnatomicalStructureById() throws Exception {
-        AnatomicalStructureDTO structure = DTOCreator.getAnatomicalStructureDTO();
+        AnatomicalStructureDTO structure = DTOCreator.createAnatomicalStructureDTO();
         UUID id = structure.getId();
         when(anatomicalStructureService.getAnatomicalStructureById(id)).thenReturn(structure);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/AnatomicalStructure/" + id))
@@ -58,7 +58,7 @@ public class AnatomicalStructureControllerTest {
 
     @Test
     void updateAnatomicalStructure() throws Exception {
-        AnatomicalStructureDTO updatedStructure = DTOCreator.getAnatomicalStructureDTO();
+        AnatomicalStructureDTO updatedStructure = DTOCreator.createAnatomicalStructureDTO();
         UUID id = updatedStructure.getId();
         when(anatomicalStructureService.updateAnatomicalStructure(id, updatedStructure)).thenReturn(updatedStructure);
         mockMvc.perform(MockMvcRequestBuilders.put("/api/AnatomicalStructure/" + id)
@@ -79,17 +79,15 @@ public class AnatomicalStructureControllerTest {
 
     @Test
     void anatomicalStructureDtoList() throws Exception {
-        final List<AnatomicalStructureDTO> anatomicalStructureDTOList = DTOCreator.getAnatomicalStructureDtoList();
+        final List<AnatomicalStructureDTO> anatomicalStructureDTOList = DTOCreator.createAnatomicalStructureDTOList(2); // Указываем количество элементов
         when(anatomicalStructureService.getAllAnatomicalStructures()).thenReturn(anatomicalStructureDTOList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/AnatomicalStructure"))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", is(anatomicalStructureDTOList.get(0).getId().toString())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].subject", is(anatomicalStructureDTOList.get(0).getSubject())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", is(anatomicalStructureDTOList.get(0).getName())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", is(anatomicalStructureDTOList.get(1).getId().toString())))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].subject", is(anatomicalStructureDTOList.get(1).getSubject())))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].name", is(anatomicalStructureDTOList.get(1).getName())));
     }
 }

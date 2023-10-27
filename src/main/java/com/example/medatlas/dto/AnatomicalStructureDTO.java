@@ -16,13 +16,10 @@ import java.util.UUID;
 public class AnatomicalStructureDTO {
 
     private UUID id;
-    @Getter
-    private AnatomicalStructureSubjectDTO subject;
     private String name;
-
-    public void setSubjectDTO(AnatomicalStructureSubjectDTO anatomicalStructureSubjectDTO) {
-    }
-
-    public void setAnatomicalStructureSubject(AnatomicalStructureSubjectDTO subjectDTO) {
+    @Getter
+    private String subjectId;
+    public void setSubjectDTO(AnatomicalStructureSubjectDTO subjectDTO) {
+        this.subjectId = subjectDTO.getId().toString();
     }
 }

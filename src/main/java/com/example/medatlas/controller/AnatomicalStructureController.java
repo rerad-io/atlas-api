@@ -1,10 +1,11 @@
 package com.example.medatlas.controller;
 
+import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureWithSubjectDTO;
+import com.example.medatlas.service.AnatomicalStructureService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import com.example.medatlas.dto.AnatomicalStructureDTO;
-import com.example.medatlas.service.AnatomicalStructureService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,9 @@ public class AnatomicalStructureController {
     }
 
     @PostMapping("/")
-    @Operation(summary = "Create an anatomical structure")
-    public ResponseEntity<AnatomicalStructureDTO> createStructure(@RequestBody AnatomicalStructureDTO structureDTO) {
-        AnatomicalStructureDTO createdStructure = structureService.createAnatomicalStructure(structureDTO);
+    @Operation(summary = "Create an anatomical structure with parent subject")
+    public ResponseEntity<AnatomicalStructureWithSubjectDTO> createStructureWithSubject(@RequestBody AnatomicalStructureDTO requestDTO) {
+        AnatomicalStructureWithSubjectDTO createdStructure = structureService.createAnatomicalStructureWithSubject(requestDTO);
         return ResponseEntity.ok(createdStructure);
     }
 
@@ -36,9 +37,9 @@ public class AnatomicalStructureController {
     public ResponseEntity<AnatomicalStructureDTO> getStructureById(@PathVariable UUID id) {
         AnatomicalStructureDTO structureDTO = structureService.getAnatomicalStructureById(id);
         if (structureDTO != null) {
-            AnatomicalStructureSubjectDTO subjectDTO = structureService.getAnatomicalStructureSubjectByStructureId(id);
-            if (subjectDTO != null) {
-                structureDTO.setAnatomicalStructureSubject(subjectDTO);
+            AnatomicalStructureSubjectDTO subject = structureService.getAnatomicalStructureSubjectByStructureId(id);
+            if (subject != null) {
+                structureDTO.setSubjectId(structureDTO.getSubjectId());
             }
             return ResponseEntity.ok(structureDTO);
         } else {
