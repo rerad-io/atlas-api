@@ -17,6 +17,10 @@ public class AnatomicalStructureMapper {
         structureDTO.setName(structure.getName());
 
         // Маппинг родительской сущности, если она есть
+        if (structure.getSubject() != null) {
+            structureDTO.setSubjectId(structure.getSubject().getId().toString());
+        }
+
 //        if (structure.getSubject() != null) {
 //            structureDTO.setSubjectDTO(toAnatomicalStructureSubjectDTO(structure.getSubject()));
 //        }
