@@ -41,6 +41,7 @@ public class AnatomicalStructureMapper {
         AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
         subjectDTO.setId(subject.getId());
         subjectDTO.setName(subject.getName());
+        subjectDTO.setColor(subject.getColor());
 
         // Маппинг детей, если они есть
         if (subject.getAnatomicalStructures() != null) {
