@@ -2,6 +2,7 @@ package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithChildrenDTO;
 import com.example.medatlas.dto.AnatomicalStructureWithSubjectDTO;
 import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.model.AnatomicalStructure;
@@ -34,14 +35,14 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     }
 
     @Override
-    public AnatomicalStructureDTO createAnatomicalStructure(AnatomicalStructureDTO structureDTO) {
+    public AnatomicalStructureWithSubjectDTO createAnatomicalStructure(AnatomicalStructureSubjectWithChildrenDTO structureDTO) {
         AnatomicalStructure structure = structureMapper.toEntity(structureDTO);
         structure = structureRepository.save(structure);
         return structureMapper.toDTO(structure);
     }
 
     @Override
-    public AnatomicalStructureDTO getAnatomicalStructureById(UUID id) {
+    public AnatomicalStructureWithSubjectDTO getAnatomicalStructureById(UUID id) {
         AnatomicalStructure structure = structureRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructure not found with id: " + id));
         return structureMapper.toDTO(structure);
     }
@@ -53,7 +54,7 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     }
 
     @Override
-    public AnatomicalStructureDTO updateAnatomicalStructure(UUID id, AnatomicalStructureDTO structureDTO) {
+    public AnatomicalStructureWithSubjectDTO updateAnatomicalStructure(UUID id, AnatomicalStructureWithSubjectDTO structureDTO) {
         AnatomicalStructure existingStructure = structureRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Structure not found with id: " + id));
 

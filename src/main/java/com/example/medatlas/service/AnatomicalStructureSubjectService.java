@@ -8,9 +8,9 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AnatomicalStructureSubjectService {
-    AnatomicalStructureSubjectDTO createAnatomicalStructureSubject(AnatomicalStructureSubjectDTO subjectDTO);
+    AnatomicalStructureSubjectWithChildrenDTO createAnatomicalStructureSubject(AnatomicalStructureSubjectWithChildrenDTO subjectDTO);
 
-    AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectById(UUID id);
+    AnatomicalStructureSubjectWithChildrenDTO getAnatomicalStructureSubjectById(UUID id);
 
     List<AnatomicalStructureDTO> getChildrenBySubjectId(UUID subjectId);
 
@@ -18,7 +18,7 @@ public interface AnatomicalStructureSubjectService {
 
     List<AnatomicalStructureSubjectDTO> getAllAnatomicalStructureSubjects();
 
-    AnatomicalStructureSubjectDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectDTO subject);
+    AnatomicalStructureSubjectWithChildrenDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectWithChildrenDTO subject);
 
     void deleteAnatomicalStructureSubject(UUID id);
 

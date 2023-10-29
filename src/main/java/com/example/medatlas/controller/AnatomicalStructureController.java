@@ -34,12 +34,12 @@ public class AnatomicalStructureController {
 
     @GetMapping("/{id}")
     @Operation(summary = "Get an anatomical structure by ID")
-    public ResponseEntity<AnatomicalStructureDTO> getStructureById(@PathVariable UUID id) {
-        AnatomicalStructureDTO structureDTO = structureService.getAnatomicalStructureById(id);
+    public ResponseEntity<AnatomicalStructureWithSubjectDTO> getStructureById(@PathVariable UUID id) {
+        AnatomicalStructureWithSubjectDTO structureDTO = structureService.getAnatomicalStructureById(id);
         if (structureDTO != null) {
             AnatomicalStructureSubjectDTO subject = structureService.getAnatomicalStructureSubjectByStructureId(id);
             if (subject != null) {
-                structureDTO.setSubjectId(structureDTO.getSubjectId());
+                structureDTO.setId(structureDTO.getId());
             }
             return ResponseEntity.ok(structureDTO);
         } else {
@@ -56,8 +56,8 @@ public class AnatomicalStructureController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update an anatomical structure by ID")
-    public ResponseEntity<AnatomicalStructureDTO> updateStructure(@PathVariable UUID id, @RequestBody AnatomicalStructureDTO structureDTO) {
-        AnatomicalStructureDTO updatedStructure = structureService.updateAnatomicalStructure(id, structureDTO);
+    public ResponseEntity<AnatomicalStructureWithSubjectDTO> updateStructure(@PathVariable UUID id, @RequestBody AnatomicalStructureWithSubjectDTO structureDTO) {
+        AnatomicalStructureWithSubjectDTO updatedStructure = structureService.updateAnatomicalStructure(id, structureDTO);
         if (updatedStructure != null) {
             return ResponseEntity.ok(updatedStructure);
         } else {

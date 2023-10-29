@@ -26,8 +26,8 @@ public class AnatomicalStructureSubjectController {
 
     @PostMapping("/")
     @Operation(summary = "Create an anatomical structure subject")
-    public ResponseEntity<AnatomicalStructureSubjectDTO> createSubject(@RequestBody AnatomicalStructureSubjectDTO subject) {
-        AnatomicalStructureSubjectDTO createdSubject = subjectService.createAnatomicalStructureSubject(subject);
+    public ResponseEntity<AnatomicalStructureSubjectWithChildrenDTO> createSubject(@RequestBody AnatomicalStructureSubjectWithChildrenDTO subject) {
+        AnatomicalStructureSubjectWithChildrenDTO createdSubject = subjectService.createAnatomicalStructureSubject(subject);
         return ResponseEntity.ok(createdSubject);
     }
 
@@ -48,10 +48,11 @@ public class AnatomicalStructureSubjectController {
         List<AnatomicalStructureSubjectDTO> subjectDTOList = subjectService.getAllAnatomicalStructureSubjects();
         return ResponseEntity.ok(subjectDTOList);
     }
+
     @PutMapping("/{id}")
     @Operation(summary = "Update an anatomical structure subject by ID")
-    public ResponseEntity<AnatomicalStructureSubjectDTO> updateSubject(@PathVariable UUID id, @RequestBody AnatomicalStructureSubjectDTO subject) {
-        AnatomicalStructureSubjectDTO updatedSubject = subjectService.updateAnatomicalStructureSubject(id, subject);
+    public ResponseEntity<AnatomicalStructureSubjectWithChildrenDTO> updateSubject(@PathVariable UUID id, @RequestBody AnatomicalStructureSubjectWithChildrenDTO subject) {
+        AnatomicalStructureSubjectWithChildrenDTO updatedSubject = subjectService.updateAnatomicalStructureSubject(id, subject);
         if (updatedSubject != null) {
             return ResponseEntity.ok(updatedSubject);
         } else {

@@ -1,6 +1,7 @@
 package com.example.medatlas.mapper;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
+import com.example.medatlas.dto.AnatomicalStructureWithSubjectDTO;
 import com.example.medatlas.model.AnatomicalStructure;
 import com.example.medatlas.util.ModelCreator;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +19,7 @@ public class AnatomicalStructureMapperTest {
     @DisplayName("When we have a correct entity, then it should return a correct DTO")
     void testEntityToDTO() {
         AnatomicalStructure anatomicalStructure = ModelCreator.createAnatomicalStructure();
-        AnatomicalStructureDTO structureDTO = anatomicalStructureMapper.toDTO(anatomicalStructure);
+        AnatomicalStructureWithSubjectDTO structureDTO = anatomicalStructureMapper.toDTO(anatomicalStructure);
 
         assertAll(
                 () -> assertEquals(anatomicalStructure.getId(), structureDTO.getId()),

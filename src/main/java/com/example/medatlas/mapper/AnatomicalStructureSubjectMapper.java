@@ -1,35 +1,23 @@
 package com.example.medatlas.mapper;
 
+import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithChildrenDTO;
+import com.example.medatlas.dto.AnatomicalStructureWithSubjectDTO;
 import com.example.medatlas.model.AnatomicalStructureSubject;
 import org.mapstruct.Mapper;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Mapper(componentModel = "spring")
-public class AnatomicalStructureSubjectMapper {
+public interface AnatomicalStructureSubjectMapper {
+    AnatomicalStructureSubjectWithChildrenDTO toDTO(AnatomicalStructureSubject subject);
 
-    public AnatomicalStructureSubjectDTO toDTO(AnatomicalStructureSubject subject) {
-        AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
-        subjectDTO.setId(subject.getId());
-        subjectDTO.setName(subject.getName());
-        subjectDTO.setColor(subject.getColor());
-        return subjectDTO;
-    }
+    AnatomicalStructureSubject toEntity(AnatomicalStructureSubjectWithChildrenDTO subjectDTO);
 
-    public AnatomicalStructureSubject toEntity(AnatomicalStructureSubjectDTO subjectDTO) {
-        AnatomicalStructureSubject subject = new AnatomicalStructureSubject();
-        subject.setId(subjectDTO.getId());
-        subject.setName(subjectDTO.getName());
-        subject.setColor(subjectDTO.getColor());
+    AnatomicalStructureDTO toDTO(AnatomicalStructureSubjectWithChildrenDTO subjectDTO); // Добавьте этот метод
 
-        return subject;
-    }
+    AnatomicalStructureSubjectWithChildrenDTO toDTO(AnatomicalStructureDTO structureDTO);
 
-    public List<AnatomicalStructureSubjectDTO> toDTOList(List<AnatomicalStructureSubject> subjects) {
-        return subjects.stream()
-                .map(this::toDTO)
-                .collect(Collectors.toList());
-    }
+    AnatomicalStructureSubject toEntity(AnatomicalStructureSubjectDTO subjectDTO);
+
+    AnatomicalStructureDTO toDTO(AnatomicalStructureWithSubjectDTO structureDTO);
 }
