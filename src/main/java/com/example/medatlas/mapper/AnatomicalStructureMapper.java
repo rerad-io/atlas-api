@@ -16,7 +16,6 @@ public interface AnatomicalStructureMapper {
 
     AnatomicalStructure toEntity(AnatomicalStructureWithSubjectDTO structureDTO);
 
-    // Методы маппинга для обработки связанных DTO
     AnatomicalStructureDTO toDTO(AnatomicalStructureWithSubjectDTO structureDTO);
 
     AnatomicalStructureWithSubjectDTO toDTO(AnatomicalStructureDTO structureDTO);
@@ -26,6 +25,7 @@ public interface AnatomicalStructureMapper {
     List<AnatomicalStructureDTO> toDTOList(List<AnatomicalStructure> structureList);
 
     AnatomicalStructureSubjectDTO toAnatomicalStructureSubjectDTO(AnatomicalStructureSubject subject);
+
     AnatomicalStructureSubjectDTO toDTO(AnatomicalStructureSubjectWithChildrenDTO subjectDTO);
 
     AnatomicalStructure toEntity(AnatomicalStructureSubjectWithChildrenDTO structureDTO);

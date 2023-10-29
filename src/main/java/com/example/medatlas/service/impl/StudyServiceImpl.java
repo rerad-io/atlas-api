@@ -49,7 +49,6 @@ public class StudyServiceImpl implements StudyService {
         Study existingStudy = studyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Study with ID " + id + " not found"));
 
-        // Update the fields of existingStudy using data from studyDTO
         existingStudy.setName(studyDTO.getName());
         existingStudy.setDescription(studyDTO.getDescription());
         existingStudy.setPreviewFrame(studyDTO.getPreviewFrame());

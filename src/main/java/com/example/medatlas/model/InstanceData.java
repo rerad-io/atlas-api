@@ -59,8 +59,8 @@ public class InstanceData {
 
     @Column(name = "y")
     private int y;
-
-    @Lob // аннотация @Lob для больших объектов, например, для JSON
+    // аннотация @Lob для больших объектов, например, для JSON
+    @Lob
     @Column(columnDefinition = "jsonb")
     private String path;
 

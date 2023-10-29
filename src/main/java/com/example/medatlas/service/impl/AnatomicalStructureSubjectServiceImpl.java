@@ -68,7 +68,7 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     }
 
 
-//    @Override
+    //    @Override
 //    public List<AnatomicalStructureDTO> getChildrenBySubjectId(UUID subjectId) {
 //        AnatomicalStructureSubject subject = subjectRepository.findById(subjectId)
 //                .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + subjectId));
@@ -80,58 +80,37 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
 //                .map(AnatomicalStructureDTO.class::cast) // Приводим к типу AnatomicalStructureDTO
 //                .collect(Collectors.toList());
 //    }
-@Override
-public List<AnatomicalStructureDTO> getChildrenBySubjectId(UUID subjectId) {
-    AnatomicalStructureSubject subject = subjectRepository.findById(subjectId)
-            .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + subjectId));
+    @Override
+    public List<AnatomicalStructureDTO> getChildrenBySubjectId(UUID subjectId) {
+        AnatomicalStructureSubject subject = subjectRepository.findById(subjectId)
+                .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + subjectId));
 
-    List<AnatomicalStructure> children = subject.getAnatomicalStructures();
+        List<AnatomicalStructure> children = subject.getAnatomicalStructures();
 
-    return children.stream()
-            .map(anatomicalStructure -> {
-                AnatomicalStructureDTO dto = new AnatomicalStructureDTO();
-                dto.setId(anatomicalStructure.getId());
-                dto.setName(anatomicalStructure.getName());
-                // Продолжайте копировать другие поля, если есть
-                return dto;
-            })
-            .collect(Collectors.toList());
-}
+        return children.stream()
+                .map(anatomicalStructure -> {
+                    AnatomicalStructureDTO dto = new AnatomicalStructureDTO();
+                    dto.setId(anatomicalStructure.getId());
+                    dto.setName(anatomicalStructure.getName());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+    }
 
-
-    //    @Override
-//    public List<AnatomicalStructureSubjectDTO> getAllAnatomicalStructureSubjects() {
-//        List<AnatomicalStructureSubject> subjectsList = subjectRepository.findAll();
-//        return subjectsList.stream()
-//                .map(subjectMapper::toDTO)
-//                .collect(Collectors.toList());
-//    }
-@Override
-public List<AnatomicalStructureSubjectDTO> getAllAnatomicalStructureSubjects() {
-    List<AnatomicalStructureSubject> subjectsList = subjectRepository.findAll();
-    return subjectsList.stream()
-            .map(subjectMapper::toDTO)
-            .map(dto -> {
-                AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
-                subjectDTO.setId(dto.getId());
-                subjectDTO.setName(dto.getName());
-                subjectDTO.setColor(dto.getColor());
-                // Продолжайте копировать другие поля, если есть
-                return subjectDTO;
-            })
-            .collect(Collectors.toList());
-}
-
-
-//    @Override
-//    public List<AnatomicalStructureSubjectDTO> getAllAnatomicalStructureSubjects() {
-//        List<AnatomicalStructureSubject> subjectsList = subjectRepository.findAll();
-//        return subjectsList.stream()
-//                .map(subjectMapper::toDTO)
-//                .map(AnatomicalStructureSubjectDTO.class::cast) // Приводим к типу AnatomicalStructureSubjectDTO
-//                .collect(Collectors.toList());
-//    }
-
+    @Override
+    public List<AnatomicalStructureSubjectDTO> getAllAnatomicalStructureSubjects() {
+        List<AnatomicalStructureSubject> subjectsList = subjectRepository.findAll();
+        return subjectsList.stream()
+                .map(subjectMapper::toDTO)
+                .map(dto -> {
+                    AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
+                    subjectDTO.setId(dto.getId());
+                    subjectDTO.setName(dto.getName());
+                    subjectDTO.setColor(dto.getColor());
+                    return subjectDTO;
+                })
+                .collect(Collectors.toList());
+    }
 
     @Override
     public AnatomicalStructureSubjectWithChildrenDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectWithChildrenDTO subject) {

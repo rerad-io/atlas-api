@@ -58,10 +58,8 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
         AnatomicalStructure existingStructure = structureRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Structure not found with id: " + id));
 
-        // Обновляем существующую сущность значениями из structureDTO
         existingStructure.setName(structureDTO.getName());
 
-        // Сохраняем обновленную сущность
         existingStructure = structureRepository.save(existingStructure);
 
         return structureMapper.toDTO(existingStructure);
@@ -101,9 +99,9 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
             AnatomicalStructureSubjectDTO parentSubjectDTO = new AnatomicalStructureSubjectDTO();
             parentSubjectDTO.setId(parentSubject.getId());
             parentSubjectDTO.setName(parentSubject.getName());
+            parentSubjectDTO.setColor(parentSubject.getColor());
             resultDTO.setParentSubjectDTO(parentSubjectDTO);
         }
-
         return resultDTO;
     }
 

@@ -14,7 +14,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @ApiModel(description = "Anatomical Structure with parent-Subject")
 public class AnatomicalStructureWithSubjectDTO {
-
     private UUID id;
     private String name;
     @Getter

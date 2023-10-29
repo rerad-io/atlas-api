@@ -33,18 +33,6 @@ public class AnatomicalStructureControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-//    @Test
-//    void createAnatomicalStructure() throws Exception {
-//        AnatomicalStructureSubjectWithChildrenDTO newStructure = DTOCreator.createAnatomicalStructureSubjectWithChildrenDTO();
-//        when(anatomicalStructureService.createAnatomicalStructure(newStructure)).thenReturn(newStructure);
-//        mockMvc.perform(MockMvcRequestBuilders.post("/api/AnatomicalStructure/")
-//                        .contentType("application/json")
-//                        .content(DTOCreator.asJsonString(newStructure)))
-//                .andExpect(status().isOk())
-//                .andDo(print())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.id", is(newStructure.getId().toString())))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.name", is(newStructure.getName())));
-//    }
 
     @Test
     void getAnatomicalStructureById() throws Exception {
@@ -78,18 +66,4 @@ public class AnatomicalStructureControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/AnatomicalStructure/" + id))
                 .andExpect(status().isOk());
     }
-
-//    @Test
-//    void anatomicalStructureDtoList() throws Exception {
-//        final List<AnatomicalStructureDTO> anatomicalStructureDTOList = DTOCreator.createAnatomicalStructureDTOList(2); // Указываем количество элементов
-//        when(anatomicalStructureService.getAllAnatomicalStructures()).thenReturn(anatomicalStructureDTOList);
-//        mockMvc.perform(MockMvcRequestBuilders.get("/api/AnatomicalStructure"))
-//                .andExpect(status().isOk())
-//                .andDo(print())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", is(anatomicalStructureDTOList.get(0).getId().toString())))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", is(anatomicalStructureDTOList.get(0).getName())))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id", is(anatomicalStructureDTOList.get(1).getId().toString())))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name", is(anatomicalStructureDTOList.get(1).getName())));
-//    }
 }
