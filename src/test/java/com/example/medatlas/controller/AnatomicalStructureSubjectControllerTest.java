@@ -1,7 +1,6 @@
 package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
-import com.example.medatlas.dto.AnatomicalStructureSubjectWithChildrenDTO;
 import com.example.medatlas.service.AnatomicalStructureSubjectService;
 import com.example.medatlas.util.DTOCreator;
 import org.junit.jupiter.api.DisplayName;
@@ -35,7 +34,7 @@ public class AnatomicalStructureSubjectControllerTest {
     @Test
     @DisplayName("Test createSubject")
     void createSubject() throws Exception {
-        AnatomicalStructureSubjectWithChildrenDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
+        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
         when(subjectService.createAnatomicalStructureSubject(subjectDTO)).thenReturn(subjectDTO);
 
         mockMvc.perform(post("/api/AnatomicalStructureSubject")
@@ -68,7 +67,7 @@ public class AnatomicalStructureSubjectControllerTest {
     @Test
     @DisplayName("Test getSubjectById")
     void getSubjectById() throws Exception {
-        AnatomicalStructureSubjectWithChildrenDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
+        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
         when(subjectService.getAnatomicalStructureSubjectById(subjectDTO.getId())).thenReturn(subjectDTO);
 
         mockMvc.perform(get("/api/AnatomicalStructureSubject/{id}", subjectDTO.getId()))
@@ -81,7 +80,7 @@ public class AnatomicalStructureSubjectControllerTest {
     @Test
     @DisplayName("Test updateSubject")
     void updateSubject() throws Exception {
-        AnatomicalStructureSubjectWithChildrenDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
+        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
         when(subjectService.updateAnatomicalStructureSubject(subjectDTO.getId(), subjectDTO)).thenReturn(subjectDTO);
 
         mockMvc.perform(put("/api/AnatomicalStructureSubject/{id}", subjectDTO.getId())
@@ -96,7 +95,7 @@ public class AnatomicalStructureSubjectControllerTest {
     @Test
     @DisplayName("Test deleteSubject")
     void deleteSubject() throws Exception {
-        AnatomicalStructureSubjectWithChildrenDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
+        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
 
         mockMvc.perform(delete("/api/AnatomicalStructureSubject/{id}", subjectDTO.getId()))
                 .andExpect(status().isOk());

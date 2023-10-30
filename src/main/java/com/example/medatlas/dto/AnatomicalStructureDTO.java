@@ -18,8 +18,5 @@ public class AnatomicalStructureDTO {
     private UUID id;
     private String name;
     @Getter
-    private String anatomicalStructureSubject;
-    public void setSubjectDTO(AnatomicalStructureSubjectDTO subjectDTO) {
-        this.anatomicalStructureSubject = subjectDTO.getId().toString();
-    }
+    private AnatomicalStructureSubjectDTO anatomicalStructureSubject;
 }

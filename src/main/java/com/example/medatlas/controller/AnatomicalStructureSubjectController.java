@@ -1,7 +1,6 @@
 package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
-import com.example.medatlas.dto.AnatomicalStructureSubjectWithChildrenDTO;
 import com.example.medatlas.service.AnatomicalStructureSubjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -26,15 +25,15 @@ public class AnatomicalStructureSubjectController {
 
     @PostMapping("/")
     @Operation(summary = "Create an anatomical structure subject")
-    public ResponseEntity<AnatomicalStructureSubjectWithChildrenDTO> createSubject(@RequestBody AnatomicalStructureSubjectWithChildrenDTO subject) {
-        AnatomicalStructureSubjectWithChildrenDTO createdSubject = subjectService.createAnatomicalStructureSubject(subject);
+    public ResponseEntity<AnatomicalStructureSubjectDTO> createSubject(@RequestBody AnatomicalStructureSubjectDTO subject) {
+        AnatomicalStructureSubjectDTO createdSubject = subjectService.createAnatomicalStructureSubject(subject);
         return ResponseEntity.ok(createdSubject);
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get an anatomical structure subject by ID with children")
-    public ResponseEntity<AnatomicalStructureSubjectWithChildrenDTO> getSubjectWithChildren(@PathVariable UUID id) {
-        AnatomicalStructureSubjectWithChildrenDTO subjectWithChildrenDTO = subjectService.getAnatomicalStructureSubjectWithChildren(id);
+    public ResponseEntity<AnatomicalStructureSubjectDTO> getSubjectWithChildren(@PathVariable UUID id) {
+        AnatomicalStructureSubjectDTO subjectWithChildrenDTO = subjectService.getAnatomicalStructureSubjectWithChildren(id);
         if (subjectWithChildrenDTO != null) {
             return ResponseEntity.ok(subjectWithChildrenDTO);
         } else {
@@ -51,8 +50,8 @@ public class AnatomicalStructureSubjectController {
 
     @PutMapping("/{id}")
     @Operation(summary = "Update an anatomical structure subject by ID")
-    public ResponseEntity<AnatomicalStructureSubjectWithChildrenDTO> updateSubject(@PathVariable UUID id, @RequestBody AnatomicalStructureSubjectWithChildrenDTO subject) {
-        AnatomicalStructureSubjectWithChildrenDTO updatedSubject = subjectService.updateAnatomicalStructureSubject(id, subject);
+    public ResponseEntity<AnatomicalStructureSubjectDTO> updateSubject(@PathVariable UUID id, @RequestBody AnatomicalStructureSubjectDTO subject) {
+        AnatomicalStructureSubjectDTO updatedSubject = subjectService.updateAnatomicalStructureSubject(id, subject);
         if (updatedSubject != null) {
             return ResponseEntity.ok(updatedSubject);
         } else {

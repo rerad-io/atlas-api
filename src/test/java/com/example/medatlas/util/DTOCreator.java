@@ -10,24 +10,17 @@ import java.util.UUID;
 
 public class DTOCreator {
 
-    public static AnatomicalStructureWithSubjectDTO createAnatomicalStructureDTO() {
-        AnatomicalStructureWithSubjectDTO structureDTO = new AnatomicalStructureWithSubjectDTO();
+    public static AnatomicalStructureDTO createAnatomicalStructureDTO() {
+        AnatomicalStructureDTO structureDTO = new AnatomicalStructureDTO();
         structureDTO.setId(UUID.randomUUID());
         structureDTO.setName("Sample Name");
         return structureDTO;
     }
 
-    public static AnatomicalStructureSubjectWithChildrenDTO createAnatomicalStructureSubjectDTO() {
-        AnatomicalStructureSubjectWithChildrenDTO subjectDTO = new AnatomicalStructureSubjectWithChildrenDTO();
-        subjectDTO.setId(UUID.randomUUID());
-        subjectDTO.setName("Sample Name");
-        return subjectDTO;
-    }
-
     public static List<AnatomicalStructureSubjectDTO> createAnatomicalStructureSubjectDTOList(int count) {
         List<AnatomicalStructureSubjectDTO> subjectDTOList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            AnatomicalStructureSubjectWithChildrenDTO withChildrenDTO = createAnatomicalStructureSubjectWithChildrenDTO();
+            AnatomicalStructureSubjectDTO withChildrenDTO = createAnatomicalStructureSubjectDTO();
             AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
             subjectDTO.setId(withChildrenDTO.getId());
             subjectDTO.setName(withChildrenDTO.getName());
@@ -115,8 +108,8 @@ public class DTOCreator {
         return createStudyDTOList(2); // Пример списка из двух элементов
     }
 
-    public static AnatomicalStructureSubjectWithChildrenDTO createAnatomicalStructureSubjectWithChildrenDTO() {
-        AnatomicalStructureSubjectWithChildrenDTO subjectDTO = new AnatomicalStructureSubjectWithChildrenDTO();
+    public static AnatomicalStructureSubjectDTO createAnatomicalStructureSubjectDTO() {
+        AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
         subjectDTO.setId(UUID.randomUUID());
         subjectDTO.setName("Sample Name");
         subjectDTO.setColor("Sample Color");
