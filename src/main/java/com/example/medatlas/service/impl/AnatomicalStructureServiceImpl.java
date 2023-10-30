@@ -76,7 +76,7 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     public AnatomicalStructureWithSubjectDTO createAnatomicalStructureWithSubject(AnatomicalStructureDTO structureDTO) {
         AnatomicalStructureSubject parentSubject = null;
 
-        String subjectId = structureDTO.getSubjectId();
+        String subjectId = structureDTO.getAnatomicalStructureSubject();
         if (subjectId != null) {
             Optional<AnatomicalStructureSubject> parentOptional = subjectRepository.findById(UUID.fromString(subjectId));
             if (parentOptional.isPresent()) {
@@ -100,7 +100,7 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
             parentSubjectDTO.setId(parentSubject.getId());
             parentSubjectDTO.setName(parentSubject.getName());
             parentSubjectDTO.setColor(parentSubject.getColor());
-            resultDTO.setParentSubjectDTO(parentSubjectDTO);
+            resultDTO.setAnatomicalStructureSubject(parentSubjectDTO);
         }
         return resultDTO;
     }
@@ -119,5 +119,4 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
         } else {
             return null;
         }
-    }
-}
+    }}
