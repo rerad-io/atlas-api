@@ -17,7 +17,7 @@ public interface AnatomicalStructureService {
 
     void deleteAnatomicalStructure(UUID id);
 
-    AnatomicalStructureDTO createAnatomicalStructureWithSubject(AnatomicalStructureDTO structureDTO);
+    AnatomicalStructureDTO createAnatomicalStructureWithSubject(AnatomicalStructureDTO anatomicalStructureDTO, AnatomicalStructureSubjectDTO anatomicalStructureSubject);
 
     AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID id);
 }

@@ -31,7 +31,7 @@ public class AnatomicalStructureSubject {
     @Column(name = "color", length = 6, unique = true)
     private String color;
 
-    @OneToMany(mappedBy = "subject")
+    @OneToMany(mappedBy = "anatomicalStructureSubject")
     private List<AnatomicalStructure> anatomicalStructures;
 
     @Override

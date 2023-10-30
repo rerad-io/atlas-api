@@ -2,7 +2,9 @@ package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.service.AnatomicalStructureService;
+import com.example.medatlas.service.AnatomicalStructureSubjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,16 +20,21 @@ import java.util.UUID;
 public class AnatomicalStructureController {
 
     private final AnatomicalStructureService structureService;
+    private final AnatomicalStructureSubjectService subjectService;
+    private final AnatomicalStructureMapper structureMapper;
 
     @Autowired
-    public AnatomicalStructureController(AnatomicalStructureService structureService) {
+    public AnatomicalStructureController(AnatomicalStructureService structureService, AnatomicalStructureSubjectService subjectService, AnatomicalStructureMapper structureMapper) {
         this.structureService = structureService;
+        this.subjectService = subjectService;
+        this.structureMapper = structureMapper;
     }
 
     @PostMapping("/")
     @Operation(summary = "Create an anatomical structure with parent subject")
     public ResponseEntity<AnatomicalStructureDTO> createStructureWithSubject(@RequestBody AnatomicalStructureDTO requestDTO) {
-        AnatomicalStructureDTO createdStructure = structureService.createAnatomicalStructureWithSubject(requestDTO);
+        AnatomicalStructureSubjectDTO anatomicalStructureSubject = requestDTO.getAnatomicalStructureSubject(); // Получаем данные о родительской сущности из DTO
+        AnatomicalStructureDTO createdStructure = structureService.createAnatomicalStructureWithSubject(requestDTO, anatomicalStructureSubject); // Передаем anatomicalStructureSubject вместо subject
         return ResponseEntity.ok(createdStructure);
     }
 
@@ -36,9 +43,9 @@ public class AnatomicalStructureController {
     public ResponseEntity<AnatomicalStructureDTO> getStructureById(@PathVariable UUID id) {
         AnatomicalStructureDTO structureDTO = structureService.getAnatomicalStructureById(id);
         if (structureDTO != null) {
-            AnatomicalStructureSubjectDTO subject = structureService.getAnatomicalStructureSubjectByStructureId(id);
-            if (subject != null) {
-                structureDTO.setId(structureDTO.getId());
+            AnatomicalStructureSubjectDTO anatomicalStructureSubject = structureService.getAnatomicalStructureSubjectByStructureId(id);
+            if (anatomicalStructureSubject != null) {
+                structureDTO.setAnatomicalStructureSubject(anatomicalStructureSubject); // Устанавливаем родительскую сущность в DTO
             }
             return ResponseEntity.ok(structureDTO);
         } else {

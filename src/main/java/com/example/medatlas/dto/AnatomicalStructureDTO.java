@@ -19,4 +19,8 @@ public class AnatomicalStructureDTO {
     private String name;
     @Getter
     private AnatomicalStructureSubjectDTO anatomicalStructureSubject;
+
+    public void setAnatomicalStructureSubjectDTO(AnatomicalStructureSubjectDTO anatomicalStructureSubjectDTO) {
+        this.anatomicalStructureSubject = anatomicalStructureSubjectDTO;
+    }
 }
