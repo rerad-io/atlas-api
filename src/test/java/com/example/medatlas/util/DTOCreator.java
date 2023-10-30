@@ -107,7 +107,7 @@ public class DTOCreator {
     public static StudyDTO getStudyDTO() {
         StudyDTO studyDTO = new StudyDTO();
         studyDTO.setId(UUID.randomUUID());
-        studyDTO.setName("Example Name");
+        studyDTO.setName("Study # 7 ");
         return studyDTO;
     }
 
@@ -132,7 +132,7 @@ public class DTOCreator {
         for (int i = 0; i < 2; i++) {
             AnatomicalStructureDTO structureDTO = new AnatomicalStructureDTO();
             structureDTO.setId(UUID.randomUUID());
-            structureDTO.setName("Sample Name");
+            structureDTO.setName("AnatomicalStructure-" + i+ " ");
             structureDTOList.add(structureDTO);
         }
         return structureDTOList;

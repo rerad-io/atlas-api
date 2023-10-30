@@ -67,19 +67,6 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
         return subjectWithChildrenDTO;
     }
 
-
-    //    @Override
-//    public List<AnatomicalStructureDTO> getChildrenBySubjectId(UUID subjectId) {
-//        AnatomicalStructureSubject subject = subjectRepository.findById(subjectId)
-//                .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + subjectId));
-//
-//        List<AnatomicalStructure> children = subject.getAnatomicalStructures();
-//
-//        return children.stream()
-//                .map(anatomicalStructureMapper::toDTO)
-//                .map(AnatomicalStructureDTO.class::cast) // Приводим к типу AnatomicalStructureDTO
-//                .collect(Collectors.toList());
-//    }
     @Override
     public List<AnatomicalStructureDTO> getChildrenBySubjectId(UUID subjectId) {
         AnatomicalStructureSubject subject = subjectRepository.findById(subjectId)
@@ -111,7 +98,6 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
                 })
                 .collect(Collectors.toList());
     }
-
     @Override
     public AnatomicalStructureSubjectWithChildrenDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectWithChildrenDTO subject) {
         AnatomicalStructureSubject existingSubject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + id));
