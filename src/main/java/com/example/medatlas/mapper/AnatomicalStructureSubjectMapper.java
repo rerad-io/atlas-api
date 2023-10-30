@@ -1,15 +1,23 @@
 package com.example.medatlas.mapper;
 
+import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithChildrenDTO;
+import com.example.medatlas.dto.AnatomicalStructureWithSubjectDTO;
 import com.example.medatlas.model.AnatomicalStructureSubject;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface AnatomicalStructureSubjectMapper {
-    @Mapping(source = "id", target = "id")
-    AnatomicalStructureSubjectDTO toDTO(AnatomicalStructureSubject subject);
+    AnatomicalStructureSubjectWithChildrenDTO toDTO(AnatomicalStructureSubject subject);
 
-    @Mapping(source = "id", target = "id")
+    AnatomicalStructureSubject toEntity(AnatomicalStructureSubjectWithChildrenDTO subjectDTO);
+
+    AnatomicalStructureDTO toDTO(AnatomicalStructureSubjectWithChildrenDTO subjectDTO); // Добавьте этот метод
+
+    AnatomicalStructureSubjectWithChildrenDTO toDTO(AnatomicalStructureDTO structureDTO);
+
     AnatomicalStructureSubject toEntity(AnatomicalStructureSubjectDTO subjectDTO);
+
+    AnatomicalStructureDTO toDTO(AnatomicalStructureWithSubjectDTO structureDTO);
 }

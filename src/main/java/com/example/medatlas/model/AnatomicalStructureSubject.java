@@ -1,4 +1,5 @@
 package com.example.medatlas.model;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

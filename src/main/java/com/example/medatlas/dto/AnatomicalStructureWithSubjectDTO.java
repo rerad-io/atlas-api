@@ -12,10 +12,10 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ApiModel(description = "Anatomical Structure Subject")
-public class AnatomicalStructureSubjectDTO {
-
+@ApiModel(description = "Anatomical Structure with parent-Subject")
+public class AnatomicalStructureWithSubjectDTO {
     private UUID id;
     private String name;
-    private String color;
+    @Getter
+    private AnatomicalStructureSubjectDTO parentSubjectDTO;
 }

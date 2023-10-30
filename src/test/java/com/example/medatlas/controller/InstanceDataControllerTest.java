@@ -33,7 +33,7 @@ public class InstanceDataControllerTest {
 
     @Test
     void createInstanceData() throws Exception {
-        InstanceDataDTO newInstanceData = DTOCreator.getInstanceDataDTO();
+        InstanceDataDTO newInstanceData = DTOCreator.createInstanceDataDTO();
         when(instanceDataService.createInstanceData(newInstanceData)).thenReturn(newInstanceData);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/InstanceData/")
                         .contentType("application/json")
@@ -46,7 +46,7 @@ public class InstanceDataControllerTest {
 
     @Test
     void getInstanceDataById() throws Exception {
-        InstanceDataDTO instanceData = DTOCreator.getInstanceDataDTO();
+        InstanceDataDTO instanceData = DTOCreator.createInstanceDataDTO();
         UUID id = instanceData.getId();
         when(instanceDataService.getInstanceDataById(id)).thenReturn(instanceData);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/InstanceData/" + id))
@@ -58,7 +58,7 @@ public class InstanceDataControllerTest {
 
     @Test
     void updateInstanceData() throws Exception {
-        InstanceDataDTO updatedInstanceData = DTOCreator.getInstanceDataDTO();
+        InstanceDataDTO updatedInstanceData = DTOCreator.createInstanceDataDTO();
         UUID id = updatedInstanceData.getId();
         when(instanceDataService.updateInstanceData(id, updatedInstanceData)).thenReturn(updatedInstanceData);
         mockMvc.perform(MockMvcRequestBuilders.put("/api/InstanceData/" + id)
@@ -79,7 +79,7 @@ public class InstanceDataControllerTest {
 
     @Test
     void instanceDataDtoList() throws Exception {
-        final List<InstanceDataDTO> instanceDataDTOList = DTOCreator.getInstanceDataDtoList();
+        final List<InstanceDataDTO> instanceDataDTOList = DTOCreator.createInstanceDataDTOList(2); // Указываем количество элементов
         when(instanceDataService.getAllInstanceData()).thenReturn(instanceDataDTOList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/InstanceData"))
                 .andExpect(status().isOk())

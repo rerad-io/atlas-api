@@ -1,7 +1,6 @@
 package com.example.medatlas.service.impl;
 
-import com.example.medatlas.dto.AnatomicalStructureDTO;
-import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.*;
 import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.mapper.AnatomicalStructureSubjectMapper;
 import com.example.medatlas.model.AnatomicalStructure;
@@ -37,17 +36,35 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     }
 
     @Override
-    public AnatomicalStructureSubjectDTO createAnatomicalStructureSubject(AnatomicalStructureSubjectDTO subjectDTO) {
+    public AnatomicalStructureSubjectWithChildrenDTO createAnatomicalStructureSubject(AnatomicalStructureSubjectWithChildrenDTO subjectDTO) {
         AnatomicalStructureSubject subject = subjectMapper.toEntity(subjectDTO);
         subject = subjectRepository.save(subject);
         subjectDTO.setId(subject.getId());
+        return subjectDTO;
+    }
+
+
+    @Override
+    public AnatomicalStructureSubjectWithChildrenDTO getAnatomicalStructureSubjectById(UUID id) {
+        AnatomicalStructureSubject subject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + id));
         return subjectMapper.toDTO(subject);
     }
 
     @Override
-    public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectById(UUID id) {
-        AnatomicalStructureSubject subject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + id));
-        return subjectMapper.toDTO(subject);
+    public AnatomicalStructureSubjectWithChildrenDTO getAnatomicalStructureSubjectWithChildren(UUID id) {
+        AnatomicalStructureSubjectWithChildrenDTO subject = getAnatomicalStructureSubjectById(id);
+
+        // Получите детей для данного субъекта
+        List<AnatomicalStructureDTO> childrenDTO = getChildrenBySubjectId(id);
+
+        // Создайте AnatomicalStructureSubjectWithChildrenDTO и установите поля
+        AnatomicalStructureSubjectWithChildrenDTO subjectWithChildrenDTO = new AnatomicalStructureSubjectWithChildrenDTO();
+        subjectWithChildrenDTO.setId(subject.getId());
+        subjectWithChildrenDTO.setName(subject.getName());
+        subjectWithChildrenDTO.setColor(subject.getColor());
+        subjectWithChildrenDTO.setAnatomicalStructures(childrenDTO);
+
+        return subjectWithChildrenDTO;
     }
 
     @Override
@@ -56,26 +73,35 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
                 .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + subjectId));
 
         List<AnatomicalStructure> children = subject.getAnatomicalStructures();
-        children.forEach(child -> {
-            System.out.println("Child ID: " + child.getId());
-            System.out.println("Child Name: " + child.getName());
-        });
 
         return children.stream()
-                .map(anatomicalStructureMapper::toDTO)
+                .map(anatomicalStructure -> {
+                    AnatomicalStructureDTO dto = new AnatomicalStructureDTO();
+                    dto.setId(anatomicalStructure.getId());
+                    dto.setName(anatomicalStructure.getName());
+                    return dto;
+                })
                 .collect(Collectors.toList());
     }
 
     @Override
     public List<AnatomicalStructureSubjectDTO> getAllAnatomicalStructureSubjects() {
         List<AnatomicalStructureSubject> subjectsList = subjectRepository.findAll();
-        return subjectsList.stream().map(subjectMapper::toDTO).collect(Collectors.toList());
+        return subjectsList.stream()
+                .map(subjectMapper::toDTO)
+                .map(dto -> {
+                    AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
+                    subjectDTO.setId(dto.getId());
+                    subjectDTO.setName(dto.getName());
+                    subjectDTO.setColor(dto.getColor());
+                    return subjectDTO;
+                })
+                .collect(Collectors.toList());
     }
-
     @Override
-    public AnatomicalStructureSubjectDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectDTO subjectDTO) {
+    public AnatomicalStructureSubjectWithChildrenDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectWithChildrenDTO subject) {
         AnatomicalStructureSubject existingSubject = subjectRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + id));
-        AnatomicalStructureSubject updatedSubject = subjectMapper.toEntity(subjectDTO);
+        AnatomicalStructureSubject updatedSubject = subjectMapper.toEntity(subject);
         updatedSubject.setId(existingSubject.getId());
         updatedSubject = subjectRepository.save(updatedSubject);
         return subjectMapper.toDTO(updatedSubject);

@@ -7,7 +7,6 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface SeriesMapper {
-    //    SeriesMapper INSTANCE = Mappers.getMapper(SeriesMapper.class);
     @Mapping(source = "id", target = "id")
     SeriesDTO toDTO(Series series);
 

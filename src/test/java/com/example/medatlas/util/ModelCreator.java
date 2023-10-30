@@ -1,6 +1,5 @@
 package com.example.medatlas.util;
 
-import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
 import com.example.medatlas.model.AnatomicalStructure;
 import com.example.medatlas.model.AnatomicalStructureSubject;
 
@@ -22,19 +21,12 @@ public class ModelCreator {
         subject.setName("Sample Subject");
         return subject;
     }
+
     public static AnatomicalStructureSubject getAnatomicalStructureSubject() {
         AnatomicalStructureSubject subject = new AnatomicalStructureSubject();
         subject.setId(UUID.randomUUID());
         subject.setName("Sample Name");
         subject.setColor("Sample Color");
         return subject;
-    }
-
-    public static AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectDTO() {
-        AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
-        subjectDTO.setId(UUID.randomUUID());
-        subjectDTO.setName("Sample Name");
-        subjectDTO.setColor("Sample Color");
-        return subjectDTO;
     }
 }

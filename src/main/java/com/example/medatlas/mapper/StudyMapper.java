@@ -9,7 +9,6 @@ import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface StudyMapper {
-    //    StudyMapper INSTANCE = Mappers.getMapper(StudyMapper.class);
     @Mapping(source = "id", target = "id")
     StudyDTO toDTO(Study study);
 
