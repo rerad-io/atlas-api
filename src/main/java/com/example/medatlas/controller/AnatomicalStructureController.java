@@ -1,7 +1,7 @@
 package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
-import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
 import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.service.AnatomicalStructureService;
 import com.example.medatlas.service.AnatomicalStructureSubjectService;
@@ -33,7 +33,7 @@ public class AnatomicalStructureController {
     @PostMapping("/")
     @Operation(summary = "Create an anatomical structure with parent subject")
     public ResponseEntity<AnatomicalStructureDTO> createStructureWithSubject(@RequestBody AnatomicalStructureDTO requestDTO) {
-        AnatomicalStructureSubjectDTO anatomicalStructureSubject = requestDTO.getAnatomicalStructureSubject(); // Получаем данные о родительской сущности из DTO
+        AnatomicalStructureSubjectWithoutStructuresDTO anatomicalStructureSubject = requestDTO.getAnatomicalStructureSubject(); // Получаем данные о родительской сущности из DTO
         AnatomicalStructureDTO createdStructure = structureService.createAnatomicalStructureWithSubject(requestDTO, anatomicalStructureSubject); // Передаем anatomicalStructureSubject вместо subject
         return ResponseEntity.ok(createdStructure);
     }
@@ -43,7 +43,7 @@ public class AnatomicalStructureController {
     public ResponseEntity<AnatomicalStructureDTO> getStructureById(@PathVariable UUID id) {
         AnatomicalStructureDTO structureDTO = structureService.getAnatomicalStructureById(id);
         if (structureDTO != null) {
-            AnatomicalStructureSubjectDTO anatomicalStructureSubject = structureService.getAnatomicalStructureSubjectByStructureId(id);
+            AnatomicalStructureSubjectWithoutStructuresDTO anatomicalStructureSubject = structureService.getAnatomicalStructureSubjectByStructureId(id);
             if (anatomicalStructureSubject != null) {
                 structureDTO.setAnatomicalStructureSubject(anatomicalStructureSubject); // Устанавливаем родительскую сущность в DTO
             }

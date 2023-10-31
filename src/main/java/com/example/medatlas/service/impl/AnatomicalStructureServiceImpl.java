@@ -2,6 +2,7 @@ package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
 import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.model.AnatomicalStructure;
 import com.example.medatlas.model.AnatomicalStructureSubject;
@@ -71,48 +72,50 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     }
 
     @Override
-    public AnatomicalStructureDTO createAnatomicalStructureWithSubject(AnatomicalStructureDTO structureDTO, AnatomicalStructureSubjectDTO anatomicalStructureSubject) {
-        AnatomicalStructureSubject parentSubject = getParentSubject(anatomicalStructureSubject);
+    public AnatomicalStructureDTO createAnatomicalStructureWithSubject(AnatomicalStructureDTO structureDTO, AnatomicalStructureSubjectWithoutStructuresDTO anatomicalStructureSubjectDTO) {
+        // Создаем объект AnatomicalStructureSubject из DTO
+        AnatomicalStructureSubject parentSubject = createAnatomicalStructureSubject(anatomicalStructureSubjectDTO);
 
-        AnatomicalStructure structure = createAnatomicalStructure(structureDTO, parentSubject);
-
-        return createResultDTO(structure, parentSubject);
-    }
-
-    private AnatomicalStructureSubject getParentSubject(AnatomicalStructureSubjectDTO subjectDTO) {
-        if (subjectDTO == null) {
-            return null;
-        }
-
-        UUID subjectId = subjectDTO.getId();
-        Optional<AnatomicalStructureSubject> parentOptional = subjectRepository.findById(subjectId);
-
-        return parentOptional.orElseThrow(() -> new EntityNotFoundException("Parent AnatomicalStructureSubject not found with ID: " + subjectId));
-    }
-
-    private AnatomicalStructure createAnatomicalStructure(AnatomicalStructureDTO structureDTO, AnatomicalStructureSubject parentSubject) {
+        // Создаем AnatomicalStructure и связываем его с родителем
         AnatomicalStructure structure = structureMapper.toEntity(structureDTO);
         structure.setAnatomicalStructureSubject(parentSubject);
-        return structureRepository.save(structure);
-    }
 
-    private AnatomicalStructureDTO createResultDTO(AnatomicalStructure structure, AnatomicalStructureSubject parentSubject) {
+        // Сохраняем AnatomicalStructure
+        structure = structureRepository.save(structure);
+
+        // Создаем AnatomicalStructureDTO с информацией о созданной структуре и родителе
         AnatomicalStructureDTO resultDTO = new AnatomicalStructureDTO();
         resultDTO.setId(structure.getId());
         resultDTO.setName(structure.getName());
 
         if (parentSubject != null) {
-            AnatomicalStructureSubjectDTO parentSubjectDTO = new AnatomicalStructureSubjectDTO();
+            // Создаем новую DTO сущность без поля anatomicalStructures
+            AnatomicalStructureSubjectWithoutStructuresDTO parentSubjectDTO = new AnatomicalStructureSubjectWithoutStructuresDTO();
             parentSubjectDTO.setId(parentSubject.getId());
             parentSubjectDTO.setName(parentSubject.getName());
             parentSubjectDTO.setColor(parentSubject.getColor());
+
             resultDTO.setAnatomicalStructureSubject(parentSubjectDTO);
         }
+
         return resultDTO;
     }
 
+    private AnatomicalStructureSubject createAnatomicalStructureSubject(AnatomicalStructureSubjectWithoutStructuresDTO subjectDTO) {
+        if (subjectDTO == null) {
+            return null;
+        }
+
+        AnatomicalStructureSubject parentSubject = new AnatomicalStructureSubject();
+        parentSubject.setId(subjectDTO.getId());
+        parentSubject.setName(subjectDTO.getName());
+        parentSubject.setColor(subjectDTO.getColor());
+
+        return parentSubject;
+    }
+
     @Override
-    public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID structureId) {
+    public AnatomicalStructureSubjectWithoutStructuresDTO getAnatomicalStructureSubjectByStructureId(UUID structureId) {
         Optional<AnatomicalStructure> structureOptional = structureRepository.findById(structureId);
         if (structureOptional.isPresent()) {
             AnatomicalStructure structure = structureOptional.get();

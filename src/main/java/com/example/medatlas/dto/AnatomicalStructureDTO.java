@@ -18,9 +18,9 @@ public class AnatomicalStructureDTO {
     private UUID id;
     private String name;
     @Getter
-    private AnatomicalStructureSubjectDTO anatomicalStructureSubject;
+    private AnatomicalStructureSubjectWithoutStructuresDTO  anatomicalStructureSubject;
 
-    public void setAnatomicalStructureSubjectDTO(AnatomicalStructureSubjectDTO anatomicalStructureSubjectDTO) {
-        this.anatomicalStructureSubject = anatomicalStructureSubjectDTO;
+    public void setAnatomicalStructureSubjectDTO(AnatomicalStructureSubjectWithoutStructuresDTO  anatomicalStructureSubject) {
+        this.anatomicalStructureSubject = anatomicalStructureSubject;
     }
 }

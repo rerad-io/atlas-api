@@ -2,6 +2,7 @@ package com.example.medatlas.service;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
 
 import java.util.List;
 import java.util.UUID;
@@ -17,7 +18,7 @@ public interface AnatomicalStructureService {
 
     void deleteAnatomicalStructure(UUID id);
 
-    AnatomicalStructureDTO createAnatomicalStructureWithSubject(AnatomicalStructureDTO anatomicalStructureDTO, AnatomicalStructureSubjectDTO anatomicalStructureSubject);
+    AnatomicalStructureDTO createAnatomicalStructureWithSubject(AnatomicalStructureDTO anatomicalStructureDTO, AnatomicalStructureSubjectWithoutStructuresDTO anatomicalStructureSubject);
 
-    AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID id);
+    AnatomicalStructureSubjectWithoutStructuresDTO getAnatomicalStructureSubjectByStructureId(UUID id);
 }

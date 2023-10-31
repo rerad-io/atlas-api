@@ -1,5 +1,7 @@
 package com.example.medatlas.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -31,7 +33,9 @@ public class AnatomicalStructureSubject {
     @Column(name = "color", length = 6, unique = true)
     private String color;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "anatomicalStructureSubject")
+    @JsonIgnoreProperties("anatomicalStructures")
     private List<AnatomicalStructure> anatomicalStructures;
 
     @Override
