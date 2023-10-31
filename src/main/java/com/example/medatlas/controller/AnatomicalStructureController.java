@@ -70,7 +70,6 @@ public class AnatomicalStructureController {
             return ResponseEntity.notFound().build();
         }
     }
-
     @DeleteMapping("/{id}")
     @Operation(summary = "Delete an anatomical structure by ID")
     public ResponseEntity<Void> deleteStructure(@PathVariable UUID id) {
