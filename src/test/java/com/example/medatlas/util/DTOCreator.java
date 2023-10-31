@@ -130,4 +130,13 @@ public class DTOCreator {
         }
         return structureDTOList;
     }
+
+     {
+    }public static AnatomicalStructureSubjectWithoutStructuresDTO createAnatomicalStructureSubjectWithoutStructuresDTO() {
+        AnatomicalStructureSubjectWithoutStructuresDTO dto = new AnatomicalStructureSubjectWithoutStructuresDTO();
+        dto.setId(UUID.randomUUID());
+        dto.setName("Example Name");
+        dto.setColor("Example Color");
+        return dto;
+    }
 }

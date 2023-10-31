@@ -1,6 +1,7 @@
 package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
 import com.example.medatlas.service.AnatomicalStructureSubjectService;
 import com.example.medatlas.util.DTOCreator;
 import org.junit.jupiter.api.DisplayName;
@@ -35,15 +36,17 @@ public class AnatomicalStructureSubjectControllerTest {
     @DisplayName("Test createSubject")
     void createSubject() throws Exception {
         AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
-        when(subjectService.createAnatomicalStructureSubject(subjectDTO)).thenReturn(subjectDTO);
+        AnatomicalStructureSubjectWithoutStructuresDTO subjectWithoutStructuresDTO = DTOCreator.createAnatomicalStructureSubjectWithoutStructuresDTO();
+
+        when(subjectService.createAnatomicalStructureSubject(subjectDTO)).thenReturn(subjectWithoutStructuresDTO);
 
         mockMvc.perform(post("/api/AnatomicalStructureSubject")
                         .content(DTOCreator.asJsonString(subjectDTO))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(subjectDTO.getId().toString()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(subjectDTO.getName()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(subjectDTO.getColor()));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(subjectWithoutStructuresDTO.getId().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(subjectWithoutStructuresDTO.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(subjectWithoutStructuresDTO.getColor()));
     }
 
     @Test

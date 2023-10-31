@@ -2,6 +2,7 @@ package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
 import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.mapper.AnatomicalStructureSubjectMapper;
 import com.example.medatlas.model.AnatomicalStructure;
@@ -34,11 +35,16 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     }
 
     @Override
-    public AnatomicalStructureSubjectDTO createAnatomicalStructureSubject(AnatomicalStructureSubjectDTO subjectDTO) {
+    public AnatomicalStructureSubjectWithoutStructuresDTO createAnatomicalStructureSubject(AnatomicalStructureSubjectDTO subjectDTO) {
         AnatomicalStructureSubject subject = subjectMapper.toEntity(subjectDTO);
         subject = subjectRepository.save(subject);
-        subjectDTO.setId(subject.getId());
-        return subjectDTO;
+
+        AnatomicalStructureSubjectWithoutStructuresDTO resultDTO = new AnatomicalStructureSubjectWithoutStructuresDTO();
+        resultDTO.setId(subject.getId());
+        resultDTO.setName(subject.getName());
+        resultDTO.setColor(subject.getColor());
+
+        return resultDTO;
     }
 
     @Override
@@ -109,6 +115,6 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
 
     @Override
     public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID id) {
-          return null;
+        return null;
     }
 }
