@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 
 @Getter
@@ -18,4 +19,5 @@ public class AnatomicalStructureSubjectDTO {
     private UUID id;
     private String name;
     private String color;
+    private List<AnatomicalStructureDTO> anatomicalStructures;
 }

@@ -2,8 +2,7 @@ package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
-import com.example.medatlas.dto.AnatomicalStructureSubjectWithChildrenDTO;
-import com.example.medatlas.dto.AnatomicalStructureWithSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
 import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.model.AnatomicalStructure;
 import com.example.medatlas.model.AnatomicalStructureSubject;
@@ -35,14 +34,14 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     }
 
     @Override
-    public AnatomicalStructureWithSubjectDTO createAnatomicalStructure(AnatomicalStructureSubjectWithChildrenDTO structureDTO) {
+    public AnatomicalStructureDTO createAnatomicalStructure(AnatomicalStructureSubjectDTO structureDTO) {
         AnatomicalStructure structure = structureMapper.toEntity(structureDTO);
         structure = structureRepository.save(structure);
         return structureMapper.toDTO(structure);
     }
 
     @Override
-    public AnatomicalStructureWithSubjectDTO getAnatomicalStructureById(UUID id) {
+    public AnatomicalStructureDTO getAnatomicalStructureById(UUID id) {
         AnatomicalStructure structure = structureRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructure not found with id: " + id));
         return structureMapper.toDTO(structure);
     }
@@ -54,7 +53,7 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     }
 
     @Override
-    public AnatomicalStructureWithSubjectDTO updateAnatomicalStructure(UUID id, AnatomicalStructureWithSubjectDTO structureDTO) {
+    public AnatomicalStructureDTO updateAnatomicalStructure(UUID id, AnatomicalStructureDTO structureDTO) {
         AnatomicalStructure existingStructure = structureRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Structure not found with id: " + id));
 
@@ -73,44 +72,48 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     }
 
     @Override
-    public AnatomicalStructureWithSubjectDTO createAnatomicalStructureWithSubject(AnatomicalStructureDTO structureDTO) {
-        AnatomicalStructureSubject parentSubject = null;
-
-        String subjectId = structureDTO.getSubjectId();
-        if (subjectId != null) {
-            Optional<AnatomicalStructureSubject> parentOptional = subjectRepository.findById(UUID.fromString(subjectId));
-            if (parentOptional.isPresent()) {
-                parentSubject = parentOptional.get();
-            } else {
-                throw new EntityNotFoundException("Parent AnatomicalStructureSubject not found with ID: " + subjectId);
-            }
-        }
+    public AnatomicalStructureDTO createAnatomicalStructureWithSubject(AnatomicalStructureDTO structureDTO, AnatomicalStructureSubjectWithoutStructuresDTO anatomicalStructureSubjectDTO) {
+        AnatomicalStructureSubject parentSubject = createAnatomicalStructureSubject(anatomicalStructureSubjectDTO);
 
         AnatomicalStructure structure = structureMapper.toEntity(structureDTO);
-        structure.setSubject(parentSubject);
+        structure.setAnatomicalStructureSubject(parentSubject);
 
         structure = structureRepository.save(structure);
 
-        AnatomicalStructureWithSubjectDTO resultDTO = new AnatomicalStructureWithSubjectDTO();
+        AnatomicalStructureDTO resultDTO = new AnatomicalStructureDTO();
         resultDTO.setId(structure.getId());
         resultDTO.setName(structure.getName());
 
         if (parentSubject != null) {
-            AnatomicalStructureSubjectDTO parentSubjectDTO = new AnatomicalStructureSubjectDTO();
+            AnatomicalStructureSubjectWithoutStructuresDTO parentSubjectDTO = new AnatomicalStructureSubjectWithoutStructuresDTO();
             parentSubjectDTO.setId(parentSubject.getId());
             parentSubjectDTO.setName(parentSubject.getName());
             parentSubjectDTO.setColor(parentSubject.getColor());
-            resultDTO.setParentSubjectDTO(parentSubjectDTO);
+
+            resultDTO.setAnatomicalStructureSubject(parentSubjectDTO);
         }
         return resultDTO;
     }
 
+    private AnatomicalStructureSubject createAnatomicalStructureSubject(AnatomicalStructureSubjectWithoutStructuresDTO subjectDTO) {
+        if (subjectDTO == null) {
+            return null;
+        }
+
+        AnatomicalStructureSubject parentSubject = new AnatomicalStructureSubject();
+        parentSubject.setId(subjectDTO.getId());
+        parentSubject.setName(subjectDTO.getName());
+        parentSubject.setColor(subjectDTO.getColor());
+
+        return parentSubject;
+    }
+
     @Override
-    public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID structureId) {
+    public AnatomicalStructureSubjectWithoutStructuresDTO getAnatomicalStructureSubjectByStructureId(UUID structureId) {
         Optional<AnatomicalStructure> structureOptional = structureRepository.findById(structureId);
         if (structureOptional.isPresent()) {
             AnatomicalStructure structure = structureOptional.get();
-            AnatomicalStructureSubject subject = structure.getSubject();
+            AnatomicalStructureSubject subject = structure.getAnatomicalStructureSubject();
             if (subject != null) {
                 return structureMapper.toAnatomicalStructureSubjectDTO(subject);
             } else {

@@ -1,6 +1,5 @@
 package com.example.medatlas.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -28,7 +27,7 @@ public class AnatomicalStructure {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
-    private AnatomicalStructureSubject subject;
+    private AnatomicalStructureSubject anatomicalStructureSubject;
 
     @Column(name = "name", length = 250, unique = true)
     private String name;
@@ -38,12 +37,12 @@ public class AnatomicalStructure {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         AnatomicalStructure that = (AnatomicalStructure) o;
-        return Objects.equals(subject, that.subject) &&
+        return Objects.equals(anatomicalStructureSubject, that.anatomicalStructureSubject) &&
                 Objects.equals(name, that.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(subject, name);
+        return Objects.hash(anatomicalStructureSubject, name);
     }
 }

@@ -10,7 +10,7 @@ public class ModelCreator {
     public static AnatomicalStructure createAnatomicalStructure() {
         AnatomicalStructure structure = new AnatomicalStructure();
         structure.setId(UUID.randomUUID());
-        structure.setSubject(createAnatomicalStructureSubject());
+        structure.setAnatomicalStructureSubject(createAnatomicalStructureSubject());
         structure.setName("Sample Name");
         return structure;
     }
