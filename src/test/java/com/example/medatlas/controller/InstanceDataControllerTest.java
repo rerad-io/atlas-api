@@ -72,14 +72,14 @@ public class InstanceDataControllerTest {
 
     @Test
     void deleteInstanceData() throws Exception {
-        UUID id = UUID.randomUUID(); // Замените на существующий ID
+        UUID id = UUID.randomUUID();
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/InstanceData/" + id))
                 .andExpect(status().isOk());
     }
 
     @Test
     void instanceDataDtoList() throws Exception {
-        final List<InstanceDataDTO> instanceDataDTOList = DTOCreator.createInstanceDataDTOList(2); // Указываем количество элементов
+        final List<InstanceDataDTO> instanceDataDTOList = DTOCreator.createInstanceDataDTOList(2);
         when(instanceDataService.getAllInstanceData()).thenReturn(instanceDataDTOList);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/InstanceData"))
                 .andExpect(status().isOk())

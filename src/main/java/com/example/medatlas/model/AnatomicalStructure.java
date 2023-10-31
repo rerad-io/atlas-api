@@ -1,7 +1,5 @@
 package com.example.medatlas.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -27,10 +25,8 @@ public class AnatomicalStructure {
     @Column(name = "id")
     private UUID id;
 
-    @JsonBackReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "subject_id", referencedColumnName = "id")
-    @JsonIgnore
     private AnatomicalStructureSubject anatomicalStructureSubject;
 
     @Column(name = "name", length = 250, unique = true)

@@ -75,7 +75,7 @@ public class SeriesControllerTest {
 
     @Test
     void deleteSeries() throws Exception {
-        UUID id = UUID.randomUUID(); // Замените на существующий ID
+        UUID id = UUID.randomUUID();
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/Series/" + id))
                 .andExpect(status().isOk());
     }

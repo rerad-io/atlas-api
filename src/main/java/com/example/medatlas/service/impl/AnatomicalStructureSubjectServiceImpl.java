@@ -52,10 +52,8 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectWithChildren(UUID id) {
         AnatomicalStructureSubjectDTO subject = getAnatomicalStructureSubjectById(id);
 
-        // Получите детей для данного субъекта
         List<AnatomicalStructureDTO> childrenDTO = getChildrenBySubjectId(id);
 
-        // Создайте AnatomicalStructureSubjectWithChildrenDTO и установите поля
         AnatomicalStructureSubjectDTO subjectWithChildrenDTO = new AnatomicalStructureSubjectDTO();
         subjectWithChildrenDTO.setId(subject.getId());
         subjectWithChildrenDTO.setName(subject.getName());
@@ -111,9 +109,6 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
 
     @Override
     public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID id) {
-        // Реализация этого метода зависит от вашей бизнес-логики
-        // Вы можете добавить код для поиска связанных структур субъекта
-        // на основе ID структуры (если это поддерживается в вашей системе)
-        return null; // Пока не реализовано
+          return null;
     }
 }

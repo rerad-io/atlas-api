@@ -49,7 +49,7 @@ public class AnatomicalStructureSubjectControllerTest {
     @Test
     @DisplayName("Test getSubjectAll")
     void getSubjectAll() throws Exception {
-        final List<AnatomicalStructureSubjectDTO> subjectDTOList = DTOCreator.createAnatomicalStructureSubjectDTOList(2); // Указываем количество элементов
+        final List<AnatomicalStructureSubjectDTO> subjectDTOList = DTOCreator.createAnatomicalStructureSubjectDTOList(2);
         when(subjectService.getAllAnatomicalStructureSubjects()).thenReturn(subjectDTOList);
 
         mockMvc.perform(get("/api/AnatomicalStructureSubject"))

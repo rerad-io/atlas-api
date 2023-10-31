@@ -79,7 +79,7 @@ public class DTOCreator {
     }
 
     public static List<SeriesDTO> getSeriesDtoList() {
-        return createSeriesDTOList(2); // Пример списка из двух элементов
+        return createSeriesDTOList(2);
     }
 
     public static StudyDTO createStudyDTO() {
@@ -105,7 +105,7 @@ public class DTOCreator {
     }
 
     public static List<StudyDTO> getStudyDTOList() {
-        return createStudyDTOList(2); // Пример списка из двух элементов
+        return createStudyDTOList(2);
     }
 
     public static AnatomicalStructureSubjectDTO createAnatomicalStructureSubjectDTO() {
@@ -114,7 +114,7 @@ public class DTOCreator {
         subjectDTO.setName("Sample Name");
         subjectDTO.setColor("Sample Color");
 
-        List<AnatomicalStructureDTO> children = createAnatomicalStructureDTOList(); // Пример списка из двух элементов
+        List<AnatomicalStructureDTO> children = createAnatomicalStructureDTOList();
         subjectDTO.setAnatomicalStructures(children);
 
         return subjectDTO;
@@ -125,7 +125,7 @@ public class DTOCreator {
         for (int i = 0; i < 2; i++) {
             AnatomicalStructureDTO structureDTO = new AnatomicalStructureDTO();
             structureDTO.setId(UUID.randomUUID());
-            structureDTO.setName("AnatomicalStructure-" + i+ " ");
+            structureDTO.setName("AnatomicalStructure-" + i + " ");
             structureDTOList.add(structureDTO);
         }
         return structureDTOList;

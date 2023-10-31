@@ -73,23 +73,18 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
 
     @Override
     public AnatomicalStructureDTO createAnatomicalStructureWithSubject(AnatomicalStructureDTO structureDTO, AnatomicalStructureSubjectWithoutStructuresDTO anatomicalStructureSubjectDTO) {
-        // Создаем объект AnatomicalStructureSubject из DTO
         AnatomicalStructureSubject parentSubject = createAnatomicalStructureSubject(anatomicalStructureSubjectDTO);
 
-        // Создаем AnatomicalStructure и связываем его с родителем
         AnatomicalStructure structure = structureMapper.toEntity(structureDTO);
         structure.setAnatomicalStructureSubject(parentSubject);
 
-        // Сохраняем AnatomicalStructure
         structure = structureRepository.save(structure);
 
-        // Создаем AnatomicalStructureDTO с информацией о созданной структуре и родителе
         AnatomicalStructureDTO resultDTO = new AnatomicalStructureDTO();
         resultDTO.setId(structure.getId());
         resultDTO.setName(structure.getName());
 
         if (parentSubject != null) {
-            // Создаем новую DTO сущность без поля anatomicalStructures
             AnatomicalStructureSubjectWithoutStructuresDTO parentSubjectDTO = new AnatomicalStructureSubjectWithoutStructuresDTO();
             parentSubjectDTO.setId(parentSubject.getId());
             parentSubjectDTO.setName(parentSubject.getName());
@@ -97,7 +92,6 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
 
             resultDTO.setAnatomicalStructureSubject(parentSubjectDTO);
         }
-
         return resultDTO;
     }
 

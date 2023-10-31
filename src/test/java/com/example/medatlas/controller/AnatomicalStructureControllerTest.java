@@ -58,7 +58,7 @@ public class AnatomicalStructureControllerTest {
 
     @Test
     void deleteAnatomicalStructure() throws Exception {
-        UUID id = UUID.randomUUID(); // Замените на существующий ID
+        UUID id = UUID.randomUUID();
         mockMvc.perform(MockMvcRequestBuilders.delete("/api/AnatomicalStructure/" + id))
                 .andExpect(status().isOk());
     }

@@ -33,8 +33,8 @@ public class AnatomicalStructureController {
     @PostMapping("/")
     @Operation(summary = "Create an anatomical structure with parent subject")
     public ResponseEntity<AnatomicalStructureDTO> createStructureWithSubject(@RequestBody AnatomicalStructureDTO requestDTO) {
-        AnatomicalStructureSubjectWithoutStructuresDTO anatomicalStructureSubject = requestDTO.getAnatomicalStructureSubject(); // Получаем данные о родительской сущности из DTO
-        AnatomicalStructureDTO createdStructure = structureService.createAnatomicalStructureWithSubject(requestDTO, anatomicalStructureSubject); // Передаем anatomicalStructureSubject вместо subject
+        AnatomicalStructureSubjectWithoutStructuresDTO anatomicalStructureSubject = requestDTO.getAnatomicalStructureSubject();
+        AnatomicalStructureDTO createdStructure = structureService.createAnatomicalStructureWithSubject(requestDTO, anatomicalStructureSubject);
         return ResponseEntity.ok(createdStructure);
     }
 
@@ -45,7 +45,7 @@ public class AnatomicalStructureController {
         if (structureDTO != null) {
             AnatomicalStructureSubjectWithoutStructuresDTO anatomicalStructureSubject = structureService.getAnatomicalStructureSubjectByStructureId(id);
             if (anatomicalStructureSubject != null) {
-                structureDTO.setAnatomicalStructureSubject(anatomicalStructureSubject); // Устанавливаем родительскую сущность в DTO
+                structureDTO.setAnatomicalStructureSubject(anatomicalStructureSubject);
             }
             return ResponseEntity.ok(structureDTO);
         } else {
