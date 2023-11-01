@@ -44,8 +44,8 @@ public class AnatomicalStructureSubjectController {
 
     @GetMapping
     @Operation(summary = "Get all anatomical structure subjects")
-    public ResponseEntity<List<AnatomicalStructureSubjectDTO>> getAllSubjects() {
-        List<AnatomicalStructureSubjectDTO> subjectDTOList = subjectService.getAllAnatomicalStructureSubjects();
+    public ResponseEntity<List<AnatomicalStructureSubjectWithoutStructuresDTO>> getAllSubjects() {
+        List<AnatomicalStructureSubjectWithoutStructuresDTO> subjectDTOList = subjectService.getAllAnatomicalStructureSubjects();
         return ResponseEntity.ok(subjectDTOList);
     }
 

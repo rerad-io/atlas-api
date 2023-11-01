@@ -16,7 +16,7 @@ public interface AnatomicalStructureSubjectService {
 
     AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectWithChildren(UUID id);
 
-    List<AnatomicalStructureSubjectDTO> getAllAnatomicalStructureSubjects();
+    List<AnatomicalStructureSubjectWithoutStructuresDTO> getAllAnatomicalStructureSubjects();
 
     AnatomicalStructureSubjectDTO updateAnatomicalStructureSubject(UUID id, AnatomicalStructureSubjectDTO subject);
 

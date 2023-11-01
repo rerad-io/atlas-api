@@ -1,6 +1,7 @@
 package com.example.medatlas.mapper;
 
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
 import com.example.medatlas.model.AnatomicalStructureSubject;
 import org.mapstruct.*;
 
@@ -15,5 +16,9 @@ public interface AnatomicalStructureSubjectMapper {
 
     AnatomicalStructureSubject toEntity(AnatomicalStructureSubjectDTO subjectDTO);
 
+    //    AnatomicalStructureSubjectDTO toDTO(AnatomicalStructureSubject subject);
+    @Mapping(target = "anatomicalStructures", ignore = true)
     AnatomicalStructureSubjectDTO toDTO(AnatomicalStructureSubject subject);
+
+    AnatomicalStructureSubjectWithoutStructuresDTO toAnatomicalStructureSubjectWithoutStructuresDTO(AnatomicalStructureSubject subject);
 }

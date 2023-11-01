@@ -23,15 +23,17 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     private final AnatomicalStructureSubjectRepository subjectRepository;
     private final AnatomicalStructureSubjectMapper subjectMapper;
     private final AnatomicalStructureMapper structureMapper;
+    private final AnatomicalStructureSubjectMapper subjectWithoutStructureMapper;
 
     @Autowired
     public AnatomicalStructureSubjectServiceImpl(
             AnatomicalStructureSubjectRepository subjectRepository,
             AnatomicalStructureSubjectMapper subjectMapper,
-            AnatomicalStructureMapper structureMapper) {
+            AnatomicalStructureMapper structureMapper, AnatomicalStructureSubjectMapper subjectWithoutStructureMapper) {
         this.subjectRepository = subjectRepository;
         this.subjectMapper = subjectMapper;
         this.structureMapper = structureMapper;
+        this.subjectWithoutStructureMapper = subjectWithoutStructureMapper;
     }
 
     @Override
@@ -84,10 +86,10 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     }
 
     @Override
-    public List<AnatomicalStructureSubjectDTO> getAllAnatomicalStructureSubjects() {
+    public List<AnatomicalStructureSubjectWithoutStructuresDTO> getAllAnatomicalStructureSubjects() {
         List<AnatomicalStructureSubject> subjectsList = subjectRepository.findAll();
         return subjectsList.stream()
-                .map(subjectMapper::toDTO)
+                .map(subjectWithoutStructureMapper::toAnatomicalStructureSubjectWithoutStructuresDTO)
                 .collect(Collectors.toList());
     }
 
