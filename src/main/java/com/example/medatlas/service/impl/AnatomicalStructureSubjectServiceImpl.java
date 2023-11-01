@@ -3,6 +3,7 @@ package com.example.medatlas.service.impl;
 import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
+import com.example.medatlas.dto.AnatomicalStructureWithoutSubjectDTO;
 import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.mapper.AnatomicalStructureSubjectMapper;
 import com.example.medatlas.model.AnatomicalStructure;
@@ -60,7 +61,7 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectWithChildren(UUID id) {
         AnatomicalStructureSubjectDTO subject = getAnatomicalStructureSubjectById(id);
 
-        List<AnatomicalStructureDTO> childrenDTO = getChildrenBySubjectId(id);
+        List<AnatomicalStructureWithoutSubjectDTO> childrenDTO = getChildrenBySubjectId(id);
 
         AnatomicalStructureSubjectDTO subjectWithChildrenDTO = new AnatomicalStructureSubjectDTO();
         subjectWithChildrenDTO.setId(subject.getId());
@@ -72,14 +73,14 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     }
 
     @Override
-    public List<AnatomicalStructureDTO> getChildrenBySubjectId(UUID subjectId) {
+    public List<AnatomicalStructureWithoutSubjectDTO> getChildrenBySubjectId(UUID subjectId) {
         AnatomicalStructureSubject subject = subjectRepository.findById(subjectId)
                 .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + subjectId));
 
         List<AnatomicalStructure> children = subject.getAnatomicalStructures();
 
-        List<AnatomicalStructureDTO> dtos = children.stream()
-                .map(structureMapper::toDTO)
+        List<AnatomicalStructureWithoutSubjectDTO> dtos = children.stream()
+                .map(structureMapper::toAnatomicalStructureWithoutSubjectDTO)
                 .collect(Collectors.toList());
 
         return dtos;

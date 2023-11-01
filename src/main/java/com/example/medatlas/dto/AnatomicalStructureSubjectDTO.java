@@ -19,5 +19,5 @@ public class AnatomicalStructureSubjectDTO {
     private UUID id;
     private String name;
     private String color;
-    private List<AnatomicalStructureDTO> anatomicalStructures;
+    private List<AnatomicalStructureWithoutSubjectDTO> anatomicalStructures;
 }
