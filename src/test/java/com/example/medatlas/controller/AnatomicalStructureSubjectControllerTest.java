@@ -32,75 +32,74 @@ public class AnatomicalStructureSubjectControllerTest {
     @MockBean
     private AnatomicalStructureSubjectService subjectService;
 
-//    @Test
-//    @DisplayName("Test createSubject")
-//    void createSubject() throws Exception {
-//        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
-//        AnatomicalStructureSubjectWithoutStructuresDTO subjectWithoutStructuresDTO = DTOCreator.createAnatomicalStructureSubjectWithoutStructuresDTO();
-//
-//        when(subjectService.createAnatomicalStructureSubject(subjectDTO)).thenReturn(subjectWithoutStructuresDTO);
-//
-//        mockMvc.perform(post("/api/AnatomicalStructureSubject")
-//                        .content(DTOCreator.asJsonString(subjectDTO))
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(subjectWithoutStructuresDTO.getId().toString()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(subjectWithoutStructuresDTO.getName()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(subjectWithoutStructuresDTO.getColor()));
-//    }
+    @Test
+    @DisplayName("Test createSubject")
+    void createSubject() throws Exception {
+        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
+        AnatomicalStructureSubjectWithoutStructuresDTO subjectWithoutStructuresDTO = DTOCreator.createAnatomicalStructureSubjectWithoutStructuresDTO();
 
-//    @Test
-//    @DisplayName("Test getSubjectAll")
-//    void getSubjectAll() throws Exception {
-//        final List<AnatomicalStructureSubjectWithoutStructuresDTO> subjectDTOList = DTOCreator.createAnatomicalStructureSubjectDTOList(2);
-//        when(subjectService.getAllAnatomicalStructureSubjects()).thenReturn(subjectDTOList);
-//
-//        mockMvc.perform(get("/api/AnatomicalStructureSubject"))
-//                .andExpect(status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(subjectDTOList.get(0).getId().toString()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(subjectDTOList.get(0).getName()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[0].color").value(subjectDTOList.get(0).getColor()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(subjectDTOList.get(1).getId().toString()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value(subjectDTOList.get(1).getName()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$[1].color").value(subjectDTOList.get(1).getColor()));
-//    }
+        when(subjectService.createAnatomicalStructureSubject(subjectDTO)).thenReturn(subjectWithoutStructuresDTO);
 
+        mockMvc.perform(post("/api/AnatomicalStructureSubject")
+                        .content(DTOCreator.asJsonString(subjectDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(subjectWithoutStructuresDTO.getId().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(subjectWithoutStructuresDTO.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(subjectWithoutStructuresDTO.getColor()));
+    }
 
-//    @Test
-//    @DisplayName("Test getSubjectById")
-//    void getSubjectById() throws Exception {
-//        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
-//        when(subjectService.getAnatomicalStructureSubjectById(subjectDTO.getId())).thenReturn(subjectDTO);
-//
-//        mockMvc.perform(get("/api/AnatomicalStructureSubject/{id}", subjectDTO.getId()))
-//                .andExpect(status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(subjectDTO.getId().toString()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(subjectDTO.getName()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(subjectDTO.getColor()));
-//    }
+    @Test
+    @DisplayName("Test getSubjectAll")
+    void getSubjectAll() throws Exception {
+        final List<AnatomicalStructureSubjectWithoutStructuresDTO> subjectDTOList = DTOCreator.createAnatomicalStructureSubjectDTOList(2);
+        when(subjectService.getAllAnatomicalStructureSubjects()).thenReturn(subjectDTOList);
 
-//    @Test
-//    @DisplayName("Test updateSubject")
-//    void updateSubject() throws Exception {
-//        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
-//        when(subjectService.updateAnatomicalStructureSubject(subjectDTO.getId(), subjectDTO)).thenReturn(subjectDTO);
-//
-//        mockMvc.perform(put("/api/AnatomicalStructureSubject/{id}", subjectDTO.getId())
-//                        .content(DTOCreator.asJsonString(subjectDTO))
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(subjectDTO.getId().toString()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(subjectDTO.getName()))
-//                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(subjectDTO.getColor()));
-//    }
+        mockMvc.perform(get("/api/AnatomicalStructureSubject"))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$", hasSize(2)))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].id").value(subjectDTOList.get(0).getId().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name").value(subjectDTOList.get(0).getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].color").value(subjectDTOList.get(0).getColor()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].id").value(subjectDTOList.get(1).getId().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].name").value(subjectDTOList.get(1).getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].color").value(subjectDTOList.get(1).getColor()));
+    }
 
-//    @Test
-//    @DisplayName("Test deleteSubject")
-//    void deleteSubject() throws Exception {
-//        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
-//
-//        mockMvc.perform(delete("/api/AnatomicalStructureSubject/{id}", subjectDTO.getId()))
-//                .andExpect(status().isOk());
-//    }
+    @Test
+    @DisplayName("Test getSubjectById")
+    void getSubjectById() throws Exception {
+        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
+        when(subjectService.getAnatomicalStructureSubjectById(subjectDTO.getId())).thenReturn(subjectDTO);
+
+        mockMvc.perform(get("/api/AnatomicalStructureSubject/{id}", subjectDTO.getId()))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(subjectDTO.getId().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(subjectDTO.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(subjectDTO.getColor()));
+    }
+
+    @Test
+    @DisplayName("Test updateSubject")
+    void updateSubject() throws Exception {
+        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
+        when(subjectService.updateAnatomicalStructureSubject(subjectDTO.getId(), subjectDTO)).thenReturn(subjectDTO);
+
+        mockMvc.perform(put("/api/AnatomicalStructureSubject/{id}", subjectDTO.getId())
+                        .content(DTOCreator.asJsonString(subjectDTO))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.id").value(subjectDTO.getId().toString()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name").value(subjectDTO.getName()))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.color").value(subjectDTO.getColor()));
+    }
+
+    @Test
+    @DisplayName("Test deleteSubject")
+    void deleteSubject() throws Exception {
+        AnatomicalStructureSubjectDTO subjectDTO = DTOCreator.createAnatomicalStructureSubjectDTO();
+
+        mockMvc.perform(delete("/api/AnatomicalStructureSubject/{id}", subjectDTO.getId()))
+                .andExpect(status().isOk());
+    }
 }

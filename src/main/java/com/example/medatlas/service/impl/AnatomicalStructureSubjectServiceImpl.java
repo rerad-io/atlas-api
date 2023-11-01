@@ -1,6 +1,5 @@
 package com.example.medatlas.service.impl;
 
-import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
 import com.example.medatlas.dto.AnatomicalStructureWithoutSubjectDTO;
