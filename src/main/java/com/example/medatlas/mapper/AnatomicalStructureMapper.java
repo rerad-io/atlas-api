@@ -23,7 +23,6 @@ public interface AnatomicalStructureMapper {
     AnatomicalStructure toEntity(AnatomicalStructureDTO structureDTO);
 
     AnatomicalStructure toEntity(AnatomicalStructureSubjectDTO structureDTO);
-    AnatomicalStructureWithoutSubjectDTO toAnatomicalStructureWithoutSubjectDTO(AnatomicalStructure structure);
 
-    List<AnatomicalStructure> toEntityList(List<AnatomicalStructureDTO> structureDTOList);
+    AnatomicalStructureWithoutSubjectDTO toAnatomicalStructureWithoutSubjectDTO(AnatomicalStructure structure);
 }

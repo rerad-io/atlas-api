@@ -16,7 +16,6 @@ public interface AnatomicalStructureSubjectMapper {
 
     AnatomicalStructureSubject toEntity(AnatomicalStructureSubjectDTO subjectDTO);
 
-    //    AnatomicalStructureSubjectDTO toDTO(AnatomicalStructureSubject subject);
     @Mapping(target = "anatomicalStructures", ignore = true)
     AnatomicalStructureSubjectDTO toDTO(AnatomicalStructureSubject subject);
 

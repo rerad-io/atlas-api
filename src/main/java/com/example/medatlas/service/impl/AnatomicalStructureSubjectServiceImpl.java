@@ -78,11 +78,9 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
 
         List<AnatomicalStructure> children = subject.getAnatomicalStructures();
 
-        List<AnatomicalStructureWithoutSubjectDTO> dtos = children.stream()
+        return children.stream()
                 .map(structureMapper::toAnatomicalStructureWithoutSubjectDTO)
                 .collect(Collectors.toList());
-
-        return dtos;
     }
 
     @Override
