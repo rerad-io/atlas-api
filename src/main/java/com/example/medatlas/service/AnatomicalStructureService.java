@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AnatomicalStructureService {
-    AnatomicalStructureDTO createAnatomicalStructure(AnatomicalStructureSubjectDTO structureDTO);
+//    AnatomicalStructureDTO createAnatomicalStructure(AnatomicalStructureSubjectDTO structureDTO);
 
     AnatomicalStructureDTO getAnatomicalStructureById(UUID id);
 
