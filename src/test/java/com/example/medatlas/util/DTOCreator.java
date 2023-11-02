@@ -17,14 +17,10 @@ public class DTOCreator {
         return structureDTO;
     }
 
-    public static List<AnatomicalStructureSubjectDTO> createAnatomicalStructureSubjectDTOList(int count) {
-        List<AnatomicalStructureSubjectDTO> subjectDTOList = new ArrayList<>();
+    public static List<AnatomicalStructureSubjectWithoutStructuresDTO> createAnatomicalStructureSubjectDTOList(int count) {
+        List<AnatomicalStructureSubjectWithoutStructuresDTO> subjectDTOList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
-            AnatomicalStructureSubjectDTO withChildrenDTO = createAnatomicalStructureSubjectDTO();
-            AnatomicalStructureSubjectDTO subjectDTO = new AnatomicalStructureSubjectDTO();
-            subjectDTO.setId(withChildrenDTO.getId());
-            subjectDTO.setName(withChildrenDTO.getName());
-            subjectDTO.setColor(withChildrenDTO.getColor());
+            AnatomicalStructureSubjectWithoutStructuresDTO subjectDTO = createAnatomicalStructureSubjectWithoutStructuresDTO();
             subjectDTOList.add(subjectDTO);
         }
         return subjectDTOList;
@@ -114,20 +110,28 @@ public class DTOCreator {
         subjectDTO.setName("Sample Name");
         subjectDTO.setColor("Sample Color");
 
-        List<AnatomicalStructureDTO> children = createAnatomicalStructureDTOList();
+        List<AnatomicalStructureWithoutSubjectDTO> children = createAnatomicalStructureWithoutSubjectDTOList();
         subjectDTO.setAnatomicalStructures(children);
 
         return subjectDTO;
     }
 
-    private static List<AnatomicalStructureDTO> createAnatomicalStructureDTOList() {
-        List<AnatomicalStructureDTO> structureDTOList = new ArrayList<>();
+    private static List<AnatomicalStructureWithoutSubjectDTO> createAnatomicalStructureWithoutSubjectDTOList() {
+        List<AnatomicalStructureWithoutSubjectDTO> structureDTOList = new ArrayList<>();
         for (int i = 0; i < 2; i++) {
-            AnatomicalStructureDTO structureDTO = new AnatomicalStructureDTO();
+            AnatomicalStructureWithoutSubjectDTO structureDTO = new AnatomicalStructureWithoutSubjectDTO();
             structureDTO.setId(UUID.randomUUID());
             structureDTO.setName("AnatomicalStructure-" + i + " ");
             structureDTOList.add(structureDTO);
         }
         return structureDTOList;
+    }
+
+    public static AnatomicalStructureSubjectWithoutStructuresDTO createAnatomicalStructureSubjectWithoutStructuresDTO() {
+        AnatomicalStructureSubjectWithoutStructuresDTO dto = new AnatomicalStructureSubjectWithoutStructuresDTO();
+        dto.setId(UUID.randomUUID());
+        dto.setName("Example Name");
+        dto.setColor("Example Color");
+        return dto;
     }
 }

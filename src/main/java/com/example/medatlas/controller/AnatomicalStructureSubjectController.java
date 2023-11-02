@@ -1,6 +1,7 @@
 package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
+import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
 import com.example.medatlas.service.AnatomicalStructureSubjectService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -25,8 +26,8 @@ public class AnatomicalStructureSubjectController {
 
     @PostMapping("/")
     @Operation(summary = "Create an anatomical structure subject")
-    public ResponseEntity<AnatomicalStructureSubjectDTO> createSubject(@RequestBody AnatomicalStructureSubjectDTO subject) {
-        AnatomicalStructureSubjectDTO createdSubject = subjectService.createAnatomicalStructureSubject(subject);
+    public ResponseEntity<AnatomicalStructureSubjectWithoutStructuresDTO> createSubject(@RequestBody AnatomicalStructureSubjectDTO subject) {
+        AnatomicalStructureSubjectWithoutStructuresDTO createdSubject = subjectService.createAnatomicalStructureSubject(subject);
         return ResponseEntity.ok(createdSubject);
     }
 
@@ -43,8 +44,8 @@ public class AnatomicalStructureSubjectController {
 
     @GetMapping
     @Operation(summary = "Get all anatomical structure subjects")
-    public ResponseEntity<List<AnatomicalStructureSubjectDTO>> getAllSubjects() {
-        List<AnatomicalStructureSubjectDTO> subjectDTOList = subjectService.getAllAnatomicalStructureSubjects();
+    public ResponseEntity<List<AnatomicalStructureSubjectWithoutStructuresDTO>> getAllSubjects() {
+        List<AnatomicalStructureSubjectWithoutStructuresDTO> subjectDTOList = subjectService.getAllAnatomicalStructureSubjects();
         return ResponseEntity.ok(subjectDTOList);
     }
 

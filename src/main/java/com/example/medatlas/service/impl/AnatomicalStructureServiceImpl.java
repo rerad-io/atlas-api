@@ -63,7 +63,6 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
 
         return structureMapper.toDTO(existingStructure);
     }
-
     @Override
     public void deleteAnatomicalStructure(UUID id) {
         AnatomicalStructure structure = structureRepository.findById(id)
