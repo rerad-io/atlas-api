@@ -25,4 +25,6 @@ public interface AnatomicalStructureMapper {
     AnatomicalStructure toEntity(AnatomicalStructureSubjectDTO structureDTO);
 
     AnatomicalStructureWithoutSubjectDTO toAnatomicalStructureWithoutSubjectDTO(AnatomicalStructure structure);
+
+    AnatomicalStructureSubject toEntity(AnatomicalStructureSubjectWithoutStructuresDTO parentSubjectDTO);
 }
