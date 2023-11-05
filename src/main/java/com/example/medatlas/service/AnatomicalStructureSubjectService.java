@@ -25,4 +25,6 @@ public interface AnatomicalStructureSubjectService {
     boolean existsSubjectById(UUID id);
 
     AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID id);
+
+    boolean hasChildStructures(UUID id);
 }

@@ -117,4 +117,14 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID id) {
         return null;
     }
+    @Override
+    public boolean hasChildStructures(UUID id) {
+        AnatomicalStructureSubject subject = subjectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + id));
+
+        List<AnatomicalStructure> childStructures = subject.getAnatomicalStructures();
+
+        return !childStructures.isEmpty(); // Если есть дочерние структуры, вернуть true, иначе false
+    }
+
 }
