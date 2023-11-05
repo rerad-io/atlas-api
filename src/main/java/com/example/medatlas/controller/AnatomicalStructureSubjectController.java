@@ -3,9 +3,11 @@ package com.example.medatlas.controller;
 import com.example.medatlas.dto.AnatomicalStructureSubjectDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
 import com.example.medatlas.service.AnatomicalStructureSubjectService;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,7 +16,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/AnatomicalStructureSubject")
-@Tag(name = "Anatomical Structure Subject API", description = "API endpoints for the Anatomical Structure Subject Controller")
+@Api(value = "Anatomical Structure Subject API", tags = {"API endpoints for the Anatomical Structure Subject Controller"})
+//@Tag(name = "Anatomical Structure Subject API", description = "API endpoints for the Anatomical Structure Subject Controller")
 public class AnatomicalStructureSubjectController {
 
     private final AnatomicalStructureSubjectService subjectService;
@@ -32,6 +35,7 @@ public class AnatomicalStructureSubjectController {
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get an anatomical structure subject by ID with children")
     public ResponseEntity<AnatomicalStructureSubjectDTO> getSubjectWithChildren(@PathVariable UUID id) {
         AnatomicalStructureSubjectDTO subjectWithChildrenDTO = subjectService.getAnatomicalStructureSubjectWithChildren(id);
@@ -43,6 +47,7 @@ public class AnatomicalStructureSubjectController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all anatomical structure subjects")
     public ResponseEntity<List<AnatomicalStructureSubjectWithoutStructuresDTO>> getAllSubjects() {
         List<AnatomicalStructureSubjectWithoutStructuresDTO> subjectDTOList = subjectService.getAllAnatomicalStructureSubjects();
@@ -50,6 +55,7 @@ public class AnatomicalStructureSubjectController {
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update an anatomical structure subject by ID")
     public ResponseEntity<AnatomicalStructureSubjectDTO> updateSubject(@PathVariable UUID id, @RequestBody AnatomicalStructureSubjectDTO subject) {
         AnatomicalStructureSubjectDTO updatedSubject = subjectService.updateAnatomicalStructureSubject(id, subject);
@@ -61,6 +67,7 @@ public class AnatomicalStructureSubjectController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Delete an anatomical structure subject by ID")
     public ResponseEntity<Void> deleteSubject(@PathVariable UUID id) {
         subjectService.deleteAnatomicalStructureSubject(id);
