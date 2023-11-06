@@ -50,7 +50,7 @@ public class InstanceData {
     private int instanceNumber;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "type", length = 2)
+    @Column(name = "type", length = 10)
     private InstanceDataType type;
 
 
@@ -60,8 +60,8 @@ public class InstanceData {
     @Column(name = "y")
     private int y;
     // аннотация @Lob для больших объектов, например, для JSON
-    @Lob
-    @Column(columnDefinition = "json")
+//    @Lob
+    @Column(name = "path")
     private String path;
 
     @Override
