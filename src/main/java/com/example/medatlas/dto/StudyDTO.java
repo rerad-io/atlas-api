@@ -18,5 +18,5 @@ public class StudyDTO {
     private String name;
     private String description;
     private String previewFrame;
-    private List<SeriesDTO> seriesList;
+    private List<SeriesDTOWithoutStudy> seriesList;
 }
