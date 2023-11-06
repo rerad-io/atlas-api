@@ -6,7 +6,6 @@ import com.example.medatlas.service.SeriesService;
 import com.example.medatlas.service.StudyService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +17,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/Series")
 @Api(value = "Series API", tags = {"API endpoints for the Series Controller"})
-//@Tag(name = "Anatomical Series API", description = "API endpoints for the Series Controller")
 public class SeriesController {
 
     private final SeriesService seriesService;

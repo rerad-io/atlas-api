@@ -47,12 +47,8 @@ public class StudyController {
     public ResponseEntity<StudyDTO> getStudyById(@PathVariable UUID id) {
         StudyDTO studyDTO = studyService.getStudyById(id);
         if (studyDTO != null) {
-            // Получите список SeriesDTO для заданного studyId
             List<SeriesDTO> seriesDTOList = studyService.getSeriesForStudy(id);
-
-            // Установите список SeriesDTO в StudyDTO
             studyDTO.setSeriesList(seriesDTOList);
-
             return ResponseEntity.ok(studyDTO);
         } else {
             return ResponseEntity.notFound().build();

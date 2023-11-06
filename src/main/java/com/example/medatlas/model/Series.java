@@ -38,7 +38,7 @@ public class Series {
     @Column(name = "number")
     private int number;
 
-    @Column(name = "name", length = 250)
+    @Column(name = "name", length = 250, unique = true)
     private String name;
 
     @Column(name = "preview_frame", length = 250)

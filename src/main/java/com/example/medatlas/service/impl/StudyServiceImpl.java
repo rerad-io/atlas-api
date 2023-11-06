@@ -73,10 +73,9 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     public List<SeriesDTO> getSeriesForStudy(UUID studyId) {
-        // Здесь используем репозиторий SeriesRepository для доступа к данным Series
-        List<Series> seriesList = seriesRepository.findByStudyId(studyId); // Предполагается, что у вас есть репозиторий для Series
+               List<Series> seriesList = seriesRepository.findByStudyId(studyId);
         return seriesList.stream()
-                .map(seriesMapper::toDTO) // Преобразование Series в SeriesDTO
+                .map(seriesMapper::toDTO)
                 .collect(Collectors.toList());
     }
 }
