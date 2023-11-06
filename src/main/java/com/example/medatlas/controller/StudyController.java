@@ -1,10 +1,10 @@
 package com.example.medatlas.controller;
 
+import com.example.medatlas.dto.SeriesDTO;
 import com.example.medatlas.dto.StudyDTO;
 import com.example.medatlas.service.StudyService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/Study")
 @Api(value = "Study API", tags = {"API endpoints for the Study Controller"})
-//@Tag(name = "Study API", description = "API endpoints for the Study Controller")
 public class StudyController {
 
     private final StudyService studyService;
@@ -48,6 +47,12 @@ public class StudyController {
     public ResponseEntity<StudyDTO> getStudyById(@PathVariable UUID id) {
         StudyDTO studyDTO = studyService.getStudyById(id);
         if (studyDTO != null) {
+            // Получите список SeriesDTO для заданного studyId
+            List<SeriesDTO> seriesDTOList = studyService.getSeriesForStudy(id);
+
+            // Установите список SeriesDTO в StudyDTO
+            studyDTO.setSeriesList(seriesDTOList);
+
             return ResponseEntity.ok(studyDTO);
         } else {
             return ResponseEntity.notFound().build();

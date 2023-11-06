@@ -32,10 +32,10 @@ public class Series {
     private UUID id;
 
     @ManyToOne(targetEntity = Study.class, fetch = FetchType.LAZY)
-    @JoinColumn(name = "study_id", referencedColumnName = "id", unique = true)
+    @JoinColumn(name = "study_id", referencedColumnName = "id")
     private Study study;
 
-    @Column(name = "number", unique = true)
+    @Column(name = "number")
     private int number;
 
     @Column(name = "name", length = 250)

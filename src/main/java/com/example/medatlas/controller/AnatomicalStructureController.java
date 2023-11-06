@@ -7,7 +7,6 @@ import com.example.medatlas.service.AnatomicalStructureService;
 import com.example.medatlas.service.AnatomicalStructureSubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,6 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/AnatomicalStructure")
 @Api(value = "Anatomical Structure API", tags = {"API endpoints for the Anatomical Structure Controller"})
-//@Tag(name = "Anatomical Structure API", description = "API endpoints for the Anatomical Structure Controller")
 public class AnatomicalStructureController {
 
     private final AnatomicalStructureService structureService;
