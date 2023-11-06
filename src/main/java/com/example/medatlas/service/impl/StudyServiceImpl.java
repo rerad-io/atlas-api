@@ -1,8 +1,12 @@
 package com.example.medatlas.service.impl;
 
+import com.example.medatlas.dto.SeriesDTO;
 import com.example.medatlas.dto.StudyDTO;
+import com.example.medatlas.mapper.SeriesMapper;
 import com.example.medatlas.mapper.StudyMapper;
+import com.example.medatlas.model.Series;
 import com.example.medatlas.model.Study;
+import com.example.medatlas.repository.SeriesRepository;
 import com.example.medatlas.repository.StudyRepository;
 import com.example.medatlas.service.StudyService;
 import jakarta.persistence.EntityNotFoundException;
@@ -11,17 +15,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class StudyServiceImpl implements StudyService {
 
     private final StudyRepository studyRepository;
     private final StudyMapper studyMapper;
+    private final SeriesRepository seriesRepository;
 
+    private final SeriesMapper seriesMapper;
     @Autowired
-    public StudyServiceImpl(StudyRepository studyRepository, StudyMapper studyMapper) {
+    public StudyServiceImpl(StudyRepository studyRepository, StudyMapper studyMapper, SeriesRepository seriesRepository, SeriesMapper seriesMapper) {
         this.studyRepository = studyRepository;
         this.studyMapper = studyMapper;
+        this.seriesRepository = seriesRepository;
+        this.seriesMapper = seriesMapper;
     }
 
     @Override
@@ -60,5 +69,13 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public void deleteStudy(UUID id) {
         studyRepository.deleteById(id);
+    }
+
+    @Override
+    public List<SeriesDTO> getSeriesForStudy(UUID studyId) {
+               List<Series> seriesList = seriesRepository.findByStudyId(studyId);
+        return seriesList.stream()
+                .map(seriesMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }

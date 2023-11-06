@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.UUID;
 @Getter
 @Setter
@@ -17,4 +18,5 @@ public class StudyDTO {
     private String name;
     private String description;
     private String previewFrame;
+    private List<SeriesDTO> seriesList;
 }
