@@ -30,9 +30,9 @@ public class Study {
     private UUID id;
 
     @Column(name = "external_id", unique = true)
-    private UUID externalId;
+    private String externalId;
 
-    @Column(name = "name", length = 250)
+    @Column(name = "name", length = 250, unique = true)
     private String name;
 
     @Column(name = "description", columnDefinition = "TEXT")
