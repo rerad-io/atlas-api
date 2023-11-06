@@ -22,7 +22,5 @@ public interface AnatomicalStructureSubjectService {
 
     void deleteAnatomicalStructureSubject(UUID id);
 
-    boolean existsSubjectById(UUID id);
-
-    AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID id);
+    boolean hasChildStructures(UUID id);
 }

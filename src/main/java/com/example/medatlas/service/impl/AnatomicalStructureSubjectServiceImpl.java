@@ -109,12 +109,12 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     }
 
     @Override
-    public boolean existsSubjectById(UUID id) {
-        return subjectRepository.existsById(id);
-    }
+    public boolean hasChildStructures(UUID id) {
+        AnatomicalStructureSubject subject = subjectRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + id));
 
-    @Override
-    public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectByStructureId(UUID id) {
-        return null;
+        List<AnatomicalStructure> childStructures = subject.getAnatomicalStructures();
+
+        return !childStructures.isEmpty();
     }
 }

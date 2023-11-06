@@ -4,9 +4,11 @@ import com.example.medatlas.dto.SeriesDTO;
 import com.example.medatlas.dto.StudyDTO;
 import com.example.medatlas.service.SeriesService;
 import com.example.medatlas.service.StudyService;
+import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,8 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/Series")
-@Tag(name = "Anatomical Series API", description = "API endpoints for the Series Controller")
+@Api(value = "Series API", tags = {"API endpoints for the Series Controller"})
+//@Tag(name = "Anatomical Series API", description = "API endpoints for the Series Controller")
 public class SeriesController {
 
     private final SeriesService seriesService;
@@ -28,6 +31,7 @@ public class SeriesController {
     }
 
     @PostMapping("/")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Create an anatomical series")
     public ResponseEntity<SeriesDTO> createSeries(@RequestBody SeriesDTO seriesDTO) {
         StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
@@ -43,6 +47,7 @@ public class SeriesController {
     }
 
     @GetMapping()
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get all anatomical series")
     public ResponseEntity<List<SeriesDTO>> getAllSeries() {
         // TODO need much better search
@@ -56,6 +61,7 @@ public class SeriesController {
     }
 
     @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get anatomical series by ID")
     public ResponseEntity<SeriesDTO> getSeriesById(@PathVariable UUID id) {
         SeriesDTO seriesDTO = seriesService.getSeriesById(id);
@@ -69,6 +75,7 @@ public class SeriesController {
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update an anatomical series")
     public ResponseEntity<SeriesDTO> updateSeries(@PathVariable UUID id, @RequestBody SeriesDTO seriesDTO) {
         StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
@@ -82,6 +89,7 @@ public class SeriesController {
     }
 
     @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Delete an anatomical series")
     public ResponseEntity<Void> deleteSeries(@PathVariable UUID id) {
         seriesService.deleteSeries(id);
