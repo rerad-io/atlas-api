@@ -1,6 +1,6 @@
 package com.example.medatlas.service;
 
-import com.example.medatlas.dto.SeriesDTO;
+import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
 
 import java.util.List;
@@ -17,5 +17,5 @@ public interface StudyService {
 
     void deleteStudy(UUID id);
 
-    List<SeriesDTO> getSeriesForStudy(UUID id);
+    List<SeriesDTOWithoutStudy> getSeriesForStudy(UUID id);
 }

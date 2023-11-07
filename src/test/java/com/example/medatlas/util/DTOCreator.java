@@ -50,7 +50,7 @@ public class DTOCreator {
         }
     }
 
-    public static SeriesDTO createSeriesDTO() {
+    public static SeriesDTOWithoutStudy createSeriesDTO() {
         SeriesDTO seriesDTO = new SeriesDTO();
         seriesDTO.setId(UUID.randomUUID());
         seriesDTO.setNumber(1);
@@ -58,8 +58,8 @@ public class DTOCreator {
         return seriesDTO;
     }
 
-    public static List<SeriesDTO> createSeriesDTOList(int count) {
-        List<SeriesDTO> seriesDTOList = new ArrayList<>();
+    public static List<SeriesDTOWithoutStudy> createSeriesDTOList(int count) {
+        List<SeriesDTOWithoutStudy> seriesDTOList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             seriesDTOList.add(createSeriesDTO());
         }
@@ -74,7 +74,7 @@ public class DTOCreator {
         return seriesDTO;
     }
 
-    public static List<SeriesDTO> getSeriesDtoList() {
+    public static List<SeriesDTOWithoutStudy> getSeriesDtoList() {
         return createSeriesDTOList(2);
     }
 

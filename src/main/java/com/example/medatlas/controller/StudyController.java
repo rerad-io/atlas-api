@@ -1,6 +1,6 @@
 package com.example.medatlas.controller;
 
-import com.example.medatlas.dto.SeriesDTO;
+import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
 import com.example.medatlas.service.StudyService;
 import io.swagger.annotations.Api;
@@ -47,7 +47,7 @@ public class StudyController {
     public ResponseEntity<StudyDTO> getStudyById(@PathVariable UUID id) {
         StudyDTO studyDTO = studyService.getStudyById(id);
         if (studyDTO != null) {
-            List<SeriesDTO> seriesDTOList = studyService.getSeriesForStudy(id);
+            List<SeriesDTOWithoutStudy> seriesDTOList = studyService.getSeriesForStudy(id);
             studyDTO.setSeriesList(seriesDTOList);
             return ResponseEntity.ok(studyDTO);
         } else {

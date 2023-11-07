@@ -1,6 +1,7 @@
 package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.SeriesDTO;
+import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
 import com.example.medatlas.mapper.SeriesMapper;
 import com.example.medatlas.model.Series;
@@ -48,9 +49,9 @@ public class SeriesServiceImpl implements SeriesService {
     }
 
     @Override
-    public List<SeriesDTO> getAllSeries() {
+    public List<SeriesDTOWithoutStudy> getAllSeries() {
         List<Series> seriesList = seriesRepository.findAll();
-        return seriesList.stream().map(seriesMapper::toDTO).collect(Collectors.toList());
+        return seriesList.stream().map(seriesMapper::toDTOWithoutStudy).collect(Collectors.toList());
     }
 
     @Override
