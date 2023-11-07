@@ -14,7 +14,7 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: external_id
-                  type: VARCHAR(50)
+                  type: UUID
               - column:
                   name: Name
                   type: VARCHAR(250)
