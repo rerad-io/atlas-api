@@ -14,7 +14,7 @@ import java.util.UUID;
 @ApiModel(description = "Study")
 public class StudyDTO {
     private UUID id;
-    private UUID externalId;
+    private String externalId;
     private String name;
     private String description;
     private String previewFrame;
