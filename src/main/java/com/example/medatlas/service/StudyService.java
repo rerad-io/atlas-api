@@ -2,18 +2,19 @@ package com.example.medatlas.service;
 
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
+import com.example.medatlas.dto.StudyWithoutSeriesDTO;
 
 import java.util.List;
 import java.util.UUID;
 
 public interface StudyService {
-    StudyDTO createStudy(StudyDTO studyDTO);
+    StudyWithoutSeriesDTO createStudy(StudyWithoutSeriesDTO studyDTO);
 
-    StudyDTO getStudyById(UUID id);
+    StudyWithoutSeriesDTO getStudyById(UUID id);
 
     List<StudyDTO> getAllStudies();
 
-    StudyDTO updateStudy(UUID id, StudyDTO studyDTO);
+    StudyWithoutSeriesDTO updateStudy(UUID id, StudyWithoutSeriesDTO studyDTO);
 
     void deleteStudy(UUID id);
 

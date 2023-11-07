@@ -3,6 +3,7 @@ package com.example.medatlas.controller;
 import com.example.medatlas.dto.SeriesDTO;
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
+import com.example.medatlas.dto.StudyWithoutSeriesDTO;
 import com.example.medatlas.service.SeriesService;
 import com.example.medatlas.service.StudyService;
 import io.swagger.annotations.Api;
@@ -33,7 +34,7 @@ public class SeriesController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Create an anatomical series")
     public ResponseEntity<SeriesDTO> createSeries(@RequestBody SeriesDTO seriesDTO) {
-        StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
 
         if (parentStudy == null) {
             return ResponseEntity.notFound().build();
@@ -67,7 +68,7 @@ public class SeriesController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update an anatomical series")
     public ResponseEntity<SeriesDTO> updateSeries(@PathVariable UUID id, @RequestBody SeriesDTO seriesDTO) {
-        StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
 
         if (parentStudy == null) {
             return ResponseEntity.notFound().build();

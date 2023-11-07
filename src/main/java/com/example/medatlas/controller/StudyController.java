@@ -2,6 +2,7 @@ package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
+import com.example.medatlas.dto.StudyWithoutSeriesDTO;
 import com.example.medatlas.service.StudyService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
@@ -28,8 +29,8 @@ public class StudyController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Create a study")
-    public ResponseEntity<StudyDTO> createStudy(@RequestBody StudyDTO studyDTO) {
-        StudyDTO createdStudy = studyService.createStudy(studyDTO);
+    public ResponseEntity<StudyWithoutSeriesDTO> createStudy(@RequestBody StudyWithoutSeriesDTO studyDTO) {
+        StudyWithoutSeriesDTO createdStudy = studyService.createStudy(studyDTO);
         return ResponseEntity.ok(createdStudy);
     }
 
@@ -44,8 +45,8 @@ public class StudyController {
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get a study by ID")
-    public ResponseEntity<StudyDTO> getStudyById(@PathVariable UUID id) {
-        StudyDTO studyDTO = studyService.getStudyById(id);
+    public ResponseEntity<StudyWithoutSeriesDTO> getStudyById(@PathVariable UUID id) {
+        StudyWithoutSeriesDTO studyDTO = studyService.getStudyById(id);
         if (studyDTO != null) {
             List<SeriesDTOWithoutStudy> seriesDTOList = studyService.getSeriesForStudy(id);
             studyDTO.setSeriesList(seriesDTOList);
@@ -58,8 +59,8 @@ public class StudyController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update a study")
-    public ResponseEntity<StudyDTO> updateStudy(@PathVariable UUID id, @RequestBody StudyDTO studyDTO) {
-        StudyDTO updatedStudy = studyService.updateStudy(id, studyDTO);
+    public ResponseEntity<StudyWithoutSeriesDTO> updateStudy(@PathVariable UUID id, @RequestBody StudyWithoutSeriesDTO studyDTO) {
+        StudyWithoutSeriesDTO updatedStudy = studyService.updateStudy(id, studyDTO);
         if (updatedStudy != null) {
             return ResponseEntity.ok(updatedStudy);
         } else {
