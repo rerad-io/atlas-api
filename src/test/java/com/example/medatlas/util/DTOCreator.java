@@ -93,8 +93,8 @@ public class DTOCreator {
         return studyDTOList;
     }
 
-    public static StudyDTO getStudyDTO() {
-        StudyDTO studyDTO = new StudyDTO();
+    public static StudyWithoutSeriesDTO getStudyDTO() {
+        StudyWithoutSeriesDTO studyDTO = new StudyWithoutSeriesDTO();
         studyDTO.setId(UUID.randomUUID());
         studyDTO.setName("Study # 7 ");
         return studyDTO;

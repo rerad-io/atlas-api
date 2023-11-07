@@ -3,6 +3,7 @@ package com.example.medatlas.service.impl;
 import com.example.medatlas.dto.SeriesDTO;
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
+import com.example.medatlas.dto.StudyWithoutSeriesDTO;
 import com.example.medatlas.mapper.SeriesMapper;
 import com.example.medatlas.model.Series;
 import com.example.medatlas.repository.SeriesRepository;
@@ -32,7 +33,7 @@ public class SeriesServiceImpl implements SeriesService {
 
     @Override
     public SeriesDTO createSeries(SeriesDTO seriesDTO) {
-        StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
         if (parentStudy == null) {
             throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudy().getId());
         }
@@ -56,7 +57,7 @@ public class SeriesServiceImpl implements SeriesService {
 
     @Override
     public SeriesDTO updateSeries(UUID id, SeriesDTO seriesDTO) {
-        StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
         if (parentStudy == null) {
             throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudy().getId());
         }
