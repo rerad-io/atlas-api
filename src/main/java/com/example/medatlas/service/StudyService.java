@@ -19,4 +19,6 @@ public interface StudyService {
     void deleteStudy(UUID id);
 
     List<SeriesDTOWithoutStudy> getSeriesForStudy(UUID id);
+
+    String getStudyNameById(String studyId);
 }

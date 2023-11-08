@@ -26,6 +26,7 @@ public class StudyServiceImpl implements StudyService {
     private final SeriesRepository seriesRepository;
 
     private final SeriesMapper seriesMapper;
+
     @Autowired
     public StudyServiceImpl(StudyRepository studyRepository, StudyMapper studyMapper, SeriesRepository seriesRepository, SeriesMapper seriesMapper) {
         this.studyRepository = studyRepository;
@@ -78,5 +79,11 @@ public class StudyServiceImpl implements StudyService {
         return seriesList.stream()
                 .map(seriesMapper::toDTOWithoutStudy)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public String getStudyNameById(String studyId) {
+        Study study = studyRepository.findById(UUID.fromString(studyId)).orElse(null);
+        return (study != null) ? study.getName() : null;
     }
 }

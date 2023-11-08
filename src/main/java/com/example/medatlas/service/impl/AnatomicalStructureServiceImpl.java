@@ -23,15 +23,17 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     private final AnatomicalStructureRepository structureRepository;
     private final AnatomicalStructureMapper structureMapper;
     private final AnatomicalStructureSubjectService subjectService;
+    private final AnatomicalStructureRepository anatomicalStructureRepository;
 
     @Autowired
     public AnatomicalStructureServiceImpl(
             AnatomicalStructureRepository structureRepository,
             AnatomicalStructureMapper structureMapper,
-            AnatomicalStructureSubjectService subjectService) {
+            AnatomicalStructureSubjectService subjectService, AnatomicalStructureRepository anatomicalStructureRepository) {
         this.structureRepository = structureRepository;
         this.structureMapper = structureMapper;
         this.subjectService = subjectService;
+        this.anatomicalStructureRepository = anatomicalStructureRepository;
     }
 
     @Override
@@ -100,5 +102,11 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
         } else {
             return null;
         }
+    }
+
+    @Override
+    public String getAnatomicalStructureNameById(String structureId) {
+        AnatomicalStructure structure = anatomicalStructureRepository.findById(UUID.fromString(structureId)).orElse(null);
+        return (structure != null) ? structure.getName() : null;
     }
 }

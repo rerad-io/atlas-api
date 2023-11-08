@@ -37,14 +37,20 @@ public class InstanceData {
     @ManyToOne(targetEntity = Study.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "study_id", referencedColumnName = "id")
     private Study study;
+    @Column(name = "study_name")
+    private String studyName;
 
     @ManyToOne(targetEntity = Series.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "series_id", referencedColumnName = "id")
     private Series series;
+    @Column(name = "series_name")
+    private String seriesName;
 
     @ManyToOne(targetEntity = AnatomicalStructure.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "anatomical_structure_id", referencedColumnName = "id")
     private AnatomicalStructure structure;
+    @Column(name = "structure_name")
+    private String structureName;
 
     @Column(name = "instance_number", unique = true)
     private int instanceNumber;
@@ -53,14 +59,12 @@ public class InstanceData {
     @Column(name = "type", length = 10)
     private InstanceDataType type;
 
-
     @Column(name = "x")
     private int x;
 
     @Column(name = "y")
     private int y;
-    // аннотация @Lob для больших объектов, например, для JSON
-//    @Lob
+
     @Column(name = "path")
     private String path;
 

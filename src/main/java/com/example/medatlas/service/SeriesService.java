@@ -16,4 +16,6 @@ public interface SeriesService {
     SeriesDTO updateSeries(UUID id, SeriesDTO seriesDTO);
 
     void deleteSeries(UUID id);
+
+    String getSeriesNameById(String series);
 }
