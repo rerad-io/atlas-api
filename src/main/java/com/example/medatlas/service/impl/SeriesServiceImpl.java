@@ -2,7 +2,6 @@ package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.SeriesDTO;
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
-import com.example.medatlas.dto.StudyDTO;
 import com.example.medatlas.dto.StudyWithoutSeriesDTO;
 import com.example.medatlas.mapper.SeriesMapper;
 import com.example.medatlas.model.Series;
@@ -73,5 +72,11 @@ public class SeriesServiceImpl implements SeriesService {
     public void deleteSeries(UUID id) {
         Series series = seriesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Series not found with id: " + id));
         seriesRepository.delete(series);
+    }
+
+    @Override
+    public String getSeriesNameById(String seriesId) {
+        Series series = seriesRepository.findById(UUID.fromString(seriesId)).orElse(null);
+        return (series != null) ? series.getName() : null;
     }
 }

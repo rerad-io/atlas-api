@@ -7,4 +7,5 @@ import java.util.UUID;
 
 @Repository
 public interface StudyRepository extends JpaRepository<Study, UUID> {
+    Study findByName(String studyDTO);
 }

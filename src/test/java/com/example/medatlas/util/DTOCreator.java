@@ -29,7 +29,7 @@ public class DTOCreator {
     public static InstanceDataDTO createInstanceDataDTO() {
         InstanceDataDTO instanceDataDTO = new InstanceDataDTO();
         instanceDataDTO.setId(UUID.randomUUID());
-        instanceDataDTO.setName("Sample Name");
+//        instanceDataDTO.setName("Sample Name");
         return instanceDataDTO;
     }
 

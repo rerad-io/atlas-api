@@ -10,19 +10,24 @@ import com.example.medatlas.model.Series;
 import com.example.medatlas.model.Study;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface InstanceDataMapper {
-    @Mapping(target = "studyDTO", source = "study")
-    @Mapping(target = "seriesDTO", source = "series")
-    @Mapping(target = "anatomicalStructureDTO", source = "structure")
+    @Mappings({
+            @Mapping(target = "study", source = "studyName"),
+            @Mapping(target = "series", source = "seriesName"),
+            @Mapping(target = "structure", source = "structureName")
+    })
     InstanceDataDTO toDTO(InstanceData instanceData);
 
-    @Mapping(target = "study", source = "studyDTO")
-    @Mapping(target = "series", source = "seriesDTO")
-    @Mapping(target = "structure", source = "anatomicalStructureDTO")
+    @Mappings({
+            @Mapping(target = "studyName", source = "study"),
+            @Mapping(target = "seriesName", source = "series"),
+            @Mapping(target = "structureName", source = "structure")
+    })
     InstanceData toEntity(InstanceDataDTO instanceDataDTO);
 
     Study toEntity(StudyDTO studyDTO);
@@ -40,4 +45,10 @@ public interface InstanceDataMapper {
     AnatomicalStructureDTO toDTO(AnatomicalStructure anatomicalStructure);
 
     List<InstanceDataDTO> toDTOList(List<InstanceData> instanceDataList);
+
+    Study studyToEntity(String studyDTO);
+
+    Series seriesToEntity(String seriesDTO);
+
+    AnatomicalStructure structureToEntity(String structureDTO);
 }
