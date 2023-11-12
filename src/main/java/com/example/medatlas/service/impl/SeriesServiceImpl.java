@@ -32,9 +32,9 @@ public class SeriesServiceImpl implements SeriesService {
 
     @Override
     public SeriesDTO createSeries(SeriesDTO seriesDTO) {
-        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudyId());
         if (parentStudy == null) {
-            throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudy().getId());
+            throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudyId());
         }
 
         Series series = seriesMapper.toEntity(seriesDTO);
@@ -56,9 +56,9 @@ public class SeriesServiceImpl implements SeriesService {
 
     @Override
     public SeriesDTO updateSeries(UUID id, SeriesDTO seriesDTO) {
-        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudyId());
         if (parentStudy == null) {
-            throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudy().getId());
+            throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudyId());
         }
 
         Series existingSeries = seriesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Series not found with id: " + id));

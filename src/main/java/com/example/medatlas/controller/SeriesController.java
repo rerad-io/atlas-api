@@ -34,7 +34,7 @@ public class SeriesController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Create an anatomical series")
     public ResponseEntity<SeriesDTO> createSeries(@RequestBody SeriesDTO seriesDTO) {
-        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudyId());
 
         if (parentStudy == null) {
             return ResponseEntity.notFound().build();
@@ -68,7 +68,7 @@ public class SeriesController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Update an anatomical series")
     public ResponseEntity<SeriesDTO> updateSeries(@PathVariable UUID id, @RequestBody SeriesDTO seriesDTO) {
-        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudyId());
 
         if (parentStudy == null) {
             return ResponseEntity.notFound().build();
