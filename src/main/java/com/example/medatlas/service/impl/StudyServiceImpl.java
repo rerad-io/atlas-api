@@ -45,6 +45,7 @@ public class StudyServiceImpl implements StudyService {
     public StudyDTO getStudyById(UUID id) {
         Study study = studyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Study with ID " + id + " not found"));
+        study.getSeriesList().size();
         return studyMapper.toDTO(study);
     }
 

@@ -45,15 +45,16 @@ public class StudyController {
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get a study by ID")
     public ResponseEntity<StudyDTO> getStudyById(@PathVariable UUID id) {
+        List<SeriesDTOWithoutStudy> seriesDTOList = studyService.getSeriesForStudy(id);
         StudyDTO studyDTO = studyService.getStudyById(id);
         if (studyDTO != null) {
-            List<SeriesDTOWithoutStudy> seriesDTOList = studyService.getSeriesForStudy(id);
             studyDTO.setSeriesList(seriesDTOList);
             return ResponseEntity.ok(studyDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

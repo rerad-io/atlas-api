@@ -1,6 +1,5 @@
 package com.example.medatlas.dto;
 
-import com.example.medatlas.model.Study;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,7 +13,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(description = "Series")
-public class SeriesDTO extends SeriesDTOWithoutStudy {
+public class SeriesDTO  {
     private UUID id;
     private int number;
     private String name;
