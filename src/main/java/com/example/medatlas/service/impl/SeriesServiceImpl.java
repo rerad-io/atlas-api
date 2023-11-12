@@ -2,7 +2,7 @@ package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.SeriesDTO;
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
-import com.example.medatlas.dto.StudyWithoutSeriesDTO;
+import com.example.medatlas.dto.StudyDTO;
 import com.example.medatlas.mapper.SeriesMapper;
 import com.example.medatlas.model.Series;
 import com.example.medatlas.repository.SeriesRepository;
@@ -32,9 +32,9 @@ public class SeriesServiceImpl implements SeriesService {
 
     @Override
     public SeriesDTO createSeries(SeriesDTO seriesDTO) {
-        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudyId());
         if (parentStudy == null) {
-            throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudy().getId());
+            throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudyId());
         }
 
         Series series = seriesMapper.toEntity(seriesDTO);
@@ -56,9 +56,9 @@ public class SeriesServiceImpl implements SeriesService {
 
     @Override
     public SeriesDTO updateSeries(UUID id, SeriesDTO seriesDTO) {
-        StudyWithoutSeriesDTO parentStudy = studyService.getStudyById(seriesDTO.getStudy().getId());
+        StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudyId());
         if (parentStudy == null) {
-            throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudy().getId());
+            throw new EntityNotFoundException("Study not found with id: " + seriesDTO.getStudyId());
         }
 
         Series existingSeries = seriesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Series not found with id: " + id));

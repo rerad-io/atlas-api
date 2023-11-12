@@ -10,6 +10,7 @@ import java.util.UUID;
 
 public class DTOCreator {
 
+
     public static AnatomicalStructureDTO createAnatomicalStructureDTO() {
         AnatomicalStructureDTO structureDTO = new AnatomicalStructureDTO();
         structureDTO.setId(UUID.randomUUID());
@@ -29,7 +30,6 @@ public class DTOCreator {
     public static InstanceDataDTO createInstanceDataDTO() {
         InstanceDataDTO instanceDataDTO = new InstanceDataDTO();
         instanceDataDTO.setId(UUID.randomUUID());
-//        instanceDataDTO.setName("Sample Name");
         return instanceDataDTO;
     }
 
@@ -50,7 +50,7 @@ public class DTOCreator {
         }
     }
 
-    public static SeriesDTOWithoutStudy createSeriesDTO() {
+    public static SeriesDTO createSeriesDTO() {
         SeriesDTO seriesDTO = new SeriesDTO();
         seriesDTO.setId(UUID.randomUUID());
         seriesDTO.setNumber(1);
@@ -58,8 +58,8 @@ public class DTOCreator {
         return seriesDTO;
     }
 
-    public static List<SeriesDTOWithoutStudy> createSeriesDTOList(int count) {
-        List<SeriesDTOWithoutStudy> seriesDTOList = new ArrayList<>();
+    public static List<SeriesDTO> createSeriesDTOList(int count) {
+        List<SeriesDTO> seriesDTOList = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             seriesDTOList.add(createSeriesDTO());
         }
@@ -74,7 +74,7 @@ public class DTOCreator {
         return seriesDTO;
     }
 
-    public static List<SeriesDTOWithoutStudy> getSeriesDtoList() {
+    public static List<SeriesDTO> getSeriesDtoList() {
         return createSeriesDTOList(2);
     }
 
@@ -93,8 +93,8 @@ public class DTOCreator {
         return studyDTOList;
     }
 
-    public static StudyWithoutSeriesDTO getStudyDTO() {
-        StudyWithoutSeriesDTO studyDTO = new StudyWithoutSeriesDTO();
+    public static StudyDTO getStudyDTO() {
+        StudyDTO studyDTO = new StudyDTO();
         studyDTO.setId(UUID.randomUUID());
         studyDTO.setName("Study # 7 ");
         return studyDTO;
@@ -133,5 +133,9 @@ public class DTOCreator {
         dto.setName("Example Name");
         dto.setColor("Example Color");
         return dto;
+    }
+
+    public static List<SeriesDTO> getSeriesDTOList() {
+        return createSeriesDTOList(2);
     }
 }

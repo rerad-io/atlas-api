@@ -12,6 +12,7 @@ public interface SeriesMapper {
     SeriesDTO toDTO(Series series);
 
     @Mapping(source = "id", target = "id")
+    @Mapping(source = "studyId", target = "study.id")
     Series toEntity(SeriesDTO seriesDTO);
 
     SeriesDTOWithoutStudy toEntity(SeriesDTOWithoutStudy seriesDTOWithoutStudy);

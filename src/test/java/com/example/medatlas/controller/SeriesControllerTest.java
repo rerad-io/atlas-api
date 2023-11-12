@@ -1,7 +1,6 @@
 package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.SeriesDTO;
-import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.service.SeriesService;
 import com.example.medatlas.util.DTOCreator;
 import org.junit.jupiter.api.DisplayName;
@@ -83,7 +82,7 @@ public class SeriesControllerTest {
 
     @Test
     void seriesDtoList() throws Exception {
-        final List<SeriesDTOWithoutStudy> seriesDTOList = DTOCreator.getSeriesDtoList();
+        final List<SeriesDTO> seriesDTOList = DTOCreator.getSeriesDTOList();
         mockMvc.perform(MockMvcRequestBuilders.get("/api/Series"))
                 .andExpect(status().isOk())
                 .andDo(print())

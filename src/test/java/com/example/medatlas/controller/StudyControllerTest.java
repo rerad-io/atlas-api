@@ -1,7 +1,6 @@
 package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.StudyDTO;
-import com.example.medatlas.dto.StudyWithoutSeriesDTO;
 import com.example.medatlas.service.StudyService;
 import com.example.medatlas.util.DTOCreator;
 import org.junit.jupiter.api.DisplayName;
@@ -34,7 +33,7 @@ public class StudyControllerTest {
 
     @Test
     void createStudy() throws Exception {
-        StudyWithoutSeriesDTO newStudy = DTOCreator.getStudyDTO();
+        StudyDTO newStudy = DTOCreator.getStudyDTO();
         when(studyService.createStudy(newStudy)).thenReturn(newStudy);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/Study/")
                         .contentType("application/json")
@@ -47,7 +46,7 @@ public class StudyControllerTest {
 
     @Test
     void getStudyById() throws Exception {
-        StudyWithoutSeriesDTO study = DTOCreator.getStudyDTO();
+        StudyDTO study = DTOCreator.getStudyDTO();
         UUID id = study.getId();
         when(studyService.getStudyById(id)).thenReturn(study);
         mockMvc.perform(MockMvcRequestBuilders.get("/api/Study/" + id))
@@ -59,7 +58,7 @@ public class StudyControllerTest {
 
     @Test
     void updateStudy() throws Exception {
-        StudyWithoutSeriesDTO updatedStudy = DTOCreator.getStudyDTO();
+        StudyDTO updatedStudy = DTOCreator.getStudyDTO();
         UUID id = updatedStudy.getId();
         when(studyService.updateStudy(id, updatedStudy)).thenReturn(updatedStudy);
         mockMvc.perform(MockMvcRequestBuilders.put("/api/Study/" + id)
