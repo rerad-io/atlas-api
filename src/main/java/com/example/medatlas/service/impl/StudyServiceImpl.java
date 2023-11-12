@@ -52,7 +52,9 @@ public class StudyServiceImpl implements StudyService {
     @Override
     public List<StudyDTO> getAllStudies() {
         List<Study> studies = studyRepository.findAll();
-        return studyMapper.toDTOList(studies);
+        List<StudyDTO> studyDTOList = studyMapper.toDTOList(studies);
+        studyDTOList.forEach(studyDTO -> studyDTO.setSeriesList(null));
+        return studyDTOList;
     }
 
     @Override
