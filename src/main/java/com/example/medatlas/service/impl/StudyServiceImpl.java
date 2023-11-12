@@ -2,7 +2,6 @@ package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
-import com.example.medatlas.dto.StudyWithoutSeriesDTO;
 import com.example.medatlas.mapper.SeriesMapper;
 import com.example.medatlas.mapper.StudyMapper;
 import com.example.medatlas.model.Series;
@@ -36,14 +35,14 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public StudyWithoutSeriesDTO createStudy(StudyWithoutSeriesDTO studyDTO) {
+    public StudyDTO createStudy(StudyDTO studyDTO) {
         Study study = studyMapper.toEntity(studyDTO);
         Study savedStudy = studyRepository.save(study);
         return studyMapper.toDTO(savedStudy);
     }
 
     @Override
-    public StudyWithoutSeriesDTO getStudyById(UUID id) {
+    public StudyDTO getStudyById(UUID id) {
         Study study = studyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Study with ID " + id + " not found"));
         return studyMapper.toDTO(study);
@@ -56,7 +55,7 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public StudyWithoutSeriesDTO updateStudy(UUID id, StudyWithoutSeriesDTO studyDTO) {
+    public StudyDTO updateStudy(UUID id, StudyDTO studyDTO) {
         Study existingStudy = studyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Study with ID " + id + " not found"));
 
