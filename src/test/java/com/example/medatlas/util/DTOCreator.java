@@ -10,6 +10,7 @@ import java.util.UUID;
 
 public class DTOCreator {
 
+
     public static AnatomicalStructureDTO createAnatomicalStructureDTO() {
         AnatomicalStructureDTO structureDTO = new AnatomicalStructureDTO();
         structureDTO.setId(UUID.randomUUID());
@@ -29,7 +30,6 @@ public class DTOCreator {
     public static InstanceDataDTO createInstanceDataDTO() {
         InstanceDataDTO instanceDataDTO = new InstanceDataDTO();
         instanceDataDTO.setId(UUID.randomUUID());
-//        instanceDataDTO.setName("Sample Name");
         return instanceDataDTO;
     }
 
@@ -58,13 +58,13 @@ public class DTOCreator {
         return seriesDTO;
     }
 
-//    public static List<SeriesDTOWithoutStudy> createSeriesDTOList(int count) {
-//        List<SeriesDTOWithoutStudy> seriesDTOList = new ArrayList<>();
-//        for (int i = 0; i < count; i++) {
-//            seriesDTOList.add(createSeriesDTO());
-//        }
-//        return seriesDTOList;
-//    }
+    public static List<SeriesDTO> createSeriesDTOList(int count) {
+        List<SeriesDTO> seriesDTOList = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            seriesDTOList.add(createSeriesDTO());
+        }
+        return seriesDTOList;
+    }
 
     public static SeriesDTO getSeriesDTO() {
         SeriesDTO seriesDTO = new SeriesDTO();
@@ -74,9 +74,9 @@ public class DTOCreator {
         return seriesDTO;
     }
 
-//    public static List<SeriesDTOWithoutStudy> getSeriesDtoList() {
-//        return createSeriesDTOList(2);
-//    }
+    public static List<SeriesDTO> getSeriesDtoList() {
+        return createSeriesDTOList(2);
+    }
 
     public static StudyDTO createStudyDTO() {
         StudyDTO studyDTO = new StudyDTO();
@@ -133,5 +133,9 @@ public class DTOCreator {
         dto.setName("Example Name");
         dto.setColor("Example Color");
         return dto;
+    }
+
+    public static List<SeriesDTO> getSeriesDTOList() {
+        return createSeriesDTOList(2);
     }
 }
