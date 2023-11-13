@@ -1,12 +1,16 @@
 package com.example.medatlas.service.impl;
 
+import com.example.medatlas.dto.InstanceDataDTO;
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
 import com.example.medatlas.exception.SeriesExternalIdNullException;
+import com.example.medatlas.mapper.InstanceDataMapper;
 import com.example.medatlas.mapper.SeriesMapper;
 import com.example.medatlas.mapper.StudyMapper;
+import com.example.medatlas.model.InstanceData;
 import com.example.medatlas.model.Series;
 import com.example.medatlas.model.Study;
+import com.example.medatlas.repository.InstanceDataRepository;
 import com.example.medatlas.repository.SeriesRepository;
 import com.example.medatlas.repository.StudyRepository;
 import com.example.medatlas.service.StudyService;
@@ -26,13 +30,17 @@ public class StudyServiceImpl implements StudyService {
     private final SeriesRepository seriesRepository;
 
     private final SeriesMapper seriesMapper;
+    private final InstanceDataMapper instanceDataMapper;
+    private final InstanceDataRepository instanceDataRepository;
 
     @Autowired
-    public StudyServiceImpl(StudyRepository studyRepository, StudyMapper studyMapper, SeriesRepository seriesRepository, SeriesMapper seriesMapper) {
+    public StudyServiceImpl(StudyRepository studyRepository, StudyMapper studyMapper, SeriesRepository seriesRepository, SeriesMapper seriesMapper, InstanceDataMapper instanceDataMapper, InstanceDataRepository instanceDataRepository) {
         this.studyRepository = studyRepository;
         this.studyMapper = studyMapper;
         this.seriesRepository = seriesRepository;
         this.seriesMapper = seriesMapper;
+        this.instanceDataMapper = instanceDataMapper;
+        this.instanceDataRepository = instanceDataRepository;
     }
 
     @Override
@@ -49,7 +57,6 @@ public class StudyServiceImpl implements StudyService {
     public StudyDTO getStudyById(UUID id) {
         Study study = studyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Study with ID " + id + " not found"));
-//        study.getSeriesList().size();
         return studyMapper.toDTO(study);
     }
 
@@ -91,5 +98,13 @@ public class StudyServiceImpl implements StudyService {
     public String getStudyNameById(String studyId) {
         Study study = studyRepository.findById(UUID.fromString(studyId)).orElse(null);
         return (study != null) ? study.getName() : null;
+    }
+
+    @Override
+    public List<InstanceDataDTO> getInstanceDataForStudy(UUID studyId) {
+        List<InstanceData> instanceDataList = instanceDataRepository.findByStudyId(studyId);
+        return instanceDataList.stream()
+                .map(instanceDataMapper::toDTO)
+                .collect(Collectors.toList());
     }
 }
