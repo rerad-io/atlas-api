@@ -2,6 +2,7 @@ package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
+import com.example.medatlas.exception.SeriesExternalIdNullException;
 import com.example.medatlas.mapper.SeriesMapper;
 import com.example.medatlas.mapper.StudyMapper;
 import com.example.medatlas.model.Series;
@@ -36,6 +37,9 @@ public class StudyServiceImpl implements StudyService {
 
     @Override
     public StudyDTO createStudy(StudyDTO studyDTO) {
+        if (studyDTO.getExternalId() == null || studyDTO.getExternalId().isEmpty()) {
+            throw new SeriesExternalIdNullException("ExternalId should not be empty & must contain 36 characters");
+        }
         Study study = studyMapper.toEntity(studyDTO);
         Study savedStudy = studyRepository.save(study);
         return studyMapper.toDTO(savedStudy);
@@ -45,7 +49,7 @@ public class StudyServiceImpl implements StudyService {
     public StudyDTO getStudyById(UUID id) {
         Study study = studyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Study with ID " + id + " not found"));
-        study.getSeriesList().size();
+//        study.getSeriesList().size();
         return studyMapper.toDTO(study);
     }
 
@@ -53,7 +57,7 @@ public class StudyServiceImpl implements StudyService {
     public List<StudyDTO> getAllStudies() {
         List<StudyRepository.StudySummary> studies = studyRepository.findAllProjectedBy();
         return studies.stream()
-                .map(studySummary -> studyMapper.toDTO(studySummary))
+                .map(studyMapper::toDTO)
                 .collect(Collectors.toList());
     }
 
