@@ -16,9 +16,12 @@ import java.util.UUID;
 @ApiModel(description = "Instance Data")
 public class InstanceDataDTO {
     private UUID id;
-    private String study;
-    private String series;
-    private String structure;
+    private UUID studyId;
+    private String studyName;
+    private UUID seriesId;
+    private String seriesName;
+    private UUID structureId;
+    private String structureName;
     private int instanceNumber;
     private InstanceDataType type;
     private int x;

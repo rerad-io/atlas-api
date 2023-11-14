@@ -1,10 +1,14 @@
 package com.example.medatlas.mapper;
 
+import com.example.medatlas.dto.InstanceDataDTO;
 import com.example.medatlas.dto.StudyDTO;
+import com.example.medatlas.model.InstanceData;
 import com.example.medatlas.model.Study;
 import com.example.medatlas.repository.StudyRepository;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface StudyMapper {
@@ -14,4 +18,8 @@ public interface StudyMapper {
     StudyDTO toDTO(Study study);
 
     StudyDTO toDTO(StudyRepository.StudySummary studySummary);
+
+    List<InstanceDataDTO> toInstanceDataDTOList(List<InstanceData> instanceDataList);
+
+    List<InstanceData> toInstanceDataList(List<InstanceDataDTO> instanceDataDTOList);
 }

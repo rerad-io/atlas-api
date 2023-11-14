@@ -48,34 +48,115 @@ public class InstanceDataServiceImpl implements InstanceDataService {
         this.anatomicalStructureRepository = anatomicalStructureRepository;
     }
 
+    //    @Override
+//    public InstanceDataDTO createInstanceData(InstanceDataDTO instanceDataDTO) {
+//        String studyId = String.valueOf(instanceDataDTO.getStudyId());
+//        String seriesId = String.valueOf(instanceDataDTO.getSeriesId());
+//        String structureId = String.valueOf(instanceDataDTO.getStructureId());
+//
+//        String studyName = studyService.getStudyNameById(studyId);
+//        String seriesName = seriesService.getSeriesNameById(seriesId);
+//        String structureName = anatomicalStructureService.getAnatomicalStructureNameById(structureId);
+//
+//        Study study = studyRepository.findById(UUID.fromString(studyId)).orElse(null);
+//        Series series = seriesRepository.findById(UUID.fromString(seriesId)).orElse(null);
+//        AnatomicalStructure anatomicalStructure = anatomicalStructureRepository.findById(UUID.fromString(structureId)).orElse(null);
+//
+//        InstanceData instanceData = instanceDataMapper.toEntity(instanceDataDTO);
+//        instanceData.setStudy(study);
+//        instanceData.setSeries(series);
+//        instanceData.setStructure(anatomicalStructure);
+//        instanceData.setStudyName(studyName);
+//        instanceData.setSeriesName(seriesName);
+//        instanceData.setStructureName(structureName);
+//
+//        InstanceData savedInstanceData = instanceDataRepository.save(instanceData);
+//
+//        InstanceDataDTO responseDTO = instanceDataMapper.toDTO(savedInstanceData);
+//        responseDTO.setStudyName(studyName);
+//        responseDTO.setSeriesName(seriesName);
+//        responseDTO.setStructureName(structureName);
+//        return responseDTO;
+//    }
+//    @Override
+//    public InstanceDataDTO createInstanceData(InstanceDataDTO instanceDataDTO) {
+//        UUID studyId = instanceDataDTO.getStudyId().getId();
+//        UUID seriesId = instanceDataDTO.getSeriesId().getId();
+//        UUID structureId = instanceDataDTO.getStructureId().getId();
+//
+//        Study study = studyRepository.findById(studyId)
+//                .orElseThrow(() -> new EntityNotFoundException("Study not found with ID: " + studyId));
+//        Series series = seriesRepository.findById(seriesId)
+//                .orElseThrow(() -> new EntityNotFoundException("Series not found with ID: " + seriesId));
+//        AnatomicalStructure anatomicalStructure = anatomicalStructureRepository.findById(structureId)
+//                .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructure not found with ID: " + structureId));
+//
+//        InstanceData instanceData = instanceDataMapper.toEntity(instanceDataDTO);
+//        instanceData.setStudy(study);
+//        instanceData.setSeries(series);
+//        instanceData.setStructure(anatomicalStructure);
+//        instanceData.setStudyName(study.getName()); // Предположим, что в Study есть метод getName()
+//        instanceData.setSeriesName(series.getName()); // Предположим, что в Series есть метод getName()
+//        instanceData.setStructureName(anatomicalStructure.getName()); // Предположим, что в AnatomicalStructure есть метод getName()
+//
+//        InstanceData savedInstanceData = instanceDataRepository.save(instanceData);
+//
+//        InstanceDataDTO responseDTO = instanceDataMapper.toDTO(savedInstanceData);
+//        responseDTO.setStudyName(study.getName());
+//        responseDTO.setSeriesName(series.getName());
+//        responseDTO.setStructureName(anatomicalStructure.getName());
+//
+//        return responseDTO;
+//    }
     @Override
     public InstanceDataDTO createInstanceData(InstanceDataDTO instanceDataDTO) {
-        String studyId = instanceDataDTO.getStudy();
-        String seriesId = instanceDataDTO.getSeries();
-        String structureId = instanceDataDTO.getStructure();
+        UUID studyId = instanceDataDTO.getStudyId() != null ? instanceDataDTO.getStudyId() : null;
+        UUID seriesId = instanceDataDTO.getSeriesId() != null ? instanceDataDTO.getSeriesId() : null;
+        UUID structureId = instanceDataDTO.getStructureId() != null ? instanceDataDTO.getStructureId() : null;
 
-        String studyName = studyService.getStudyNameById(studyId);
-        String seriesName = seriesService.getSeriesNameById(seriesId);
-        String structureName = anatomicalStructureService.getAnatomicalStructureNameById(structureId);
-
-        Study study = studyRepository.findById(UUID.fromString(studyId)).orElse(null);
-        Series series = seriesRepository.findById(UUID.fromString(seriesId)).orElse(null);
-        AnatomicalStructure anatomicalStructure = anatomicalStructureRepository.findById(UUID.fromString(structureId)).orElse(null);
+        Study study = studyId != null ? studyRepository.findById(studyId)
+                .orElseThrow(() -> new EntityNotFoundException("Study not found with ID: " + studyId)) : null;
+        Series series = seriesId != null ? seriesRepository.findById(seriesId)
+                .orElseThrow(() -> new EntityNotFoundException("Series not found with ID: " + seriesId)) : null;
+        AnatomicalStructure anatomicalStructure = structureId != null ? anatomicalStructureRepository.findById(structureId)
+                .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructure not found with ID: " + structureId)) : null;
 
         InstanceData instanceData = instanceDataMapper.toEntity(instanceDataDTO);
-        instanceData.setStudy(study);
-        instanceData.setSeries(series);
-        instanceData.setStructure(anatomicalStructure);
-        instanceData.setStudyName(studyName);
-        instanceData.setSeriesName(seriesName);
-        instanceData.setStructureName(structureName);
+
+        if (study != null) {
+            instanceData.setStudy(study);
+            instanceData.setStudyName(study.getName());
+        }
+
+        if (series != null) {
+            instanceData.setSeries(series);
+            instanceData.setSeriesName(series.getName());
+        }
+
+        if (anatomicalStructure != null) {
+            instanceData.setStructure(anatomicalStructure);
+            instanceData.setStructureName(anatomicalStructure.getName());
+        }
 
         InstanceData savedInstanceData = instanceDataRepository.save(instanceData);
 
         InstanceDataDTO responseDTO = instanceDataMapper.toDTO(savedInstanceData);
-        responseDTO.setStudy(studyName);
-        responseDTO.setSeries(seriesName);
-        responseDTO.setStructure(structureName);
+
+        if (study != null) {
+            responseDTO.setStudyId(studyId);
+            responseDTO.setStudyName(study.getName());
+        }
+
+        if (series != null) {
+            responseDTO.setSeriesId(seriesId);
+            responseDTO.setSeriesName(series.getName());
+        }
+
+        if (anatomicalStructure != null) {
+            responseDTO.setStructureId(structureId);
+            responseDTO.setStructureName(anatomicalStructure.getName());
+        }
+
         return responseDTO;
     }
 
@@ -106,7 +187,6 @@ public class InstanceDataServiceImpl implements InstanceDataService {
         InstanceData updatedInstanceData = instanceDataRepository.save(existingInstanceData);
         return instanceDataMapper.toDTO(updatedInstanceData);
     }
-
     @Override
     public void deleteInstanceData(UUID id) {
         InstanceData instanceData = instanceDataRepository.findById(id)
