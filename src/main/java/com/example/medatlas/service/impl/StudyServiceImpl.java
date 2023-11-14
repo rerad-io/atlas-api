@@ -53,26 +53,13 @@ public class StudyServiceImpl implements StudyService {
         return studyMapper.toDTO(savedStudy);
     }
 
-//    @Override
-//    public StudyDTO getStudyById(UUID id) {
-//        Study study = studyRepository.findById(id)
-//                .orElseThrow(() -> new EntityNotFoundException("Study with ID " + id + " not found"));
-//        return studyMapper.toDTO(study);
-//    }
     @Override
     public StudyDTO getStudyById(UUID id) {
         Study study = studyRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Study with ID " + id + " not found"));
-
-        List<SeriesDTOWithoutStudy> seriesDTOList = getSeriesForStudy(id);
-        List<InstanceDataDTO> instanceDataList = getInstanceDataForStudy(id);
-
-        StudyDTO studyDTO = studyMapper.toDTO(study);
-        studyDTO.setSeriesList(seriesDTOList);
-        studyDTO.setInstanceDataList(instanceDataList);
-
-        return studyDTO;
+        return studyMapper.toDTO(study);
     }
+
     @Override
     public List<StudyDTO> getAllStudies() {
         List<StudyRepository.StudySummary> studies = studyRepository.findAllProjectedBy();

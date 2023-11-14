@@ -10,10 +10,7 @@ import com.example.medatlas.repository.AnatomicalStructureRepository;
 import com.example.medatlas.repository.InstanceDataRepository;
 import com.example.medatlas.repository.SeriesRepository;
 import com.example.medatlas.repository.StudyRepository;
-import com.example.medatlas.service.AnatomicalStructureService;
 import com.example.medatlas.service.InstanceDataService;
-import com.example.medatlas.service.SeriesService;
-import com.example.medatlas.service.StudyService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,9 +23,6 @@ public class InstanceDataServiceImpl implements InstanceDataService {
 
     private final InstanceDataRepository instanceDataRepository;
     private final InstanceDataMapper instanceDataMapper;
-    private final StudyService studyService;
-    private final SeriesService seriesService;
-    private final AnatomicalStructureService anatomicalStructureService;
     private final StudyRepository studyRepository;
     private final SeriesRepository seriesRepository;
     private final AnatomicalStructureRepository anatomicalStructureRepository;
@@ -37,77 +31,14 @@ public class InstanceDataServiceImpl implements InstanceDataService {
     @Autowired
     public InstanceDataServiceImpl(
             InstanceDataRepository instanceDataRepository,
-            InstanceDataMapper instanceDataMapper, StudyService studyService, SeriesService seriesService, AnatomicalStructureService anatomicalStructureService, StudyRepository studyRepository, SeriesRepository seriesRepository, AnatomicalStructureRepository anatomicalStructureRepository) {
+            InstanceDataMapper instanceDataMapper, StudyRepository studyRepository, SeriesRepository seriesRepository, AnatomicalStructureRepository anatomicalStructureRepository) {
         this.instanceDataRepository = instanceDataRepository;
         this.instanceDataMapper = instanceDataMapper;
-        this.studyService = studyService;
-        this.seriesService = seriesService;
-        this.anatomicalStructureService = anatomicalStructureService;
         this.studyRepository = studyRepository;
         this.seriesRepository = seriesRepository;
         this.anatomicalStructureRepository = anatomicalStructureRepository;
     }
 
-    //    @Override
-//    public InstanceDataDTO createInstanceData(InstanceDataDTO instanceDataDTO) {
-//        String studyId = String.valueOf(instanceDataDTO.getStudyId());
-//        String seriesId = String.valueOf(instanceDataDTO.getSeriesId());
-//        String structureId = String.valueOf(instanceDataDTO.getStructureId());
-//
-//        String studyName = studyService.getStudyNameById(studyId);
-//        String seriesName = seriesService.getSeriesNameById(seriesId);
-//        String structureName = anatomicalStructureService.getAnatomicalStructureNameById(structureId);
-//
-//        Study study = studyRepository.findById(UUID.fromString(studyId)).orElse(null);
-//        Series series = seriesRepository.findById(UUID.fromString(seriesId)).orElse(null);
-//        AnatomicalStructure anatomicalStructure = anatomicalStructureRepository.findById(UUID.fromString(structureId)).orElse(null);
-//
-//        InstanceData instanceData = instanceDataMapper.toEntity(instanceDataDTO);
-//        instanceData.setStudy(study);
-//        instanceData.setSeries(series);
-//        instanceData.setStructure(anatomicalStructure);
-//        instanceData.setStudyName(studyName);
-//        instanceData.setSeriesName(seriesName);
-//        instanceData.setStructureName(structureName);
-//
-//        InstanceData savedInstanceData = instanceDataRepository.save(instanceData);
-//
-//        InstanceDataDTO responseDTO = instanceDataMapper.toDTO(savedInstanceData);
-//        responseDTO.setStudyName(studyName);
-//        responseDTO.setSeriesName(seriesName);
-//        responseDTO.setStructureName(structureName);
-//        return responseDTO;
-//    }
-//    @Override
-//    public InstanceDataDTO createInstanceData(InstanceDataDTO instanceDataDTO) {
-//        UUID studyId = instanceDataDTO.getStudyId().getId();
-//        UUID seriesId = instanceDataDTO.getSeriesId().getId();
-//        UUID structureId = instanceDataDTO.getStructureId().getId();
-//
-//        Study study = studyRepository.findById(studyId)
-//                .orElseThrow(() -> new EntityNotFoundException("Study not found with ID: " + studyId));
-//        Series series = seriesRepository.findById(seriesId)
-//                .orElseThrow(() -> new EntityNotFoundException("Series not found with ID: " + seriesId));
-//        AnatomicalStructure anatomicalStructure = anatomicalStructureRepository.findById(structureId)
-//                .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructure not found with ID: " + structureId));
-//
-//        InstanceData instanceData = instanceDataMapper.toEntity(instanceDataDTO);
-//        instanceData.setStudy(study);
-//        instanceData.setSeries(series);
-//        instanceData.setStructure(anatomicalStructure);
-//        instanceData.setStudyName(study.getName()); // Предположим, что в Study есть метод getName()
-//        instanceData.setSeriesName(series.getName()); // Предположим, что в Series есть метод getName()
-//        instanceData.setStructureName(anatomicalStructure.getName()); // Предположим, что в AnatomicalStructure есть метод getName()
-//
-//        InstanceData savedInstanceData = instanceDataRepository.save(instanceData);
-//
-//        InstanceDataDTO responseDTO = instanceDataMapper.toDTO(savedInstanceData);
-//        responseDTO.setStudyName(study.getName());
-//        responseDTO.setSeriesName(series.getName());
-//        responseDTO.setStructureName(anatomicalStructure.getName());
-//
-//        return responseDTO;
-//    }
     @Override
     public InstanceDataDTO createInstanceData(InstanceDataDTO instanceDataDTO) {
         UUID studyId = instanceDataDTO.getStudyId() != null ? instanceDataDTO.getStudyId() : null;
@@ -187,6 +118,7 @@ public class InstanceDataServiceImpl implements InstanceDataService {
         InstanceData updatedInstanceData = instanceDataRepository.save(existingInstanceData);
         return instanceDataMapper.toDTO(updatedInstanceData);
     }
+
     @Override
     public void deleteInstanceData(UUID id) {
         InstanceData instanceData = instanceDataRepository.findById(id)

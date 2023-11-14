@@ -73,10 +73,4 @@ public class SeriesServiceImpl implements SeriesService {
         Series series = seriesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Series not found with id: " + id));
         seriesRepository.delete(series);
     }
-
-    @Override
-    public String getSeriesNameById(String seriesId) {
-        Series series = seriesRepository.findById(UUID.fromString(seriesId)).orElse(null);
-        return (series != null) ? series.getName() : null;
-    }
 }

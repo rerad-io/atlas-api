@@ -18,6 +18,4 @@ public interface AnatomicalStructureService {
     AnatomicalStructureDTO createAnatomicalStructureWithSubject(AnatomicalStructureDTO anatomicalStructureDTO, AnatomicalStructureSubjectWithoutStructuresDTO anatomicalStructureSubject);
 
     AnatomicalStructureSubjectWithoutStructuresDTO getAnatomicalStructureSubjectByStructureId(UUID id);
-
-    String getAnatomicalStructureNameById(String structure);
 }
