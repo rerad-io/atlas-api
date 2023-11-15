@@ -1,10 +1,14 @@
 package com.example.medatlas.service.impl;
 
+import com.example.medatlas.dto.InstanceDataDTO;
 import com.example.medatlas.dto.SeriesDTO;
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
+import com.example.medatlas.mapper.InstanceDataMapper;
 import com.example.medatlas.mapper.SeriesMapper;
+import com.example.medatlas.model.InstanceData;
 import com.example.medatlas.model.Series;
+import com.example.medatlas.repository.InstanceDataRepository;
 import com.example.medatlas.repository.SeriesRepository;
 import com.example.medatlas.service.SeriesService;
 import com.example.medatlas.service.StudyService;
@@ -22,12 +26,17 @@ public class SeriesServiceImpl implements SeriesService {
     private final SeriesRepository seriesRepository;
     private final SeriesMapper seriesMapper;
     private final StudyService studyService;
+    private final InstanceDataRepository instanceDataRepository;
+    private final InstanceDataMapper instanceDataMapper;
 
     @Autowired
-    public SeriesServiceImpl(SeriesRepository seriesRepository, SeriesMapper seriesMapper, StudyService studyService) {
+    public SeriesServiceImpl(SeriesRepository seriesRepository, SeriesMapper seriesMapper, StudyService studyService,
+                             InstanceDataRepository instanceDataRepository, InstanceDataMapper instanceDataMapper) {
         this.seriesRepository = seriesRepository;
         this.seriesMapper = seriesMapper;
         this.studyService = studyService;
+        this.instanceDataRepository = instanceDataRepository;
+        this.instanceDataMapper = instanceDataMapper;
     }
 
     @Override
@@ -73,4 +82,13 @@ public class SeriesServiceImpl implements SeriesService {
         Series series = seriesRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Series not found with id: " + id));
         seriesRepository.delete(series);
     }
+
+    @Override
+    public List<InstanceDataDTO> getInstanceDataForSeries(UUID id) {
+        List<InstanceData> instanceDataList = instanceDataRepository.findBySeriesId(id);
+        return instanceDataList.stream()
+                .map(instanceDataMapper::toDTO)
+                .collect(Collectors.toList());
+    }
+
 }

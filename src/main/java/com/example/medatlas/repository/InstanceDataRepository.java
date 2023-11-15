@@ -10,4 +10,6 @@ import java.util.UUID;
 @Repository
 public interface InstanceDataRepository extends JpaRepository<InstanceData, UUID> {
     List<InstanceData> findByStudyId(UUID studyId);
+
+    List<InstanceData> findBySeriesId(UUID id);
 }

@@ -54,7 +54,7 @@ public class InstanceData {
     @Column(name = "structure_name")
     private String structureName;
 
-    @Column(name = "instance_number")
+    @Column(name = "instance_number", unique = true)
     private int instanceNumber;
 
     @Enumerated(EnumType.STRING)
