@@ -11,23 +11,23 @@ import com.example.medatlas.model.Study;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
+import org.mapstruct.Named;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface InstanceDataMapper {
     @Mappings({
-            @Mapping(target = "study", source = "studyName"),
-            @Mapping(target = "series", source = "seriesName"),
-            @Mapping(target = "structure", source = "structureName")
+            @Mapping(target = "studyId", source = "study.id"),
+            @Mapping(target = "studyName", source = "study.name"),
+            @Mapping(target = "seriesId", source = "series.id"),
+            @Mapping(target = "seriesName", source = "series.name"),
+            @Mapping(target = "seriesNumber", source = "series.number"),
+            @Mapping(target = "structureId", source = "structure.id"),
+            @Mapping(target = "structureName", source = "structure.name")
     })
     InstanceDataDTO toDTO(InstanceData instanceData);
 
-    @Mappings({
-            @Mapping(target = "studyName", source = "study"),
-            @Mapping(target = "seriesName", source = "series"),
-            @Mapping(target = "structureName", source = "structure")
-    })
     InstanceData toEntity(InstanceDataDTO instanceDataDTO);
 
     Study toEntity(StudyDTO studyDTO);
@@ -38,17 +38,17 @@ public interface InstanceDataMapper {
 
     SeriesDTO toDTO(Series series);
 
-    @Mapping(source = "id", target = "id")
     AnatomicalStructure toEntity(AnatomicalStructureDTO anatomicalStructureDTO);
 
-    @Mapping(source = "id", target = "id")
     AnatomicalStructureDTO toDTO(AnatomicalStructure anatomicalStructure);
 
     List<InstanceDataDTO> toDTOList(List<InstanceData> instanceDataList);
 
-    Study studyToEntity(String studyDTO);
+    List<InstanceData> toEntityList(List<InstanceDataDTO> instanceDataDTOList);
 
-    Series seriesToEntity(String seriesDTO);
-
-    AnatomicalStructure structureToEntity(String structureDTO);
+    @Mapping(target = "studyId", source = "study.id")
+    @Mapping(target = "seriesId", source = "series.id")
+    @Mapping(target = "structureId", source = "structure.id")
+    @Named("toDTOWithIds")
+    InstanceDataDTO toDTOWithIds(InstanceData instanceData);
 }

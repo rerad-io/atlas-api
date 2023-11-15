@@ -1,5 +1,6 @@
 package com.example.medatlas.service;
 
+import com.example.medatlas.dto.InstanceDataDTO;
 import com.example.medatlas.dto.SeriesDTO;
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 
@@ -17,5 +18,5 @@ public interface SeriesService {
 
     void deleteSeries(UUID id);
 
-    String getSeriesNameById(String series);
+    List<InstanceDataDTO> getInstanceDataForSeries(UUID id);
 }

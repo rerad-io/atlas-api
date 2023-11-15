@@ -1,5 +1,6 @@
 package com.example.medatlas.controller;
 
+import com.example.medatlas.dto.InstanceDataDTO;
 import com.example.medatlas.dto.SeriesDTOWithoutStudy;
 import com.example.medatlas.dto.StudyDTO;
 import com.example.medatlas.service.StudyService;
@@ -47,14 +48,16 @@ public class StudyController {
     public ResponseEntity<StudyDTO> getStudyById(@PathVariable UUID id) {
         List<SeriesDTOWithoutStudy> seriesDTOList = studyService.getSeriesForStudy(id);
         StudyDTO studyDTO = studyService.getStudyById(id);
+
         if (studyDTO != null) {
+            List<InstanceDataDTO> instanceDataList = studyService.getInstanceDataForStudy(id);
+            studyDTO.setInstanceDataList(instanceDataList);
             studyDTO.setSeriesList(seriesDTOList);
             return ResponseEntity.ok(studyDTO);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
-
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
