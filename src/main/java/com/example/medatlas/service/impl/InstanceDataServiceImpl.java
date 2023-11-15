@@ -62,6 +62,7 @@ public class InstanceDataServiceImpl implements InstanceDataService {
         if (series != null) {
             instanceData.setSeries(series);
             instanceData.setSeriesName(series.getName());
+            instanceData.setSeriesNumber(series.getNumber());
         }
 
         if (anatomicalStructure != null) {

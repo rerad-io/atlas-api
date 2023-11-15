@@ -45,6 +45,8 @@ public class InstanceData {
     private Series series;
     @Column(name = "series_name")
     private String seriesName;
+    @Column(name = "series_number")
+    private int seriesNumber;
 
     @ManyToOne(targetEntity = AnatomicalStructure.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "anatomical_structure_id", referencedColumnName = "id")

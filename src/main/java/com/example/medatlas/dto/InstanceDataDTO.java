@@ -20,6 +20,7 @@ public class InstanceDataDTO {
     private String studyName;
     private UUID seriesId;
     private String seriesName;
+    private int seriesNumber;
     private UUID structureId;
     private String structureName;
     private int instanceNumber;
