@@ -60,6 +60,10 @@ public class SeriesController {
         if (seriesDTO != null) {
             List<InstanceDataDTO> instanceDataDTOList = seriesService.getInstanceDataForSeries(id);
             seriesDTO.setInstanceDataList(instanceDataDTOList);
+            StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudyId());
+            if(parentStudy != null){
+                seriesDTO.setStudyExternalId(parentStudy.getExternalId());
+            }
             return ResponseEntity.ok(seriesDTO);
         } else {
             return ResponseEntity.notFound().build();
