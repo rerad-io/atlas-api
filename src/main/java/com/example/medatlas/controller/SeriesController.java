@@ -32,7 +32,7 @@ public class SeriesController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Create an anatomical series")
+    @Operation(summary = "Create an series")
     public ResponseEntity<SeriesDTO> createSeries(@RequestBody SeriesDTO seriesDTO) {
         StudyDTO parentStudy = studyService.getStudyById(seriesDTO.getStudyId());
 
