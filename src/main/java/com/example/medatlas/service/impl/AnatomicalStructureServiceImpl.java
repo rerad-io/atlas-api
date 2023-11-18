@@ -35,14 +35,20 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     }
 
     @Override
+    public List<AnatomicalStructureDTO> getAllAnatomicalStructures() {
+        List<AnatomicalStructure> structureList = structureRepository.findAll();
+        return structureMapper.toDTOList(structureList);
+    }
+
+    @Override
     public AnatomicalStructureDTO getAnatomicalStructureById(UUID id) {
         AnatomicalStructure structure = structureRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("AnatomicalStructure not found with id: " + id));
         return structureMapper.toDTO(structure);
     }
 
     @Override
-    public List<AnatomicalStructureDTO> getAllAnatomicalStructures() {
-        List<AnatomicalStructure> structureList = structureRepository.findAll();
+    public List<AnatomicalStructureDTO> getAnatomicalStructuresByName(String name) {
+        List<AnatomicalStructure> structureList = structureRepository.findByNameIgnoreCase(name);
         return structureMapper.toDTOList(structureList);
     }
 

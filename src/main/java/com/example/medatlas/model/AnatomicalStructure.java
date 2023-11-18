@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "anatomical_structure")
+@Table(name = "anatomical_structure", indexes = {@Index(name = "idx_name", columnList = "name")})
 @NoArgsConstructor
 @AllArgsConstructor
 public class AnatomicalStructure {
