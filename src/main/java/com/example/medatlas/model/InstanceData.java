@@ -13,7 +13,6 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-//@Table(name = "instance_data")
 @Table(name = "instance_data", uniqueConstraints = {
         @UniqueConstraint(name = "uk_instance_number_per_structure", columnNames = {"anatomical_structure_id", "instance_number"})
 })
@@ -51,7 +50,7 @@ public class InstanceData {
     @Column(name = "series_number")
     private int seriesNumber;
 
-    @ManyToOne(targetEntity = AnatomicalStructure.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = AnatomicalStructure.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "anatomical_structure_id", referencedColumnName = "id")
     private AnatomicalStructure structure;
     @Column(name = "structure_name")
