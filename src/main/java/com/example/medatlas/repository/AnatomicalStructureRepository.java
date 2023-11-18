@@ -12,7 +12,6 @@ import java.util.UUID;
 @Repository
 public interface AnatomicalStructureRepository extends JpaRepository<AnatomicalStructure, UUID> {
     @Query("SELECT a FROM AnatomicalStructure a WHERE lower(a.name) LIKE lower(concat('%', :name, '%'))")
-//@Query("SELECT a FROM AnatomicalStructure a WHERE a.name LIKE %:name%")
     List<AnatomicalStructure> findByNameIgnoreCase(@Param("name") String name);
 
 
