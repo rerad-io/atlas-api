@@ -7,9 +7,11 @@ import java.util.List;
 import java.util.UUID;
 
 public interface AnatomicalStructureService {
+    List<AnatomicalStructureDTO> getAllAnatomicalStructures();
+
     AnatomicalStructureDTO getAnatomicalStructureById(UUID id);
 
-    List<AnatomicalStructureDTO> getAllAnatomicalStructures();
+    List<AnatomicalStructureDTO> getAnatomicalStructuresByName(String name);
 
     AnatomicalStructureDTO updateAnatomicalStructure(UUID id, AnatomicalStructureDTO structureDTO);
 

@@ -2,11 +2,10 @@ package com.example.medatlas.controller;
 
 import com.example.medatlas.dto.AnatomicalStructureDTO;
 import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
-import com.example.medatlas.mapper.AnatomicalStructureMapper;
 import com.example.medatlas.service.AnatomicalStructureService;
-import com.example.medatlas.service.AnatomicalStructureSubjectService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,14 +20,10 @@ import java.util.UUID;
 public class AnatomicalStructureController {
 
     private final AnatomicalStructureService structureService;
-    private final AnatomicalStructureSubjectService subjectService;
-    private final AnatomicalStructureMapper structureMapper;
 
     @Autowired
-    public AnatomicalStructureController(AnatomicalStructureService structureService, AnatomicalStructureSubjectService subjectService, AnatomicalStructureMapper structureMapper) {
+    public AnatomicalStructureController(AnatomicalStructureService structureService) {
         this.structureService = structureService;
-        this.subjectService = subjectService;
-        this.structureMapper = structureMapper;
     }
 
     @PostMapping("/")
@@ -61,6 +56,16 @@ public class AnatomicalStructureController {
     @Operation(summary = "Get all anatomical structures")
     public ResponseEntity<List<AnatomicalStructureDTO>> getAllAnatomicalStructures() {
         List<AnatomicalStructureDTO> structureDTOList = structureService.getAllAnatomicalStructures();
+        return ResponseEntity.ok(structureDTOList);
+    }
+    @GetMapping("/search")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Search anatomical structures by name")
+    public ResponseEntity<List<AnatomicalStructureDTO>> searchAnatomicalStructuresByName(@RequestParam("name") String name) {
+        List<AnatomicalStructureDTO> structureDTOList = structureService.getAnatomicalStructuresByName(name);
+        if (structureDTOList.isEmpty()) {
+            throw new EntityNotFoundException("No anatomical structures found with the name: " + name);
+        }
         return ResponseEntity.ok(structureDTOList);
     }
 
