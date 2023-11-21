@@ -45,3 +45,6 @@ data:
 
     # Server port configuration
     server.port={{ .Values.service.port }}
+    
+    # Enable  Swagger UI
+    springfox.documentation.swagger-ui.enabled=true
