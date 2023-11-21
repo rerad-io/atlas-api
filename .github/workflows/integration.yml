@@ -49,20 +49,35 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-  deploy:
-    name: Deploy
-    needs: ['build']
-    uses: rerad-io/rerad-devops/.github/workflows/deploy-on-kuber.yaml@main
-    with:
+   deploy-auth:
+    name: Auth Deploy
+    needs: [ 'Build' ]
+    runs-on: dev-runner
+    environment: development
+    env:
       APP: atlas-api
       NAMESPACE: rerad-dev
-    secrets:
-      KUBE_CONFIG_DATA: ${{ secrets.KUBE_CONFIG_DATA }}
-      args: | 
-        -f ./.helm/values.dev.yaml \
-        --set image.tag=${{ github.sha }} \
-        --set ingress.enabled=true \
-        --set database.host=${{ secrets.POSTGRES_HOST }} \
-        --set database.databaseName=${{ secrets.POSTGRES_NAME }} \
-        --set database.password=${{ secrets.POSTGRES_PASSWORD }} \
-        --wait
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: install helm
+        uses: Azure/setup-helm@v3
+        with:
+          version: ${{ env.HELM_VERSION }}
+      - name: Set kubeconfig
+        uses: azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+      - name: Upgrade helm release
+        run: |
+          helm upgrade ${{ env.APP }} --install ./helm --namespace ${{ env.NAMESPACE }} \
+          --set image.tag=${{ github.sha }} \
+          -f ./.helm/values.dev.yaml \
+          --set image.tag=${{ github.sha }} \
+          --set ingress.enabled=true \
+          --set database.host=${{ secrets.POSTGRES_HOST }} \
+          --set database.databaseName=${{ secrets.POSTGRES_NAME }} \
+          --set database.password=${{ secrets.POSTGRES_PASSWORD }} \
+          --debug \
+          --wait
