@@ -57,6 +57,8 @@ jobs:
     env:
       APP: atlas-api
       NAMESPACE: rerad-dev
+      HELM_VERSION: 3.13.2
+      HELM_EXPERIMENTAL_OCI: 1
     steps:
       - name: Checkout
         uses: actions/checkout@v3
