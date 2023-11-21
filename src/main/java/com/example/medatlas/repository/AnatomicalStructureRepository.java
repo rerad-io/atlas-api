@@ -14,6 +14,5 @@ public interface AnatomicalStructureRepository extends JpaRepository<AnatomicalS
     @Query("SELECT a FROM AnatomicalStructure a WHERE lower(a.name) LIKE lower(concat('%', :name, '%'))")
     List<AnatomicalStructure> findByNameIgnoreCase(@Param("name") String name);
 
-
     AnatomicalStructure findByName(String name);
 }

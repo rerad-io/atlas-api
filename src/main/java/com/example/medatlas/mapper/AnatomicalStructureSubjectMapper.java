@@ -5,6 +5,7 @@ import com.example.medatlas.dto.AnatomicalStructureSubjectWithoutStructuresDTO;
 import com.example.medatlas.model.AnatomicalStructureSubject;
 import org.mapstruct.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -20,4 +21,6 @@ public interface AnatomicalStructureSubjectMapper {
     AnatomicalStructureSubjectDTO toDTO(AnatomicalStructureSubject subject);
 
     AnatomicalStructureSubjectWithoutStructuresDTO toAnatomicalStructureSubjectWithoutStructuresDTO(AnatomicalStructureSubject subject);
+
+    List<AnatomicalStructureSubjectDTO> toDTOList(List<AnatomicalStructureSubject> subjectList);
 }
