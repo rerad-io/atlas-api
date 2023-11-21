@@ -40,6 +40,22 @@ public class AnatomicalStructureSubjectController {
         }
     }
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Get all anatomical structure subjects")
+    public ResponseEntity<List<AnatomicalStructureSubjectWithoutStructuresDTO>> getAllSubjects() {
+        List<AnatomicalStructureSubjectWithoutStructuresDTO> subjectDTOList = subjectService.getAllAnatomicalStructureSubjects();
+        return ResponseEntity.ok(subjectDTOList);
+    }
+
+    @GetMapping("search")
+    @ResponseStatus(HttpStatus.OK)
+    @Operation(summary = "Search anatomical structure subject by name")
+    public ResponseEntity<List<AnatomicalStructureSubjectDTO>> searchAnatomicalStructureSubjectByName(@RequestParam("name") String name) {
+        List<AnatomicalStructureSubjectDTO> subjectDTOList = subjectService.getAnatomicalStructureSubjectsByName(name);
+        return ResponseEntity.ok(subjectDTOList);
+    }
+
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Get an anatomical structure subject by ID with children")
@@ -56,13 +72,6 @@ public class AnatomicalStructureSubjectController {
         }
     }
 
-    @GetMapping
-    @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get all anatomical structure subjects")
-    public ResponseEntity<List<AnatomicalStructureSubjectWithoutStructuresDTO>> getAllSubjects() {
-        List<AnatomicalStructureSubjectWithoutStructuresDTO> subjectDTOList = subjectService.getAllAnatomicalStructureSubjects();
-        return ResponseEntity.ok(subjectDTOList);
-    }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

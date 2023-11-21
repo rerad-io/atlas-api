@@ -50,6 +50,19 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
     }
 
     @Override
+    public List<AnatomicalStructureSubjectWithoutStructuresDTO> getAllAnatomicalStructureSubjects() {
+        List<AnatomicalStructureSubject> subjectsList = subjectRepository.findAll();
+        return subjectsList.stream()
+                .map(subjectWithoutStructureMapper::toAnatomicalStructureSubjectWithoutStructuresDTO)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<AnatomicalStructureSubjectDTO> getAnatomicalStructureSubjectsByName(String name) {
+        List<AnatomicalStructureSubject> subjectList = subjectRepository.findByNameIgnoreCase(name);
+        return subjectMapper.toDTOList(subjectList);
+    }
+    @Override
     public AnatomicalStructureSubjectDTO getAnatomicalStructureSubjectById(UUID id) {
         AnatomicalStructureSubject subject = subjectRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("AnatomicalStructureSubject not found with id: " + id));
@@ -80,14 +93,6 @@ public class AnatomicalStructureSubjectServiceImpl implements AnatomicalStructur
 
         return children.stream()
                 .map(structureMapper::toAnatomicalStructureWithoutSubjectDTO)
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public List<AnatomicalStructureSubjectWithoutStructuresDTO> getAllAnatomicalStructureSubjects() {
-        List<AnatomicalStructureSubject> subjectsList = subjectRepository.findAll();
-        return subjectsList.stream()
-                .map(subjectWithoutStructureMapper::toAnatomicalStructureSubjectWithoutStructuresDTO)
                 .collect(Collectors.toList());
     }
 
