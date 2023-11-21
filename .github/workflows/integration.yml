@@ -81,5 +81,6 @@ jobs:
           --set database.host=${{ secrets.POSTGRES_HOST }} \
           --set database.databaseName=${{ secrets.POSTGRES_NAME }} \
           --set database.password=${{ secrets.POSTGRES_PASSWORD }} \
+          --set imagePullSecrets\[0\].name=ecr-registry
           --debug \
           --wait
