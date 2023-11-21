@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/InstanceData")
-@Api(value = "AInstanceData API", tags = {"API endpoints for the InstanceData Controller"})
+@Api(value = "InstanceData API", tags = {"API endpoints for the InstanceData Controller"})
 public class InstanceDataController {
 
     private final InstanceDataService instanceDataService;
