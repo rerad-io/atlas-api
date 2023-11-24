@@ -11,7 +11,6 @@ import com.example.medatlas.model.Study;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Mappings;
-import org.mapstruct.Named;
 
 import java.util.List;
 
@@ -24,7 +23,8 @@ public interface InstanceDataMapper {
             @Mapping(target = "seriesName", source = "series.name"),
             @Mapping(target = "seriesNumber", source = "series.number"),
             @Mapping(target = "structureId", source = "structure.id"),
-            @Mapping(target = "structureName", source = "structure.name")
+            @Mapping(target = "structureName", source = "structure.name"),
+            @Mapping(target = "status", source = "status")
     })
     InstanceDataDTO toDTO(InstanceData instanceData);
 
@@ -45,10 +45,4 @@ public interface InstanceDataMapper {
     List<InstanceDataDTO> toDTOList(List<InstanceData> instanceDataList);
 
     List<InstanceData> toEntityList(List<InstanceDataDTO> instanceDataDTOList);
-
-    @Mapping(target = "studyId", source = "study.id")
-    @Mapping(target = "seriesId", source = "series.id")
-    @Mapping(target = "structureId", source = "structure.id")
-    @Named("toDTOWithIds")
-    InstanceDataDTO toDTOWithIds(InstanceData instanceData);
 }

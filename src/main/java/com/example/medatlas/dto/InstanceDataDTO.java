@@ -1,5 +1,6 @@
 package com.example.medatlas.dto;
 
+import com.example.medatlas.model.enums.InstanceDataStatus;
 import com.example.medatlas.model.enums.InstanceDataType;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
@@ -28,4 +29,5 @@ public class InstanceDataDTO {
     private int x;
     private int y;
     private String path;
+    private InstanceDataStatus status;
 }

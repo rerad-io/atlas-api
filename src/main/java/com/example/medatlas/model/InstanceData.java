@@ -1,5 +1,6 @@
 package com.example.medatlas.model;
 
+import com.example.medatlas.model.enums.InstanceDataStatus;
 import com.example.medatlas.model.enums.InstanceDataType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -72,6 +73,14 @@ public class InstanceData {
     @Column(name = "path")
     private String path;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "status")
+    private InstanceDataStatus status;
+
+    @PrePersist
+    protected void onCreate() {
+        this.status = InstanceDataStatus.UNVERIFIED;
+    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
