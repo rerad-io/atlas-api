@@ -17,4 +17,5 @@ public class AnatomicalStructureWithoutSubjectDTO {
 
     private UUID id;
     private String name;
+    private String description;
 }

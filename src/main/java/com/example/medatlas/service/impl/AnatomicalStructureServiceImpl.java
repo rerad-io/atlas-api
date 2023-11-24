@@ -88,6 +88,7 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
         AnatomicalStructureDTO resultDTO = new AnatomicalStructureDTO();
         resultDTO.setId(structure.getId());
         resultDTO.setName(structure.getName());
+        resultDTO.setDescription(structure.getDescription());
         resultDTO.setAnatomicalStructureSubject(parentSubjectDTO);
         return resultDTO;
     }

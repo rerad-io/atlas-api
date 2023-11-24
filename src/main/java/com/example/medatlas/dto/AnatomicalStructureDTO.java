@@ -17,6 +17,7 @@ public class AnatomicalStructureDTO {
 
     private UUID id;
     private String name;
+    private String description;
     @Getter
     private AnatomicalStructureSubjectWithoutStructuresDTO  anatomicalStructureSubject;
 

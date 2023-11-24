@@ -32,6 +32,9 @@ public class AnatomicalStructure {
     @Column(name = "name", length = 250, unique = true)
     private String name;
 
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -44,5 +47,14 @@ public class AnatomicalStructure {
     @Override
     public int hashCode() {
         return Objects.hash(anatomicalStructureSubject, name);
+    }
+
+    @Override
+    public String toString() {
+        return "AnatomicalStructure{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                "description='" + description + '\'' +
+                '}';
     }
 }
