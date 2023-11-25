@@ -30,4 +30,12 @@ public class InstanceDataDTO {
     private int y;
     private String path;
     private InstanceDataStatus status;
+    private int statusCode;
+
+    public void setStatusCode(InstanceDataStatus status) {
+        this.statusCode = status.getCode();
+    }
+    public int getStatusCode(InstanceDataStatus status) {
+        return status.getCode();
+    }
 }
