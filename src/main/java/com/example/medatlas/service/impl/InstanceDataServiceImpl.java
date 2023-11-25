@@ -115,6 +115,7 @@ public class InstanceDataServiceImpl implements InstanceDataService {
         existingInstanceData.setX(instanceDataDTO.getX());
         existingInstanceData.setY(instanceDataDTO.getY());
         existingInstanceData.setPath(instanceDataDTO.getPath());
+        existingInstanceData.setStatus(instanceDataDTO.getStatus());
 
         InstanceData updatedInstanceData = instanceDataRepository.save(existingInstanceData);
         return instanceDataMapper.toDTO(updatedInstanceData);
