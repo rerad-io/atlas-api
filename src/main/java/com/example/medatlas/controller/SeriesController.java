@@ -46,7 +46,7 @@ public class SeriesController {
 
     @GetMapping()
     @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Get all anatomical series")
+    @Operation(summary = "Get all series")
     public ResponseEntity<List<SeriesDTOWithoutStudy>> getAllSeries() {
         List<SeriesDTOWithoutStudy> seriesDTOList = seriesService.getAllSeries();
         return ResponseEntity.ok(seriesDTOList);

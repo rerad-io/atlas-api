@@ -4,13 +4,11 @@ import lombok.Getter;
 
 @Getter
 public enum InstanceDataStatus {
-    UNVERIFIED(0, "unverified"),
-    VERIFIED(1, "verified");
+    UNVERIFIED(0),
+    VERIFIED(1);
     private final int code;
-    private final String description;
 
-    InstanceDataStatus(int code, String description) {
+    InstanceDataStatus(int code) {
         this.code = code;
-        this.description = description;
     }
 }
