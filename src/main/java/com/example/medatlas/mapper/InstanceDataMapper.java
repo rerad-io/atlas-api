@@ -25,7 +25,6 @@ public interface InstanceDataMapper {
             @Mapping(target = "structureId", source = "structure.id"),
             @Mapping(target = "structureName", source = "structure.name"),
             @Mapping(target = "status", source = "status"),
-            @Mapping(target = "statusCode", source = "status.code")
     })
     InstanceDataDTO toDTO(InstanceData instanceData);
 

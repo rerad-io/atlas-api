@@ -30,5 +30,4 @@ public class InstanceDataDTO {
     private int y;
     private String path;
     private InstanceDataStatus status;
-    private int statusCode;
 }
