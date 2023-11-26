@@ -20,19 +20,16 @@ public class InstanceDataServiceImpl implements InstanceDataService {
     private final StudyRepository studyRepository;
     private final SeriesRepository seriesRepository;
     private final AnatomicalStructureRepository anatomicalStructureRepository;
-    private final AnatomicalStructureSubjectRepository anatomicalStructureSubjectRepository;
 
     @Autowired
     public InstanceDataServiceImpl(
             InstanceDataRepository instanceDataRepository,
-            InstanceDataMapper instanceDataMapper, StudyRepository studyRepository, SeriesRepository seriesRepository, AnatomicalStructureRepository anatomicalStructureRepository,
-            AnatomicalStructureSubjectRepository anatomicalStructureSubjectRepository) {
+            InstanceDataMapper instanceDataMapper, StudyRepository studyRepository, SeriesRepository seriesRepository, AnatomicalStructureRepository anatomicalStructureRepository) {
         this.instanceDataRepository = instanceDataRepository;
         this.instanceDataMapper = instanceDataMapper;
         this.studyRepository = studyRepository;
         this.seriesRepository = seriesRepository;
         this.anatomicalStructureRepository = anatomicalStructureRepository;
-        this.anatomicalStructureSubjectRepository = anatomicalStructureSubjectRepository;
     }
 
     @Override
@@ -67,9 +64,6 @@ public class InstanceDataServiceImpl implements InstanceDataService {
         if (anatomicalStructure != null) {
             instanceData.setStructure(anatomicalStructure);
             instanceData.setStructureName(anatomicalStructure.getName());
-//            if (anatomicalStructureSubject != null) {
-//                instanceDataDTO.setSubjectColor(anatomicalStructureSubject.getColor());
-//            }
         }
 
         InstanceData savedInstanceData = instanceDataRepository.save(instanceData);
@@ -100,7 +94,6 @@ public class InstanceDataServiceImpl implements InstanceDataService {
 
         InstanceDataDTO instanceDataDTO = instanceDataMapper.toDTO(instanceData);
 
-        // Fetch the AnatomicalStructureSubject
         AnatomicalStructure anatomicalStructure = instanceData.getStructure();
         AnatomicalStructureSubject anatomicalStructureSubject = null;
 
@@ -108,13 +101,13 @@ public class InstanceDataServiceImpl implements InstanceDataService {
             anatomicalStructureSubject = anatomicalStructure.getAnatomicalStructureSubject();
         }
 
-        // Set subjectColor if anatomicalStructureSubject is not null
         if (anatomicalStructureSubject != null) {
             instanceDataDTO.setSubjectColor(anatomicalStructureSubject.getColor());
         }
 
         return instanceDataDTO;
     }
+
     @Override
     public List<InstanceDataDTO> getAllInstanceData() {
         List<InstanceData> instanceDataList = instanceDataRepository.findAll();
@@ -133,7 +126,6 @@ public class InstanceDataServiceImpl implements InstanceDataService {
         existingInstanceData.setPath(instanceDataDTO.getPath());
         existingInstanceData.setStatus(instanceDataDTO.getStatus());
 
-        // Fetch the AnatomicalStructureSubject
         AnatomicalStructure anatomicalStructure = existingInstanceData.getStructure();
         AnatomicalStructureSubject anatomicalStructureSubject = null;
 
@@ -144,11 +136,9 @@ public class InstanceDataServiceImpl implements InstanceDataService {
         InstanceData updatedInstanceData = instanceDataRepository.save(existingInstanceData);
         InstanceDataDTO responseDTO = instanceDataMapper.toDTO(updatedInstanceData);
 
-        // Set subjectColor if anatomicalStructureSubject is not null
         if (anatomicalStructureSubject != null) {
             responseDTO.setSubjectColor(anatomicalStructureSubject.getColor());
         }
-
         return responseDTO;
     }
 

@@ -4,8 +4,8 @@ import lombok.Getter;
 
 @Getter
 public enum InstanceDataType {
-    Point(0),
-    Area(1);
+    POINT(0),
+    AREA(1);
 
     private final int value;
 
@@ -13,12 +13,12 @@ public enum InstanceDataType {
         this.value = value;
     }
 
-    public static InstanceDataType fromValue(int value) {
-        for (InstanceDataType type : values()) {
-            if (type.getValue() == value) {
-                return type;
-            }
-        }
-        throw new IllegalArgumentException("Invalid InstanceDataType value: " + value);
-    }
+//    public static InstanceDataType fromValue(int value) {
+//        for (InstanceDataType type : values()) {
+//            if (type.getValue() == value) {
+//                return type;
+//            }
+//        }
+//        throw new IllegalArgumentException("Invalid InstanceDataType value: " + value);
+//    }
 }
