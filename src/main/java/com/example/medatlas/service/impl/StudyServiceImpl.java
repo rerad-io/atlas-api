@@ -93,13 +93,6 @@ public class StudyServiceImpl implements StudyService {
                 .map(seriesMapper::toDTOWithoutStudy)
                 .collect(Collectors.toList());
     }
-
-//    @Override
-//    public String getStudyNameById(String studyId) {
-//        Study study = studyRepository.findById(UUID.fromString(studyId)).orElse(null);
-//        return (study != null) ? study.getName() : null;
-//    }
-
     @Override
     public List<InstanceDataDTO> getInstanceDataForStudy(UUID studyId) {
         List<InstanceData> instanceDataList = instanceDataRepository.findByStudyId(studyId);

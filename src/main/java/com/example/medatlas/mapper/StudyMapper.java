@@ -18,8 +18,4 @@ public interface StudyMapper {
     StudyDTO toDTO(Study study);
 
     StudyDTO toDTO(StudyRepository.StudySummary studySummary);
-
-//    List<InstanceDataDTO> toInstanceDataDTOList(List<InstanceData> instanceDataList);
-//
-//    List<InstanceData> toInstanceDataList(List<InstanceDataDTO> instanceDataDTOList);
 }

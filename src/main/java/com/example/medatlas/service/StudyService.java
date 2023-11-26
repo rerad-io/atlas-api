@@ -20,7 +20,5 @@ public interface StudyService {
 
     List<SeriesDTOWithoutStudy> getSeriesForStudy(UUID id);
 
-//    String getStudyNameById(String studyId);
-
     List<InstanceDataDTO> getInstanceDataForStudy(UUID id);
 }
