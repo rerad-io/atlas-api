@@ -12,13 +12,4 @@ public enum InstanceDataType {
     InstanceDataType(int value) {
         this.value = value;
     }
-
-//    public static InstanceDataType fromValue(int value) {
-//        for (InstanceDataType type : values()) {
-//            if (type.getValue() == value) {
-//                return type;
-//            }
-//        }
-//        throw new IllegalArgumentException("Invalid InstanceDataType value: " + value);
-//    }
 }
