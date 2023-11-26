@@ -7,9 +7,7 @@ import com.example.medatlas.exception.SeriesExternalIdNullException;
 import com.example.medatlas.mapper.InstanceDataMapper;
 import com.example.medatlas.mapper.SeriesMapper;
 import com.example.medatlas.mapper.StudyMapper;
-import com.example.medatlas.model.InstanceData;
-import com.example.medatlas.model.Series;
-import com.example.medatlas.model.Study;
+import com.example.medatlas.model.*;
 import com.example.medatlas.repository.InstanceDataRepository;
 import com.example.medatlas.repository.SeriesRepository;
 import com.example.medatlas.repository.StudyRepository;
@@ -19,6 +17,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -95,16 +95,35 @@ public class StudyServiceImpl implements StudyService {
     }
 
     @Override
-    public String getStudyNameById(String studyId) {
-        Study study = studyRepository.findById(UUID.fromString(studyId)).orElse(null);
-        return (study != null) ? study.getName() : null;
-    }
-
-    @Override
     public List<InstanceDataDTO> getInstanceDataForStudy(UUID studyId) {
         List<InstanceData> instanceDataList = instanceDataRepository.findByStudyId(studyId);
+
+        List<AnatomicalStructureSubject> structureSubjects = instanceDataList.stream()
+                .map(InstanceData::getStructure)
+                .filter(Objects::nonNull)
+                .map(AnatomicalStructure::getAnatomicalStructureSubject)
+                .filter(Objects::nonNull)
+                .distinct()
+                .toList();
+
+        Map<UUID, String> subjectColorMap = structureSubjects.stream()
+                .collect(Collectors.toMap(AnatomicalStructureSubject::getId, AnatomicalStructureSubject::getColor));
+
         return instanceDataList.stream()
-                .map(instanceDataMapper::toDTO)
+                .map(instanceData -> {
+                    InstanceDataDTO instanceDataDTO = instanceDataMapper.toDTO(instanceData);
+                    AnatomicalStructure anatomicalStructure = instanceData.getStructure();
+
+                    if (anatomicalStructure != null) {
+                        AnatomicalStructureSubject anatomicalStructureSubject = anatomicalStructure.getAnatomicalStructureSubject();
+                        if (anatomicalStructureSubject != null) {
+                            UUID subjectId = anatomicalStructureSubject.getId();
+                            String subjectColor = subjectColorMap.get(subjectId);
+                            instanceDataDTO.setSubjectColor(subjectColor);
+                        }
+                    }
+                    return instanceDataDTO;
+                })
                 .collect(Collectors.toList());
     }
 }

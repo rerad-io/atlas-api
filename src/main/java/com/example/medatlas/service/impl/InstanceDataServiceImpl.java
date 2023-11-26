@@ -2,14 +2,8 @@ package com.example.medatlas.service.impl;
 
 import com.example.medatlas.dto.InstanceDataDTO;
 import com.example.medatlas.mapper.InstanceDataMapper;
-import com.example.medatlas.model.AnatomicalStructure;
-import com.example.medatlas.model.InstanceData;
-import com.example.medatlas.model.Series;
-import com.example.medatlas.model.Study;
-import com.example.medatlas.repository.AnatomicalStructureRepository;
-import com.example.medatlas.repository.InstanceDataRepository;
-import com.example.medatlas.repository.SeriesRepository;
-import com.example.medatlas.repository.StudyRepository;
+import com.example.medatlas.model.*;
+import com.example.medatlas.repository.*;
 import com.example.medatlas.service.InstanceDataService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +20,6 @@ public class InstanceDataServiceImpl implements InstanceDataService {
     private final StudyRepository studyRepository;
     private final SeriesRepository seriesRepository;
     private final AnatomicalStructureRepository anatomicalStructureRepository;
-
 
     @Autowired
     public InstanceDataServiceImpl(
@@ -58,13 +51,16 @@ public class InstanceDataServiceImpl implements InstanceDataService {
             instanceData.setStudy(study);
             instanceData.setStudyName(study.getName());
         }
-
         if (series != null) {
             instanceData.setSeries(series);
             instanceData.setSeriesName(series.getName());
             instanceData.setSeriesNumber(series.getNumber());
         }
 
+        AnatomicalStructureSubject anatomicalStructureSubject = null;
+        if (anatomicalStructure != null) {
+            anatomicalStructureSubject = anatomicalStructure.getAnatomicalStructureSubject();
+        }
         if (anatomicalStructure != null) {
             instanceData.setStructure(anatomicalStructure);
             instanceData.setStructureName(anatomicalStructure.getName());
@@ -78,17 +74,16 @@ public class InstanceDataServiceImpl implements InstanceDataService {
             responseDTO.setStudyId(studyId);
             responseDTO.setStudyName(study.getName());
         }
-
         if (series != null) {
             responseDTO.setSeriesId(seriesId);
             responseDTO.setSeriesName(series.getName());
         }
-
         if (anatomicalStructure != null) {
             responseDTO.setStructureId(structureId);
             responseDTO.setStructureName(anatomicalStructure.getName());
+            assert anatomicalStructureSubject != null;
+            responseDTO.setSubjectColor(anatomicalStructureSubject.getColor());
         }
-
         return responseDTO;
     }
 
@@ -96,7 +91,21 @@ public class InstanceDataServiceImpl implements InstanceDataService {
     public InstanceDataDTO getInstanceDataById(UUID id) {
         InstanceData instanceData = instanceDataRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("InstanceData not found with id: " + id));
-        return instanceDataMapper.toDTO(instanceData);
+
+        InstanceDataDTO instanceDataDTO = instanceDataMapper.toDTO(instanceData);
+
+        AnatomicalStructure anatomicalStructure = instanceData.getStructure();
+        AnatomicalStructureSubject anatomicalStructureSubject = null;
+
+        if (anatomicalStructure != null) {
+            anatomicalStructureSubject = anatomicalStructure.getAnatomicalStructureSubject();
+        }
+
+        if (anatomicalStructureSubject != null) {
+            instanceDataDTO.setSubjectColor(anatomicalStructureSubject.getColor());
+        }
+
+        return instanceDataDTO;
     }
 
     @Override
@@ -115,9 +124,22 @@ public class InstanceDataServiceImpl implements InstanceDataService {
         existingInstanceData.setX(instanceDataDTO.getX());
         existingInstanceData.setY(instanceDataDTO.getY());
         existingInstanceData.setPath(instanceDataDTO.getPath());
+        existingInstanceData.setStatus(instanceDataDTO.getStatus());
+
+        AnatomicalStructure anatomicalStructure = existingInstanceData.getStructure();
+        AnatomicalStructureSubject anatomicalStructureSubject = null;
+
+        if (anatomicalStructure != null) {
+            anatomicalStructureSubject = anatomicalStructure.getAnatomicalStructureSubject();
+        }
 
         InstanceData updatedInstanceData = instanceDataRepository.save(existingInstanceData);
-        return instanceDataMapper.toDTO(updatedInstanceData);
+        InstanceDataDTO responseDTO = instanceDataMapper.toDTO(updatedInstanceData);
+
+        if (anatomicalStructureSubject != null) {
+            responseDTO.setSubjectColor(anatomicalStructureSubject.getColor());
+        }
+        return responseDTO;
     }
 
     @Override

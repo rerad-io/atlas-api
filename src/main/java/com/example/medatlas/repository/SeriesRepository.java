@@ -10,5 +10,5 @@ import java.util.UUID;
 public interface SeriesRepository extends JpaRepository<Series, UUID> {
     List<Series> findByStudyId(UUID studyId);
 
-    Series findByName(String seriesDTO);
+//    Series findByName(String seriesDTO);
 }

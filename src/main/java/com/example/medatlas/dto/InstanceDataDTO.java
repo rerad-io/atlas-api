@@ -22,6 +22,7 @@ public class InstanceDataDTO {
     private UUID seriesId;
     private String seriesName;
     private int seriesNumber;
+    private String subjectColor;
     private UUID structureId;
     private String structureName;
     private int instanceNumber;

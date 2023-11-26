@@ -90,5 +90,4 @@ public class SeriesServiceImpl implements SeriesService {
                 .map(instanceDataMapper::toDTO)
                 .collect(Collectors.toList());
     }
-
 }

@@ -24,7 +24,7 @@ public interface InstanceDataMapper {
             @Mapping(target = "seriesNumber", source = "series.number"),
             @Mapping(target = "structureId", source = "structure.id"),
             @Mapping(target = "structureName", source = "structure.name"),
-            @Mapping(target = "status", source = "status")
+            @Mapping(target = "status", source = "status"),
     })
     InstanceDataDTO toDTO(InstanceData instanceData);
 
@@ -43,6 +43,4 @@ public interface InstanceDataMapper {
     AnatomicalStructureDTO toDTO(AnatomicalStructure anatomicalStructure);
 
     List<InstanceDataDTO> toDTOList(List<InstanceData> instanceDataList);
-
-    List<InstanceData> toEntityList(List<InstanceDataDTO> instanceDataDTOList);
 }
