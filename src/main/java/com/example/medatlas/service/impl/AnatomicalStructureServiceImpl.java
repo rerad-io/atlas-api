@@ -47,8 +47,8 @@ public class AnatomicalStructureServiceImpl implements AnatomicalStructureServic
     }
 
     @Override
-    public List<AnatomicalStructureDTO> getAnatomicalStructuresByName(String name) {
-        List<AnatomicalStructure> structureList = structureRepository.findByNameIgnoreCase(name);
+    public List<AnatomicalStructureDTO> searchAnatomicalStructures(String name, UUID anatomicalStructureSubjectId, String orderBy, String orderByDirection) {
+        List<AnatomicalStructure> structureList = structureRepository.searchAnatomicalStructures(name, anatomicalStructureSubjectId, orderBy, orderByDirection);
         return structureMapper.toDTOList(structureList);
     }
 
