@@ -6,6 +6,8 @@ import com.example.medatlas.service.AnatomicalStructureService;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.persistence.EntityNotFoundException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +18,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/AnatomicalStructure")
-@Api(value = "Anatomical Structure API", tags = {"API endpoints for the Anatomical Structure Controller"})
+@Api(value = "Anatomical Structure API", tags = {"API endpoints for the Anatomical Structure Controller" })
 public class AnatomicalStructureController {
 
     private final AnatomicalStructureService structureService;
+    private static final Logger log = LoggerFactory.getLogger(AnatomicalStructureController.class);
 
     @Autowired
     public AnatomicalStructureController(AnatomicalStructureService structureService) {
@@ -58,14 +61,30 @@ public class AnatomicalStructureController {
         List<AnatomicalStructureDTO> structureDTOList = structureService.getAllAnatomicalStructures();
         return ResponseEntity.ok(structureDTOList);
     }
+
     @GetMapping("/search")
     @ResponseStatus(HttpStatus.OK)
     @Operation(summary = "Search anatomical structures by name")
-    public ResponseEntity<List<AnatomicalStructureDTO>> searchAnatomicalStructuresByName(@RequestParam("name") String name) {
-        List<AnatomicalStructureDTO> structureDTOList = structureService.getAnatomicalStructuresByName(name);
+    public ResponseEntity<List<AnatomicalStructureDTO>> searchAnatomicalStructures(
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "anatomicalStructureSubjectId", required = false) UUID anatomicalStructureSubjectId,
+            @RequestParam(value = "orderBy", defaultValue = "name") String orderBy,
+            @RequestParam(value = "orderByDirection", defaultValue = "asc") String orderByDirection) {
+
+        log.info("Search request parameters: name={}, anatomicalStructureSubjectId={}, orderBy={}, orderByDirection={}",
+                name, anatomicalStructureSubjectId, orderBy, orderByDirection);
+
+        List<AnatomicalStructureDTO> structureDTOList = structureService.searchAnatomicalStructures(
+                name,
+                anatomicalStructureSubjectId,
+                orderBy,
+                orderByDirection
+        );
+
         if (structureDTOList.isEmpty()) {
-            throw new EntityNotFoundException("No anatomical structures found with the name: " + name);
+            throw new EntityNotFoundException("No anatomical structures found with the specified parameters");
         }
+
         return ResponseEntity.ok(structureDTOList);
     }
 

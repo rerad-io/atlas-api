@@ -11,7 +11,7 @@ public interface AnatomicalStructureService {
 
     AnatomicalStructureDTO getAnatomicalStructureById(UUID id);
 
-    List<AnatomicalStructureDTO> getAnatomicalStructuresByName(String name);
+    List<AnatomicalStructureDTO> searchAnatomicalStructures(String name, UUID anatomicalStructureSubjectId, String orderBy, String orderByDirection);
 
     AnatomicalStructureDTO updateAnatomicalStructure(UUID id, AnatomicalStructureDTO structureDTO);
 
